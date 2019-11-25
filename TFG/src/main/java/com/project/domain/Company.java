@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Company extends User {
@@ -41,11 +40,10 @@ public class Company extends User {
 	}
 
 	// Relationships------------------------------------------------------------
-	
+
 	private About about;
-	
+
 	@OneToOne(optional = true)
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "hadler" })
 	public About getAbout() {
 		return about;
 	}

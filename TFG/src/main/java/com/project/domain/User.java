@@ -12,7 +12,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class User implements Serializable {
@@ -108,7 +107,6 @@ public class User implements Serializable {
 	private Role role;
 
 	@OneToOne(optional = false)
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "hadler" })
 	public Role getRole() {
 		return role;
 	}
