@@ -8,10 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+
 
 
 @Entity
@@ -34,10 +33,10 @@ public class Basket implements Serializable {
 	// Relationships------------------------------------------------------------------
 
 	private List<Product> products;
-	private Client client;
+	
 	
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@Valid
 	public List<Product> getProducts() {
 		return products;
@@ -47,16 +46,7 @@ public class Basket implements Serializable {
 		this.products = products;
 	}
 
-	@OneToOne(optional = false)
-	@NotNull
-	@Valid
-	public Client getClient() {
-		return client;
-	}
-
-	public void setClient(Client client) {
-		this.client = client;
-	}
+	
 
 	/**
 	 * 

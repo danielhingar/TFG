@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -140,6 +141,11 @@ public class Facture implements Serializable {
 	@NotNull
 	@Valid
 	private Client client;
+	
+	@OneToOne(optional = false)
+	@NotNull
+	@Valid
+	private Basket basket;
 
 	public Client getClient() {
 		return client;
@@ -149,8 +155,16 @@ public class Facture implements Serializable {
 		this.client = client;
 	}
 
-	// -----------------------------------------------------------------------------------
 
+	public Basket getBasket() {
+		return basket;
+	}
+
+	public void setBasket(Basket basket) {
+		this.basket = basket;
+	}
+
+	// -----------------------------------------------------------------------------------
 	/**
 	 * 
 	 */

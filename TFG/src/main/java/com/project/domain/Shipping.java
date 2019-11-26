@@ -1,29 +1,28 @@
 package com.project.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.Valid;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 public class Shipping implements Serializable {
 
 	// Attributes---------------------------------------------------------------------
 	private Long id;
-	private String name;
+	private String title;
 	private double price;
-	private Date dateMin;
-	private Date dateMax;
+	private int dateMin;
+	private int dateMax;
 	private String observation;
 
 	@Id
@@ -36,12 +35,12 @@ public class Shipping implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	@Min(0)
@@ -53,25 +52,20 @@ public class Shipping implements Serializable {
 		this.price = price;
 	}
 
-	@NotNull
-	@Temporal(TemporalType.DATE)
-	@Future
-	public Date getDateMin() {
+	@Range(min = 1,max = 30)
+	public int getDateMin() {
 		return dateMin;
 	}
 
-	public void setDateMin(Date dateMin) {
+	public void setDateMin(int dateMin) {
 		this.dateMin = dateMin;
 	}
-
-	@NotNull
-	@Temporal(TemporalType.DATE)
-	@Future
-	public Date getDateMax() {
+	@Range(min = 1,max= 30)
+	public int getDateMax() {
 		return dateMax;
 	}
 
-	public void setDateMax(Date dateMax) {
+	public void setDateMax(int dateMax) {
 		this.dateMax = dateMax;
 	}
 

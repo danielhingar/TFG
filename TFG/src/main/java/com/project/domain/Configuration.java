@@ -6,10 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+
 
 @Entity
 public class Configuration implements Serializable {
@@ -50,17 +49,7 @@ public class Configuration implements Serializable {
 
 	// Relationships------------------------------------------------------------------
 	
-	@OneToOne(optional = false)
-	@Valid
-	private Admin admin;
 
-	public Admin getAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(Admin admin) {
-		this.admin = admin;
-	}
 
 	// -------------------------------------------------------------------------------
 	/**
