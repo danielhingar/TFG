@@ -1,8 +1,8 @@
 package com.project.domain;
 
 import java.io.Serializable;
-import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.URL;
 
+@Entity
 public class About implements Serializable {
 
 	// Attributes---------------------------------------------------------------
@@ -18,7 +19,7 @@ public class About implements Serializable {
 	private String facebook;
 	private String instagram;
 	private String description;
-	private List<String> images;
+	private String images;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,17 +66,17 @@ public class About implements Serializable {
 		this.description = description;
 	}
 
-	public List<String> getImages() {
+	
+	public String getImages() {
 		return images;
 	}
 
-	public void setImages(List<String> images) {
+	public void setImages(String images) {
 		this.images = images;
 	}
-	
+
 	// Relationships------------------------------------------------------------
-	
-	
+
 	// -------------------------------------------------------------
 	/**
 	 * 
