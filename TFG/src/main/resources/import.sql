@@ -13,6 +13,6 @@ INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (
 
 
 /*Users*/
-INSERT INTO `users` (id,name,surnames,username,password,enabled,phone,email,role) VALUES (1,'Antonio','Pérez','admin','admin1',1,'674839213', 'admin@gmail.com',2);
-INSERT INTO `users` (id,name,surnames,username,password,enabled,phone,email,role) VALUES (2,'Ramón','Pérez','rampez','decide123',1,'674839213', 'rampez@gmail.com',1);
-INSERT INTO `users` (id,name,surnames,username,password,enabled,phone,email,role) VALUES (3,'Luis','García','lusgar','tokio99',1,'674839213', 'lusgar@gmail.com',3);
+INSERT INTO `admin` (id,name,surnames,username,password,enabled,phone,email,role) VALUES (1,'Antonio','Pérez','admin','admin1',1,'674839213', 'admin@gmail.com',2);
+INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,role) VALUES (2,'Ramón','Pérez','rampez','decide123',1,'674839213', 'rampez@gmail.com',1);
+INSERT INTO `reporter` (id,name,surnames,username,password,enabled,phone,email,role) VALUES (3,'Luis','García','lusgar','tokio99',1,'674839213', 'lusgar@gmail.com',3);

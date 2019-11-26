@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -17,9 +16,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Company implements Serializable{
+public class Client implements Serializable {
 
-	// Atributes commons---------------------------------------------------------
+	// Attributes------------------------------------------------------
+
 	private Long id;
 	private String name;
 	private String username;
@@ -28,11 +28,6 @@ public class Company implements Serializable{
 	private String email;
 	private boolean enabled;
 	private String phone;
-
-	// Attributes---------------------------------------------------------------
-	private String businessName;
-	private String category;
-	private String image;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -109,51 +104,12 @@ public class Company implements Serializable{
 		this.phone = phone;
 	}
 
-	@NotBlank
-	public String getBusinessName() {
-		return businessName;
-	}
-
-	public void setBusinessName(String businessName) {
-		this.businessName = businessName;
-	}
-
-	@NotBlank
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	// Relationships------------------------------------------------------------
-	@OneToOne(optional = true)
-	private About about;
-	
+	// Relationships ---------------------------------------------------------
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@NotNull
-	@ManyToOne(optional = false,fetch = FetchType.LAZY)
 	@Valid
 	private Role role;
 
-	
-	public About getAbout() {
-		return about;
-	}
-
-	public void setAbout(About about) {
-		this.about = about;
-	}
-
-	
 	public Role getRole() {
 		return role;
 	}
@@ -162,7 +118,7 @@ public class Company implements Serializable{
 		this.role = role;
 	}
 
-	// -------------------------------------------------------------
+	// ------------------------------------------------------------------------------
 	/**
 	 * 
 	 */
