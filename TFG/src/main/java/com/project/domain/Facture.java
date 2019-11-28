@@ -2,13 +2,18 @@ package com.project.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,6 +21,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Facture implements Serializable {
@@ -141,11 +148,15 @@ public class Facture implements Serializable {
 	@NotNull
 	@Valid
 	private Client client;
-	
-	@OneToOne(optional = false)
+
+	@ManyToOne(optional = false)
 	@NotNull
 	@Valid
 	private Basket basket;
+
+	@ManyToOne(optional = true)
+	@Valid
+	private Company company;
 
 	public Client getClient() {
 		return client;
@@ -155,13 +166,20 @@ public class Facture implements Serializable {
 		this.client = client;
 	}
 
-
 	public Basket getBasket() {
 		return basket;
 	}
 
 	public void setBasket(Basket basket) {
 		this.basket = basket;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	// -----------------------------------------------------------------------------------

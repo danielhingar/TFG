@@ -55,16 +55,16 @@ INSERT INTO `product` (id,company,name,description,photo,price,create_date,categ
 INSERT INTO `product` (id,company,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (8,1,'SAL DEL HIMALAYA','sal del himalaya en escamas','photo1',6.7,'2019-11-23','FOOD',null,null,null,'250 gramos',null,null,'CARREFOUR',null);
 
 /*RELATION BASKET-PRODUCTS*/
-INSERT INTO `basket_products` (basket_id,products_id) VALUES (1,1);
-INSERT INTO `basket_products` (basket_id,products_id) VALUES (1,2);
-INSERT INTO `basket_products` (basket_id,products_id) VALUES (1,3);
-INSERT INTO `basket_products` (basket_id,products_id) VALUES (2,4);
-INSERT INTO `basket_products` (basket_id,products_id) VALUES (2,5);
-INSERT INTO `basket_products` (basket_id,products_id) VALUES (3,1);
-INSERT INTO `basket_products` (basket_id,products_id) VALUES (3,6);
+INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (1,1,1);
+INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (2,1,2);
+INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (1,1,3);
+INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (3,2,4);
+INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (1,2,5);
+INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (8,3,7);
+INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (3,3,6);
 
 
 /*FACTURE--------------------------------------------------------------------------------*/
 
-INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client,basket) VALUES (1,'2019-11-22','PENDING','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',1,1);
-INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client,basket) VALUES (2,'2019-11-22','ACCEPTED','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',1,1);
+INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client,basket,company) VALUES (1,'2019-11-22','PENDING','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',1,1,1);
+INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client,basket,company) VALUES (2,'2019-11-22','ACCEPTED','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',1,1,1);

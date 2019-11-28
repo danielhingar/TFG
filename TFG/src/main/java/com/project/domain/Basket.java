@@ -3,15 +3,18 @@ package com.project.domain;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Basket implements Serializable {
@@ -32,21 +35,18 @@ public class Basket implements Serializable {
 
 	// Relationships------------------------------------------------------------------
 
-	private List<Product> products;
-	
-	
+	private List<ItemBasket> itemBaskets;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@Valid
-	public List<Product> getProducts() {
-		return products;
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JoinColumn(name="basket_id")
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "hadler" })
+	public List<ItemBasket> getItemBaskets() {
+		return itemBaskets;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setItemBaskets(List<ItemBasket> itemBaskets) {
+		this.itemBaskets = itemBaskets;
 	}
-
-	
 
 	/**
 	 * 
