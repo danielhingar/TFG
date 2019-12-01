@@ -5,19 +5,22 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.Valid;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.Range;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Product implements Serializable {
@@ -76,7 +79,7 @@ public class Product implements Serializable {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-	
+
 	@Min(0)
 	public double getPrice() {
 		return price;
@@ -85,7 +88,7 @@ public class Product implements Serializable {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
+
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Past
@@ -105,8 +108,7 @@ public class Product implements Serializable {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	
-	
+
 	public String getSize() {
 		return size;
 	}
@@ -115,7 +117,6 @@ public class Product implements Serializable {
 		this.size = size;
 	}
 
-	
 	public String getHeight() {
 		return height;
 	}
@@ -165,7 +166,7 @@ public class Product implements Serializable {
 		this.brand = brand;
 	}
 
-	@Range(min = 5,max = 90)
+	@Range(min = 5, max = 90)
 	public Integer getOffert() {
 		return offert;
 	}
@@ -176,11 +177,12 @@ public class Product implements Serializable {
 
 	// Relationships-----------------------------------------------------------------
 
-	@NotNull
-	@ManyToOne(optional = false)
-	@Valid
+	
 	private Company company;
-
+	
+	@JsonIgnoreProperties({ "products", "hibernateLazyInitializer", "hadler" })
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotNull
 	public Company getCompany() {
 		return company;
 	}

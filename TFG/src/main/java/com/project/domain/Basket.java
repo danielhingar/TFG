@@ -10,9 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.validation.Valid;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -39,7 +38,7 @@ public class Basket implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name="basket_id")
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "hadler" })
+	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "hadler" })
 	public List<ItemBasket> getItemBaskets() {
 		return itemBaskets;
 	}

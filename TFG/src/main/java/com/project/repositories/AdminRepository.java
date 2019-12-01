@@ -24,11 +24,12 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
 	
 	@Query("select r from Reporter r where r.enabled = false")
 	List<Reporter> findBannedReporter();
+
 	
 	//QUERIES DASHBOARD//
 	
-	@Query("select p.company from Product p group by p.company.id order by count(p) desc")
-	List<String> findTopCompaniesByProducts();
+//	@Query("select p.company from Product p group by p.company.id order by count(p) desc")
+//	List<String> findTopCompaniesByProducts();
 	
 
 	

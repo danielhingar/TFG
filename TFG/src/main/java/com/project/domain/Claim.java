@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Claim implements Serializable {
@@ -77,16 +80,15 @@ public class Claim implements Serializable {
 	}
 
 	// Relationships--------------------------------------------------------------------
-	@ManyToOne(optional = false)
-	@NotNull
-	@Valid
+	
 	private Reporter reporter;
-
-	@ManyToOne(optional = false)
-	@NotNull
-	@Valid
 	private Facture facture;
 
+	
+	@JsonIgnoreProperties({ "claims", "hibernateLazyInitializer", "hadler" })
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotNull
+	@Valid
 	public Reporter getReporter() {
 		return reporter;
 	}
@@ -95,6 +97,8 @@ public class Claim implements Serializable {
 		this.reporter = reporter;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "hadler" })
 	public Facture getFacture() {
 		return facture;
 	}

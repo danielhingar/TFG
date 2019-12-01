@@ -6,30 +6,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.domain.Company;
-import com.project.repositories.CompanyRepository;
+import com.project.domain.Reporter;
+
+import com.project.repositories.ReporterRepository;
+
 
 @Service
 @Transactional
-public class CompanyService {
+public class ReporterService {
 
 	// Repository------------------------------------------------------------------------------------------------
 	@Autowired
-	private CompanyRepository companyRepository;
+	private ReporterRepository reporterRepository;
 
 	// Services----------------------------------------------------------------------------------------------------
 
 	// CRUD--------------------------------------------------------------------------------------------------------
 
 	@Transactional(readOnly = true)
-	public List<Company> findAll() {
-		return (List<Company>) companyRepository.findAll();
+	public List<Reporter> findAll() {
+		return (List<Reporter>) reporterRepository.findAll();
 	}
 
 	// ----------------------------------------Show------------------------------------------------------
 	@Transactional(readOnly = true)
-	public Company findById(Long id) {
-		return companyRepository.findById(id).orElse(null);
+	public Reporter findById(Long id) {
+		return reporterRepository.findById(id).orElse(null);
 
 	}
 

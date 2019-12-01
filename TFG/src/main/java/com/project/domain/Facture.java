@@ -144,20 +144,15 @@ public class Facture implements Serializable {
 	}
 
 	// Relationships-------------------------------------------------------------------
-	@ManyToOne(optional = false)
-	@NotNull
-	@Valid
+
 	private Client client;
-
-	@ManyToOne(optional = false)
-	@NotNull
-	@Valid
 	private Basket basket;
-
-	@ManyToOne(optional = true)
-	@Valid
 	private Company company;
 
+	@NotNull
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="client_id")
 	public Client getClient() {
 		return client;
 	}
@@ -166,6 +161,10 @@ public class Facture implements Serializable {
 		this.client = client;
 	}
 
+	@NotNull
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="basket_id")
 	public Basket getBasket() {
 		return basket;
 	}
@@ -174,6 +173,10 @@ public class Facture implements Serializable {
 		this.basket = basket;
 	}
 
+	@NotNull
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="company_id")
 	public Company getCompany() {
 		return company;
 	}

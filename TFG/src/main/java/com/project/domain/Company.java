@@ -1,25 +1,32 @@
 package com.project.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.validation.Valid;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
-public class Company implements Serializable{
+public class Company implements Serializable {
 
 	// Atributes commons---------------------------------------------------------
 	private Long id;
@@ -138,30 +145,44 @@ public class Company implements Serializable{
 	}
 
 	// Relationships------------------------------------------------------------
-	@OneToOne(optional = true)
+
 	private About about;
-	
-	@NotNull
-	@ManyToOne(optional = false,fetch = FetchType.LAZY)
-	@Valid
+
+	private List<Product> products;
+
 	private Role role;
 
-	
-	public About getAbout() {
-		return about;
-	}
-
-	public void setAbout(About about) {
-		this.about = about;
-	}
-
-	
+	@NotNull
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="role_id")
 	public Role getRole() {
 		return role;
 	}
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	@JsonIgnoreProperties(value = { "company", "hibernateLazyInitializer", "hadler" })
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.ALL)
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="about_id")
+	public About getAbout() {
+		return about;
+	}
+
+	public void setAbout(About about) {
+		this.about = about;
 	}
 
 	// -------------------------------------------------------------

@@ -7,7 +7,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -20,9 +22,6 @@ public class ItemBasket implements Serializable {
 	
 	private Integer quantity;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "hadler" })
-	private Product product;
 
 	public Long getId() {
 		return id;
@@ -40,6 +39,19 @@ public class ItemBasket implements Serializable {
 		this.quantity = quantity;
 	}
 	
+	public Double getImporte() {
+		return quantity.doubleValue()*product.getPrice();
+	}
+	
+	
+	//Relationships----------------------------------------------------------------------------------------------------------
+	@NotNull
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="product_id")
+	private Product product;
+	
+	
 	public Product getProduct() {
 		return product;
 	}
@@ -48,9 +60,7 @@ public class ItemBasket implements Serializable {
 		this.product = product;
 	}
 	
-	public Double getImporte() {
-		return quantity.doubleValue()*product.getPrice();
-	}
+	
 	
 	
 
