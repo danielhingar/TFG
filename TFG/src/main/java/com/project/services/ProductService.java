@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import com.project.domain.Company;
 import com.project.domain.Product;
 import com.project.repositories.ProductRepository;
 
@@ -22,7 +22,8 @@ public class ProductService {
 	private ProductRepository productRepository;
 
 	// Services----------------------------------------------------------------------------------------------------
-
+	@Autowired
+	private CompanyService companyService;
 	// CRUD--------------------------------------------------------------------------------------------------------
 
 	// ----------------------------------------List------------------------------------------------------
@@ -53,6 +54,13 @@ public class ProductService {
 	@Transactional(readOnly = true)
 	public Page<Product> findAll(Pageable pageable){
 		return productRepository.findAll(pageable);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Product> findAllByCompany(Long companyId){
+		Company c= companyService.findById(companyId);
+		List<Product> products=c.getProducts();
+		return products;
 	}
 
 }

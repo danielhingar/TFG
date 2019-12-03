@@ -50,6 +50,12 @@ public class ProductCompanyController {
 	public List<Product> list() {
 		return productService.findAll();
 	}
+	//--------------------------List product by company----------------------------------------------------------
+	@CrossOrigin
+	@RequestMapping(value = "/listProducts/{companyId}", method = RequestMethod.GET)
+	public List<Product> listProductsCompany(@PathVariable Long companyId) {
+		return productService.findAllByCompany(companyId);
+	}
 
 	// -------------------------- Show ----------------------------------
 	@CrossOrigin

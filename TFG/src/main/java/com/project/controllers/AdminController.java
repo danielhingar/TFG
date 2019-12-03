@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.project.domain.Admin;
+import com.project.domain.Reporter;
 import com.project.services.AdminService;
+import com.project.services.ReporterService;
 
 
 @RestController
@@ -22,6 +24,9 @@ public class AdminController {
 	// Services--------------------------------------------------------------------------------------
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private ReporterService reporterService;
 
 	// -------------------------- List Admin ----------------------------------
 	@CrossOrigin
@@ -49,6 +54,12 @@ public class AdminController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Admin>(admin, HttpStatus.OK);
+	}
+	// -----------------------------------------LIST REPORTERS------------------------------------------------------
+	@CrossOrigin
+	@RequestMapping(value = "/listReporters", method = RequestMethod.GET)
+	public List<Reporter> listReporters() {
+		return reporterService.findAll();
 	}
 
 }

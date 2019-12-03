@@ -7,9 +7,11 @@ INSERT INTO `role` (id,nombre) VALUES (4,'ROLE_COMPANY');
 
 /*COMPANIES-----------------------------------------------------------------------------*/
 INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,role_id,about_id) VALUES (1,'daniel','hinojo garcía','danhingar','people3012',1,'672389123','danielhingar3397@gmail.com','showcase','foto1','deportes',4,1);
+INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,role_id,about_id) VALUES (2,'ramon','hinojo garcía','danhingar2','people3012',1,'672389123','danielhingar3397@gmail.com','showcase','foto1','deportes',4,2);
 
 /*ABOUTS--------------------------------------------------------------------------------*/
 INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (1,'calle Cuba','https://www.instagram.com/danielhingar/','https://facebook.com','Esta empresa comenzó hace ya 10 años',null);
+INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (2,'calle Cuba','https://www.instagram.com/danielhingar/','https://facebook.com','Esta empresa comenzó hace ya 10 años',null);
 
 /*ADMINS--------------------------------------------------------------------------------*/
 INSERT INTO `admin` (id,name,surnames,username,password,enabled,phone,email,role_id) VALUES (1,'Antonio','Pérez','admin','admin1',1,'674839213', 'admin@gmail.com',2);
@@ -68,4 +70,4 @@ INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (3,3,6);
 /*FACTURE--------------------------------------------------------------------------------*/
 
 INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (1,'2019-11-22','PENDING','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',1,1,1);
-INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (2,'2019-11-22','ACCEPTED','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',1,1,1);
+INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (2,'2019-11-22','ACCEPTED','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',1,1,2);

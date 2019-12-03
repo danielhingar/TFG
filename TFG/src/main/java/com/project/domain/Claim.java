@@ -99,6 +99,7 @@ public class Claim implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "hadler" })
+	@NotNull
 	public Facture getFacture() {
 		return facture;
 	}
