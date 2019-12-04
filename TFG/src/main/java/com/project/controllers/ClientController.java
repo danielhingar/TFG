@@ -26,12 +26,6 @@ public class ClientController {
 	@Autowired
 	private ClientService clientService;
 
-	// -------------------------- List ----------------------------------
-	@CrossOrigin
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public List<Client> list() {
-		return clientService.findAll();
-	}
 
 	// -------------------------- Show ----------------------------------
 	@CrossOrigin

@@ -34,7 +34,7 @@ import com.project.services.ProductService;
 
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/company/product")
 public class ProductCompanyController {
 
 	// Servicies----------------------------------------------------------------------------------------------
@@ -45,40 +45,21 @@ public class ProductCompanyController {
 	private CompanyService companyService;
 
 	// -------------------------- List ----------------------------------
+//	@CrossOrigin
+//	@RequestMapping(value = "/list", method = RequestMethod.GET)
+//	public List<Product> list() {
+//		return productService.findAll();
+//	}
+	//--------------------------List product of my company----------------------------------------------------------
 	@CrossOrigin
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public List<Product> list() {
-		return productService.findAll();
-	}
-	//--------------------------List product by company----------------------------------------------------------
-	@CrossOrigin
-	@RequestMapping(value = "/listProducts/{companyId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/myProducts/{companyId}", method = RequestMethod.GET)
 	public List<Product> listProductsCompany(@PathVariable Long companyId) {
 		return productService.findAllByCompany(companyId);
 	}
 
-	// -------------------------- Show ----------------------------------
-	@CrossOrigin
-	@RequestMapping("/show/{id}")
-	public ResponseEntity<?> show(@PathVariable Long id) {
-		Product product = null;
-		Map<String, Object> response = new HashMap<>();
-		try {
-			product = productService.findById(id);
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al realizar la consulta en la base de datos");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	
 
-		if (product == null) {
-			response.put("mensaje", "El producto no existe");
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<Product>(product, HttpStatus.OK);
-	}
-
-	// -------------------------------------Create----------------------------------------------------
+	// -------------------------------------Create a product----------------------------------------------------
 	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> crear(@Valid @RequestBody Product product, BindingResult bindingResult) {
@@ -86,7 +67,7 @@ public class ProductCompanyController {
 		Map<String, Object> response = new HashMap<>();
 		Long idCompany = 1L;
 		Company company=companyService.findById(idCompany);
-
+		product.setCompany(company);
 		if (bindingResult.hasErrors()) {
 			List<String> errors = new ArrayList<String>();
 			for (FieldError err : bindingResult.getFieldErrors()) {
@@ -97,7 +78,7 @@ public class ProductCompanyController {
 		}
 		try {
 			product.setCreateDate(new Date());
-			product.setCompany(company);
+			
 			productNew = productService.saveProduct(product);
 
 		} catch (DataAccessException e) {
@@ -111,6 +92,7 @@ public class ProductCompanyController {
 
 	}
 
+	// -------------------------------------Update a product----------------------------------------------------
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Product product, BindingResult bindingResult,
@@ -164,6 +146,7 @@ public class ProductCompanyController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
+	// -------------------------------------Delete a product----------------------------------------------------
 	@CrossOrigin
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id) {

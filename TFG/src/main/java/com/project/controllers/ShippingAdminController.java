@@ -1,10 +1,9 @@
 package com.project.controllers;
-
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,11 +24,8 @@ public class ShippingAdminController {
 	@Autowired
 	private ShippingService shippingService;
 
-	// ------------------------------------------CRUD------------------------------------------------------
-
-	// ------------------------------------------LIST--------------------------------------------------------------
-
-	// -------------------------- List Admin ----------------------------------
+	
+	// -------------------------- List shipping ----------------------------------
 	@CrossOrigin
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
@@ -37,6 +33,7 @@ public class ShippingAdminController {
 		return shippingService.findAll();
 	}
 	
+	//--------------------------Show shipping------------------------------------------------------------------------
 	@CrossOrigin
 	@GetMapping("/show/{id}")
 	@ResponseStatus(HttpStatus.OK)

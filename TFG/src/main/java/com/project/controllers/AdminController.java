@@ -1,4 +1,5 @@
 package com.project.controllers;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.project.domain.Admin;
+import com.project.domain.Client;
+import com.project.domain.Company;
 import com.project.domain.Reporter;
 import com.project.services.AdminService;
+import com.project.services.ClientService;
+import com.project.services.CompanyService;
 import com.project.services.ReporterService;
-
 
 @RestController
 @RequestMapping("/admin")
@@ -24,9 +28,16 @@ public class AdminController {
 	// Services--------------------------------------------------------------------------------------
 	@Autowired
 	private AdminService adminService;
-	
+
 	@Autowired
 	private ReporterService reporterService;
+	
+	@Autowired
+	private ClientService clientService;
+	
+	@Autowired
+	private CompanyService companyService;
+
 
 	// -------------------------- List Admin ----------------------------------
 	@CrossOrigin
@@ -55,11 +66,26 @@ public class AdminController {
 		}
 		return new ResponseEntity<Admin>(admin, HttpStatus.OK);
 	}
-	// -----------------------------------------LIST REPORTERS------------------------------------------------------
+
+	// -----------------------------------------List all reporters------------------------------------------------------
 	@CrossOrigin
 	@RequestMapping(value = "/listReporters", method = RequestMethod.GET)
 	public List<Reporter> listReporters() {
 		return reporterService.findAll();
+	}
+	
+	// -------------------------- List all clients----------------------------------
+	@CrossOrigin
+	@RequestMapping(value = "/listClients", method = RequestMethod.GET)
+	public List<Client> listClients() {
+		return clientService.findAll();
+	}
+
+	// -------------------------- List all companies ----------------------------------
+	@CrossOrigin
+	@RequestMapping(value = "/listCompanies", method = RequestMethod.GET)
+	public List<Company> listCompany() {
+		return companyService.findAll();
 	}
 
 }

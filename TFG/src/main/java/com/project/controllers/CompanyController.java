@@ -23,7 +23,7 @@ public class CompanyController {
 	@CrossOrigin
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public List<Company> list() {
-		return companyService.findAll();
+		return companyService.findAllRandom();
 	}
 
 }

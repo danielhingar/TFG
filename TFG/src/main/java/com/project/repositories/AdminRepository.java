@@ -28,8 +28,8 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
 	
 	//QUERIES DASHBOARD//
 	
-//	@Query("select p.company from Product p group by p.company.id order by count(p) desc")
-//	List<String> findTopCompaniesByProducts();
+	@Query("select f.company from Facture f where f.status = 'ACCEPT' group by f.company.id order by count(f) desc")
+	List<String> findTopCompaniesByProducts();
 	
 
 	

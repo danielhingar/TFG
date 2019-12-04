@@ -21,18 +21,28 @@ public class FactureService {
 	private FactureRepository factureRepository;
 
 	// Services----------------------------------------------------------------------------------------------------
-	@Autowired
-	private ClientService clientService;
+//	@Autowired
+//	private ClientService clientService;
 	// --------------------------------------------Methods----------------------------------------------------------
 	
+	//----------------------------------------list factures by client------------------------------------------------------
 	@Transactional(readOnly = true)
 	public List<Facture> findFactureByClient(Long clientId){
 		return factureRepository.findFacturesByClient(clientId);
 	}
 	
+	//---------------------------------------list factures by company---------------------------------------------------------
 	@Transactional(readOnly = true)
 	public List<Facture> findFactureByCompany(Long companyId){
 		return factureRepository.findFactureByCompany(companyId);
 	}
+	
+	//---------------------------------------Show a facture--------------------------------------------------------------------------------
+	@Transactional(readOnly = true)
+	public Facture findById(Long id) {
+		return factureRepository.findById(id).orElse(null);
+
+	}
+	
 
 }

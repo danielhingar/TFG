@@ -182,7 +182,6 @@ public class Product implements Serializable {
 	
 	@JsonIgnoreProperties({ "products", "hibernateLazyInitializer", "hadler" })
 	@ManyToOne(fetch = FetchType.LAZY)
-	@NotNull
 	public Company getCompany() {
 		return company;
 	}

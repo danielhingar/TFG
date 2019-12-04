@@ -14,43 +14,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.domain.Facture;
-import com.project.services.FactureService;
+import com.project.domain.Admin;
+import com.project.domain.Claim;
+import com.project.services.ClaimService;
 
 @RestController
-@RequestMapping("/company/facture")
-public class FactureCompanyController {
+@RequestMapping("/client")
+public class ClaimClientController {
 
 	// Services--------------------------------------------------------------------------------------
 	@Autowired
-	private FactureService factureService;
+	private ClaimService claimService;
 
-	// -------------------------- List Facture by Client
-	// ----------------------------------
+	// -------------------------- List Admin ----------------------------------
 	@CrossOrigin
-	@RequestMapping(value = "/myFactures/{companyId}", method = RequestMethod.GET)
-	public List<Facture> listFactureByCompany(@PathVariable Long companyId) {
-		return factureService.findFactureByCompany(companyId);
+	@RequestMapping(value = "/myClaims/{factureId}", method = RequestMethod.GET)
+	public List<Claim> list(@PathVariable Long factureId) {
+		return claimService.findClaimByFacture(factureId);
 	}
 
-	// ---------------------------- Show facture----------------------------------------------------------
+	// -------------------------- Show Claim ----------------------------------
 	@CrossOrigin
-	@RequestMapping("/show/{id}")
+	@RequestMapping("/claim/show/{id}")
 	public ResponseEntity<?> show(@PathVariable Long id) {
-		Facture facture = null;
+		Claim claim = null;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			facture = factureService.findById(id);
+			claim = claimService.findById(id);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		if (facture == null) {
-			response.put("mensaje", "La factura no existe");
+		if (claim == null) {
+			response.put("mensaje", "La queja no existe");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Facture>(facture, HttpStatus.OK);
+		return new ResponseEntity<Claim>(claim, HttpStatus.OK);
 	}
 }
