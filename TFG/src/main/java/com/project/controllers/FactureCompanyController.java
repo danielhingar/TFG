@@ -23,15 +23,15 @@ public class FactureCompanyController {
 
 	// Services--------------------------------------------------------------------------------------
 	@Autowired
-	private FactureService factureService;
+	private FactureService factureService; 
 
 	// -------------------------- List Facture by Client
 	// ----------------------------------
 	@CrossOrigin
 	@RequestMapping(value = "/myFactures/{companyId}", method = RequestMethod.GET)
-	public List<Facture> listFactureByCompany(@PathVariable Long companyId) {
+	public List<Facture> listFactureByCompany(@PathVariable int companyId) {
 		return factureService.findFactureByCompany(companyId);
-	}
+	} 
 
 	// ---------------------------- Show facture----------------------------------------------------------
 	@CrossOrigin

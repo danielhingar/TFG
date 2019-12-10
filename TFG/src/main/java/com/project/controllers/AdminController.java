@@ -16,10 +16,12 @@ import com.project.domain.Admin;
 import com.project.domain.Client;
 import com.project.domain.Company;
 import com.project.domain.Reporter;
+import com.project.domain.Usuario;
 import com.project.services.AdminService;
 import com.project.services.ClientService;
 import com.project.services.CompanyService;
 import com.project.services.ReporterService;
+import com.project.services.UsuarioService;
 
 @RestController
 @RequestMapping("/admin")
@@ -37,6 +39,9 @@ public class AdminController {
 	
 	@Autowired
 	private CompanyService companyService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 
 
 	// -------------------------- List Admin ----------------------------------
@@ -86,6 +91,13 @@ public class AdminController {
 	@RequestMapping(value = "/listCompanies", method = RequestMethod.GET)
 	public List<Company> listCompany() {
 		return companyService.findAll();
+	}
+	
+	//---------------------------- List users ------------------------------------------------
+	@CrossOrigin
+	@RequestMapping(value = "/listUsuarios", method = RequestMethod.GET)
+	public List<Usuario> listUsuarios() {
+		return usuarioService.findAll();
 	}
 
 }

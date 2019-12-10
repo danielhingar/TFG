@@ -53,7 +53,7 @@ public class ProductCompanyController {
 	//--------------------------List product of my company----------------------------------------------------------
 	@CrossOrigin
 	@RequestMapping(value = "/myProducts/{companyId}", method = RequestMethod.GET)
-	public List<Product> listProductsCompany(@PathVariable Long companyId) {
+	public List<Product> listProductsCompany(@PathVariable int companyId) {
 		return productService.findAllByCompany(companyId);
 	}
 
@@ -65,7 +65,7 @@ public class ProductCompanyController {
 	public ResponseEntity<?> crear(@Valid @RequestBody Product product, BindingResult bindingResult) {
 		Product productNew = null;
 		Map<String, Object> response = new HashMap<>();
-		Long idCompany = 1L;
+		int idCompany = 1;
 		Company company=companyService.findById(idCompany);
 		product.setCompany(company);
 		if (bindingResult.hasErrors()) {

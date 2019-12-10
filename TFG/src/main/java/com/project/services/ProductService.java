@@ -57,7 +57,7 @@ public class ProductService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Product> findAllByCompany(Long companyId){
+	public List<Product> findAllByCompany(int companyId){
 		Company c= companyService.findById(companyId);
 		List<Product> products=c.getProducts();
 		return products;

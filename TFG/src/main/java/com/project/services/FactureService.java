@@ -27,13 +27,13 @@ public class FactureService {
 	
 	//----------------------------------------list factures by client------------------------------------------------------
 	@Transactional(readOnly = true)
-	public List<Facture> findFactureByClient(Long clientId){
+	public List<Facture> findFactureByClient(int clientId){
 		return factureRepository.findFacturesByClient(clientId);
 	}
 	
 	//---------------------------------------list factures by company---------------------------------------------------------
 	@Transactional(readOnly = true)
-	public List<Facture> findFactureByCompany(Long companyId){
+	public List<Facture> findFactureByCompany(int companyId){
 		return factureRepository.findFactureByCompany(companyId);
 	}
 	

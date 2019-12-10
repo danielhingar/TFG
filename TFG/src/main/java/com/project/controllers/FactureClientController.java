@@ -30,9 +30,9 @@ public class FactureClientController {
 	// -------------------------- List Facture by Client ----------------------------------
 	@CrossOrigin
 	@RequestMapping(value = "/myFactures/{clientId}", method = RequestMethod.GET)
-	public List<Facture> listFactureByClient(@PathVariable Long clientId) {
+	public List<Facture> listFactureByClient(@PathVariable int clientId) {
 		return factureService.findFactureByClient(clientId);
-	}
+	}  
 
 	// ---------------------------- Show facture----------------------------------------------------------
 	@CrossOrigin

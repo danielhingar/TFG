@@ -14,8 +14,8 @@ INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (
 INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (2,'calle Cuba','https://www.instagram.com/danielhingar/','https://facebook.com','Esta empresa comenzó hace ya 10 años',null);
 
 /*ADMINS--------------------------------------------------------------------------------*/
-INSERT INTO `admin` (id,name,surnames,username,password,enabled,phone,email,role_id) VALUES (1,'Antonio','Pérez','admin','admin1',1,'674839213', 'admin@gmail.com',2);
-
+INSERT INTO `admin` (id,name,surnames,username,password,enabled,phone,email,role_id) VALUES (3,'Antonio','Pérez','admin','admin1',1,'674839213', 'admin@gmail.com',2);
+ 
 /*BASKET---------------------------------------------------------------------------------*/
 
 INSERT INTO `basket` (id) VALUES (1);
@@ -24,13 +24,13 @@ INSERT INTO `basket` (id) VALUES (3);
 INSERT INTO `basket` (id) VALUES (4);
 
 /*CLIENT--------------------------------------------------------------------------------*/
-INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,role_id) VALUES (1,'Ramón','Pérez','rampez','decide123',1,'674839213', 'rampez@gmail.com',1,1);
-INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,role_id) VALUES (2,'Pablo','Cabeza','pabcab','pablo1234',1,'67483973', 'pabcab@gmail.com',2,1);
-INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,role_id) VALUES (3,'Marta','García','margar','marta1234',1,'674839908', 'margar@gmail.com',3,1);
-INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,role_id) VALUES (4,'Clara','Hinojo','clahin','clara1234',1,'674839672', 'clahin@gmail.com',4,1);
+INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,role_id) VALUES (4,'Ramón','Pérez','rampez','decide123',1,'674839213', 'rampez@gmail.com',1,1);
+INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,role_id) VALUES (5,'Pablo','Cabeza','pabcab','pablo1234',1,'67483973', 'pabcab@gmail.com',2,1);
+INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,role_id) VALUES (6,'Marta','García','margar','marta1234',1,'674839908', 'margar@gmail.com',3,1);
+INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,role_id) VALUES (7,'Clara','Hinojo','clahin','clara1234',1,'674839672', 'clahin@gmail.com',4,1);
 
 /*REPORTER------------------------------------------------------------------------------*/
-INSERT INTO `reporter` (id,name,surnames,username,password,enabled,phone,email,role_id) VALUES (1,'Luis','García','lusgar','tokio99',1,'674839213', 'lusgar@gmail.com',3);
+INSERT INTO `reporter` (id,name,surnames,username,password,enabled,phone,email,role_id) VALUES (8,'Luis','García','lusgar','tokio99',1,'674839213', 'lusgar@gmail.com',3);
 
 /*SHIPPING------------------------------------------------------------------------------*/
 
@@ -44,7 +44,7 @@ INSERT INTO `configuration` (id,phone,email) VALUES (1,'673456721','showcase@gma
 
 /*CLAIMS---------------------------------------------------------------------------------*/
 
-INSERT INTO `claim` (id,reporter_id,title,description,create_date,attachment,facture_id) VALUES (1,1,'PEDIDO NO HA LLEGADO','SE HA PASADO EL TIEMPO DE ENVÍO','2019-11-21',null,2);
+INSERT INTO `claim` (id,reporter_id,title,description,create_date,attachment,facture_id) VALUES (1,8,'PEDIDO NO HA LLEGADO','SE HA PASADO EL TIEMPO DE ENVÍO','2019-11-21',null,2);
 
 /*PRODUCTS-------------------------------------------------------------------------------*/
 
@@ -69,5 +69,5 @@ INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (3,3,6);
 
 /*FACTURE--------------------------------------------------------------------------------*/
 
-INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (1,'2019-11-22','PENDING','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',1,1,1);
-INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (2,'2019-11-22','ACCEPTED','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',1,1,2);
+INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (1,'2019-11-22','PENDING','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',4,1,1);
+INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (2,'2019-11-22','ACCEPTED','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',4,1,2);

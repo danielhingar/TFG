@@ -16,12 +16,13 @@ public class Role implements Serializable {
 
 	// Attributes------------------------------------------------------------------------
 
-	private Long id;
-
-	private String nombre;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@Column(unique = true, length = 20)
+	private String nombre;
+
 	public Long getId() {
 		return id;
 	}
@@ -30,7 +31,6 @@ public class Role implements Serializable {
 		this.id = id;
 	}
 
-	@Column(unique = true, length = 20)
 	public String getNombre() {
 		return nombre;
 	}
@@ -38,11 +38,6 @@ public class Role implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-	// Relationships-----------------------------------------------------------------
-
-
-	// ------------------------------------------------------------------------------
 
 	/**
 	 * 
