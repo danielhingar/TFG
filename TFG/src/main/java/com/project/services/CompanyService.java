@@ -41,8 +41,8 @@ public class CompanyService {
 
 	// ----------------------------------------Show------------------------------------------------------
 	@Transactional(readOnly = true)
-	public Company findById(final int companyId) {
-		return companyRepository.findOne(companyId);
+	public Company findById(int companyId) {
+		return companyRepository.findById(companyId).orElse(null);
 
 	}
 

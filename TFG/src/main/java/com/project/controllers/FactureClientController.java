@@ -37,7 +37,7 @@ public class FactureClientController {
 	// ---------------------------- Show facture----------------------------------------------------------
 	@CrossOrigin
 	@RequestMapping("/show/{id}")
-	public ResponseEntity<?> show(@PathVariable Long id) {
+	public ResponseEntity<?> show(@PathVariable int id) {
 		Facture facture = null;
 		Map<String, Object> response = new HashMap<>();
 		try {

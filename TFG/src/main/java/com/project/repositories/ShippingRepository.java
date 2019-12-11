@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.project.domain.Shipping;
 
 @Repository
-public interface ShippingRepository extends JpaRepository<Shipping, Long> {
+public interface ShippingRepository extends JpaRepository<Shipping, Integer> {
 
 }

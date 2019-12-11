@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.URL;
 public class About implements Serializable {
 
 	// Attributes---------------------------------------------------------------
-	private Long id;
+	private int id;
 	private String address;
 	private String facebook;
 	private String instagram;
@@ -25,11 +25,11 @@ public class About implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

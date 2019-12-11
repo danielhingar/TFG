@@ -30,7 +30,7 @@ public class ClientService {
 
 	// ----------------------------------------SHOW------------------------------------------------------
 	@Transactional(readOnly = true)
-	public Client findById(Long id) {
+	public Client findById(int id) {
 		return clientRepository.findById(id).orElse(null);
 
 	}

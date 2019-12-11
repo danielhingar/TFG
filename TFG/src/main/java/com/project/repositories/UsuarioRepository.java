@@ -8,7 +8,7 @@ import com.project.domain.Usuario;
 
 
 @Repository
-public interface UsuarioRepository  extends JpaRepository<Usuario, Long> {
+public interface UsuarioRepository  extends JpaRepository<Usuario, Integer> {
 	
 	@Query("select u from Usuario u where u.username=?1")
 	public Usuario findByUsername(String username);

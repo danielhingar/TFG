@@ -14,17 +14,17 @@ import javax.validation.constraints.NotBlank;
 public class Configuration implements Serializable {
 
 	// Attributes----------------------------------------------------------------------
-	private Long id;
+	private int id;
 	private String phone;
 	private String email;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

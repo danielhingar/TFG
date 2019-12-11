@@ -37,7 +37,7 @@ public class ShippingAdminController {
 	@CrossOrigin
 	@GetMapping("/show/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public Shipping show(@PathVariable Long id) {
+	public Shipping show(@PathVariable int id) {
 		final Shipping shipping;
 		
 		shipping = shippingService.findById(id);

@@ -1,24 +1,18 @@
 package com.project.domain;
 
 import java.io.Serializable;
-
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Range;
 
 @Entity
 public class Shipping implements Serializable {
 
 	// Attributes---------------------------------------------------------------------
-	private Long id;
+	private int id;
 	private String title;
 	private double price;
 	private int dateMin;
@@ -27,11 +21,11 @@ public class Shipping implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

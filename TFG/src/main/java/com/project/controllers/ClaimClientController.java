@@ -3,7 +3,6 @@ package com.project.controllers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.project.domain.Admin;
 import com.project.domain.Claim;
 import com.project.services.ClaimService;
 
@@ -29,14 +26,14 @@ public class ClaimClientController {
 	// -------------------------- List Admin ----------------------------------
 	@CrossOrigin
 	@RequestMapping(value = "/myClaims/{factureId}", method = RequestMethod.GET)
-	public List<Claim> list(@PathVariable Long factureId) {
+	public List<Claim> list(@PathVariable int factureId) {
 		return claimService.findClaimByFacture(factureId);
 	}
 
 	// -------------------------- Show Claim ----------------------------------
 	@CrossOrigin
 	@RequestMapping("/claim/show/{id}")
-	public ResponseEntity<?> show(@PathVariable Long id) {
+	public ResponseEntity<?> show(@PathVariable int id) {
 		Claim claim = null;
 		Map<String, Object> response = new HashMap<>();
 		try {

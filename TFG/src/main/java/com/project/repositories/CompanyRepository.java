@@ -7,9 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.project.domain.Company;
 
 @Repository
-public interface CompanyRepository extends JpaRepository<Company, Long> {
-
-	@Query("select c from Company c where c.id= ?1")
-	Company findOne(int companyId);
+public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
 }

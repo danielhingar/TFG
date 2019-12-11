@@ -30,7 +30,7 @@ public class ReporterService {
 
 	// ----------------------------------------Show------------------------------------------------------
 	@Transactional(readOnly = true)
-	public Reporter findById(Long id) {
+	public Reporter findById(int id) {
 		return reporterRepository.findById(id).orElse(null);
 
 	}

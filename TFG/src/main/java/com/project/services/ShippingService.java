@@ -30,7 +30,7 @@ public class ShippingService {
 
 	// ----------------------------------------Show------------------------------------------------------
 	@Transactional(readOnly = true)
-	public Shipping findById(Long id) {
+	public Shipping findById(int id) {
 		return shippingRepository.findById(id).orElse(null);
 
 	}

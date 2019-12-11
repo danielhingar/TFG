@@ -34,8 +34,8 @@ public class ProductService {
 
 	// ----------------------------------------Show------------------------------------------------------
 	@Transactional(readOnly = true)
-	public Product findById(Long id) {
-		return productRepository.findById(id).orElse(null);
+	public Product findById(int id) {
+		return this.productRepository.findById(id).orElse(null);
 
 	}
 	//-----------------------------------------Save----------------------------------------------------------
@@ -46,7 +46,7 @@ public class ProductService {
 
 	//-----------------------------------------Delete----------------------------------------------------------
 	@Transactional
-	public void delete(Long id) {
+	public void delete(int id) {
 		productRepository.deleteById(id);
 	}
 

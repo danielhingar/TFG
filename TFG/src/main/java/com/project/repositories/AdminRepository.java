@@ -11,7 +11,7 @@ import com.project.domain.Client;
 import com.project.domain.Reporter;
 
 @Repository
-public interface AdminRepository extends JpaRepository<Admin, Long> {
+public interface AdminRepository extends JpaRepository<Admin, Integer> {
 	
 	@Query("select a from Admin a where a.username=?1")
 	Admin findByUsername(String username);

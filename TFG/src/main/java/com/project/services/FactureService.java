@@ -39,7 +39,7 @@ public class FactureService {
 	
 	//---------------------------------------Show a facture--------------------------------------------------------------------------------
 	@Transactional(readOnly = true)
-	public Facture findById(Long id) {
+	public Facture findById(int id) {
 		return factureRepository.findById(id).orElse(null);
 
 	}

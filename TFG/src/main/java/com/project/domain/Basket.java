@@ -20,15 +20,15 @@ public class Basket implements Serializable {
 
 	// Attributes------------------------------------------------------------------
 
-	private Long id;
+	private int id;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

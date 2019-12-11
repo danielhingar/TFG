@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.project.domain.Claim;
 
 @Repository
-public interface ClaimRepository extends JpaRepository<Claim, Long> {
+public interface ClaimRepository extends JpaRepository<Claim, Integer> {
 	@Query("select c from Claim c where c.facture.id = ?1")
-	List<Claim> findClaimByFacture(Long clientId);
+	List<Claim> findClaimByFacture(int clientId);
+	
 }

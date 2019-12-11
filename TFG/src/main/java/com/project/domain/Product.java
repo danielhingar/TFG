@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Product implements Serializable {
 
 	// Atributes-------------------------------------------------------------------
-	private Long id;
+	private int id;
 	private String name;
 	private String description;
 	private String photo;
@@ -45,11 +45,11 @@ public class Product implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

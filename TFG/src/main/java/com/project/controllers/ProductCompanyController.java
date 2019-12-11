@@ -96,7 +96,7 @@ public class ProductCompanyController {
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Product product, BindingResult bindingResult,
-			@PathVariable Long id) {
+			@PathVariable int id) {
 		Product productActually = productService.findById(id);
 		Product productUpdated = null;
 
@@ -110,10 +110,11 @@ public class ProductCompanyController {
 			response.put("errors", errors);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
-
+ 
 		if (productActually == null) {
+			Integer id1=(Integer) id;
 			response.put("mensaje",
-					"Error: no se pudo editar el producto,".concat(id.toString().concat(" no existe ")));
+					"Error: no se pudo editar el producto,".concat(id1.toString().concat(" no existe ")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 
@@ -149,7 +150,7 @@ public class ProductCompanyController {
 	// -------------------------------------Delete a product----------------------------------------------------
 	@CrossOrigin
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id) {
+	public ResponseEntity<?> delete(@PathVariable int id) {
 		Map<String, Object> response = new HashMap<>();
 		try {
 //			Product product = productService.findById(id);

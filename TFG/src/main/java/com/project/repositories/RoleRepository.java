@@ -1,12 +1,12 @@
 package com.project.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.project.domain.Reporter;
+import com.project.domain.Role;
 
 @Repository
-public interface ReporterRepository extends JpaRepository<Reporter, Integer> {
+public interface RoleRepository extends JpaRepository<Role, Integer>{
 
 }

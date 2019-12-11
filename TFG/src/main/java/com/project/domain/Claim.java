@@ -25,7 +25,7 @@ public class Claim implements Serializable {
 
 	// Attributes--------------------------------------------------------------------------
 
-	private Long id;
+	private int id;
 	private String title;
 	private String description;
 	@Column(name = "create_date")
@@ -34,11 +34,11 @@ public class Claim implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

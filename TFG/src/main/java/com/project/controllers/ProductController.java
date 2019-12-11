@@ -24,7 +24,7 @@ public class ProductController {
 	// Servicies----------------------------------------------------------------------------------------------
 	@Autowired
 	private ProductService productService;
-
+ 
 	// -------------------------------------Methods-------------------------------------------------------------
 
 //	// -------------------------- List all products ----------------------------------
@@ -44,7 +44,7 @@ public class ProductController {
 	// -------------------------- Show detail of a product----------------------------------
 	@CrossOrigin
 	@RequestMapping("/show/{id}")
-	public ResponseEntity<?> show(@PathVariable Long id) {
+	public ResponseEntity<?> show(@PathVariable int id) {
 		Product product = null;
 		Map<String, Object> response = new HashMap<>();
 		try {

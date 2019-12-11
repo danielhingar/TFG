@@ -6,15 +6,15 @@ INSERT INTO `role` (id,nombre) VALUES (4,'ROLE_COMPANY');
 
 
 /*COMPANIES-----------------------------------------------------------------------------*/
-INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,role_id,about_id) VALUES (1,'daniel','hinojo garcía','danhingar','people3012',1,'672389123','danielhingar3397@gmail.com','showcase','foto1','deportes',4,1);
-INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,role_id,about_id) VALUES (2,'ramon','hinojo garcía','danhingar2','people3012',1,'672389123','danielhingar3397@gmail.com','showcase','foto1','deportes',4,2);
-
+INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,about_id) VALUES (9,'daniel','hinojo garcía','danhingar','$2a$10$7nlxuDw39HBwdu0AQz0I/.qTOjI702AnqmZqzudGcMylrjBAn3qli',1,'672389123','danielhingar3397@gmail.com','showcase','foto1','deportes',1);
+INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,about_id) VALUES (2,'ramon','hinojo garcía','danhingar2','$2a$10$bLWWf4R6N61Q3XX9iF88t..pUG0PzUza4XZy2jdzFPOvejNk8e9rK',1,'672389123','danielhingar3397@gmail.com','showcase','foto1','deportes',2);
+ 
 /*ABOUTS--------------------------------------------------------------------------------*/
 INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (1,'calle Cuba','https://www.instagram.com/danielhingar/','https://facebook.com','Esta empresa comenzó hace ya 10 años',null);
 INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (2,'calle Cuba','https://www.instagram.com/danielhingar/','https://facebook.com','Esta empresa comenzó hace ya 10 años',null);
 
 /*ADMINS--------------------------------------------------------------------------------*/
-INSERT INTO `admin` (id,name,surnames,username,password,enabled,phone,email,role_id) VALUES (3,'Antonio','Pérez','admin','admin1',1,'674839213', 'admin@gmail.com',2);
+INSERT INTO `admin` (id,name,surnames,username,password,enabled,phone,email) VALUES (3,'Antonio','Pérez','admin','$2a$10$6XWAGJZ1dQ85TUIfEpUJ6u2nyNSltYAWuktcZYh6gGw71tEZLVpEO',1,'674839213', 'admin@gmail.com');
  
 /*BASKET---------------------------------------------------------------------------------*/
 
@@ -24,13 +24,13 @@ INSERT INTO `basket` (id) VALUES (3);
 INSERT INTO `basket` (id) VALUES (4);
 
 /*CLIENT--------------------------------------------------------------------------------*/
-INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,role_id) VALUES (4,'Ramón','Pérez','rampez','decide123',1,'674839213', 'rampez@gmail.com',1,1);
-INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,role_id) VALUES (5,'Pablo','Cabeza','pabcab','pablo1234',1,'67483973', 'pabcab@gmail.com',2,1);
-INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,role_id) VALUES (6,'Marta','García','margar','marta1234',1,'674839908', 'margar@gmail.com',3,1);
-INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,role_id) VALUES (7,'Clara','Hinojo','clahin','clara1234',1,'674839672', 'clahin@gmail.com',4,1);
+INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id) VALUES (4,'Ramón','Pérez','rampez','$2a$10$innlJ999oNhZGPVfFh2tMexaVkx/xfkPON17x9FPuhWQrzvckoQcO',1,'674839213', 'rampez@gmail.com',1);
+INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id) VALUES (5,'Pablo','Cabeza','pabcab','$2a$10$HvR2hVz1ScjkpZS8ZlUEf.0BgNSq/Ir0hkmeYuJz7bqZK6xNSQOXu',1,'67483973', 'pabcab@gmail.com',2);
+INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id) VALUES (6,'Marta','García','margar','$2a$10$1K5FCAUDCniomaZkSRLmm.Yl2B06UEpBMMr73C6hMofeqO9Iai66m',1,'674839908', 'margar@gmail.com',3);
+INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id) VALUES (7,'Clara','Hinojo','clahin','$2a$10$jR6DPrQLyrpQcocQwEIzIuEyGWTvsSddl83Ij3Na5o0expqh4pw5.',1,'674839672', 'clahin@gmail.com',4);
 
 /*REPORTER------------------------------------------------------------------------------*/
-INSERT INTO `reporter` (id,name,surnames,username,password,enabled,phone,email,role_id) VALUES (8,'Luis','García','lusgar','tokio99',1,'674839213', 'lusgar@gmail.com',3);
+INSERT INTO `reporter` (id,name,surnames,username,password,enabled,phone,email) VALUES (8,'Luis','García','lusgar','$2a$10$GQRY7aLGz5AEmSG1rUm7COXcd7r7OgFJSacOawSAX.kpjREtqzmjS',1,'674839213', 'lusgar@gmail.com');
 
 /*SHIPPING------------------------------------------------------------------------------*/
 
@@ -48,14 +48,14 @@ INSERT INTO `claim` (id,reporter_id,title,description,create_date,attachment,fac
 
 /*PRODUCTS-------------------------------------------------------------------------------*/
 
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (1,1,'NIKE AIR-MAX','zapatillas con suela ancha','photo1',100.7,'2019-11-23','SHOES','37,38,39,40,41',null,null,'550 gramos',null,null,'NIKE',null);
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (2,1,'ZAPATILLA ULTRABOOST','zapatillas perfecta para correr','photo1',120.7,'2019-11-23','SHOES','37,38,39,40,41',null,null,'550 gramos',null,null,'ADIDAS',null);
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (3,1,'LÁMPARA DE TECHO METAL','lámpara de aluminio perfecta para el salón','photo1',50.7,'2019-11-23','DECORATION',null,null,null,'300 gramos','20 pulgadas',null,'NIKE',null);
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (4,1,'CHAQUETA ACOLCHADA','chaqueta de lana perfecta para el invierno','photo1',69.7,'2019-11-23','CLOTHES','S,M,L,XL',null,null,'550 gramos',null,null,'SPRINGFIELD',20);
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (5,1,'CAMISETA MANGA CORTA','camiseta con logo de disney','photo1',30.7,'2019-11-23','CLOTHES','S,M',null,null,null,null,null,'PULL&BEARD',null);
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (6,1,'IPHONE 11','nuevo modelo de iphone','photo1',1000.7,'2019-11-23','TECNOLOGY',null,'18 cm','7 cm','750 gramos','10','36,64','IPHONE',null);
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (7,1,'PORTATIL HP','portatil hp de última generación','photo1',600.7,'2019-11-23','TECNOLOGY',null,'20 cm','40 cm','550 gramos','17',null,'HP',null);
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (8,1,'SAL DEL HIMALAYA','sal del himalaya en escamas','photo1',6.7,'2019-11-23','FOOD',null,null,null,'250 gramos',null,null,'CARREFOUR',null);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (1,9,'NIKE AIR-MAX','zapatillas con suela ancha','photo1',100.7,'2019-11-23','SHOES','37,38,39,40,41',null,null,'550 gramos',null,null,'NIKE',null);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (2,9,'ZAPATILLA ULTRABOOST','zapatillas perfecta para correr','photo1',120.7,'2019-11-23','SHOES','37,38,39,40,41',null,null,'550 gramos',null,null,'ADIDAS',null);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (3,9,'LÁMPARA DE TECHO METAL','lámpara de aluminio perfecta para el salón','photo1',50.7,'2019-11-23','DECORATION',null,null,null,'300 gramos','20 pulgadas',null,'NIKE',null);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (4,9,'CHAQUETA ACOLCHADA','chaqueta de lana perfecta para el invierno','photo1',69.7,'2019-11-23','CLOTHES','S,M,L,XL',null,null,'550 gramos',null,null,'SPRINGFIELD',20);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (5,9,'CAMISETA MANGA CORTA','camiseta con logo de disney','photo1',30.7,'2019-11-23','CLOTHES','S,M',null,null,null,null,null,'PULL&BEARD',null);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (6,9,'IPHONE 11','nuevo modelo de iphone','photo1',1000.7,'2019-11-23','TECNOLOGY',null,'18 cm','7 cm','750 gramos','10','36,64','IPHONE',null);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (7,9,'PORTATIL HP','portatil hp de última generación','photo1',600.7,'2019-11-23','TECNOLOGY',null,'20 cm','40 cm','550 gramos','17',null,'HP',null);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (8,9,'SAL DEL HIMALAYA','sal del himalaya en escamas','photo1',6.7,'2019-11-23','FOOD',null,null,null,'250 gramos',null,null,'CARREFOUR',null);
  
 /*RELATION BASKET-PRODUCTS*/
 INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (1,1,1);
@@ -69,5 +69,15 @@ INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (3,3,6);
 
 /*FACTURE--------------------------------------------------------------------------------*/
 
-INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (1,'2019-11-22','PENDING','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',4,1,1);
+INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (1,'2019-11-22','PENDING','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',4,1,9);
 INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (2,'2019-11-22','ACCEPTED','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',4,1,2);
+
+/*Usuario_role*/
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (9,4);
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (2,4);
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (3,2);
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (4,1);
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (5,1);
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (6,1);
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (7,1);
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (8,3);

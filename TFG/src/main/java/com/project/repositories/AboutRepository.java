@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.project.domain.About;
 
 @Repository
-public interface AboutRepository extends JpaRepository<About, Long> {
+public interface AboutRepository extends JpaRepository<About, Integer> {
 	
 
 }

@@ -1,7 +1,9 @@
 package com.project.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,15 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 
 
 @Entity
@@ -30,22 +28,22 @@ public class Usuario implements Serializable {
 
 	// Attributes------------------------------------------------------
 
-		private Long id;
+		private int id;
 		private String name;
 		private String username;
 		private String password;
 		private String surnames;
 		private String email;
-		private boolean enabled;
+		private Boolean enabled;
 		private String phone;
 
 		@Id
 		@GeneratedValue(strategy = GenerationType.AUTO)
-		public Long getId() {
+		public int getId() {
 			return id;
 		}
 
-		public void setId(Long id) {
+		public void setId(int id) {
 			this.id = id;
 		}
 
@@ -64,13 +62,12 @@ public class Usuario implements Serializable {
 		public String getUsername() {
 			return username;
 		}
-
+ 
 		public void setUsername(String username) {
 			this.username = username;
 		}
 
 		@NotBlank
-		@Column(length = 20)
 		public String getPassword() {
 			return password;
 		}
@@ -98,11 +95,11 @@ public class Usuario implements Serializable {
 			this.email = email;
 		}
 
-		public boolean isEnabled() {
+		public Boolean getEnabled() {
 			return enabled;
 		}
 
-		public void setEnabled(boolean enabled) {
+		public void setEnabled(Boolean enabled) {
 			this.enabled = enabled;
 		}
 
@@ -115,19 +112,21 @@ public class Usuario implements Serializable {
 		}
 
 		// Relationships ---------------------------------------------------------
-		private Role role;
-
-		@NotNull
-		@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
-		@ManyToOne(fetch = FetchType.LAZY)
-		@JoinColumn(name="role_id")
-		public Role getRole() {
-			return role;
+		
+		private List<Role> roles;
+		
+		@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+		@JoinTable(name="usuario_roles",joinColumns = @JoinColumn(name="usuario_id"),inverseJoinColumns = @JoinColumn(name="role_id"))
+		public List<Role> getRoles() {
+			return roles;
 		}
 
-		public void setRole(Role role) {
-			this.role = role;
+		public void setRoles(List<Role> roles) {
+			this.roles = roles;
 		}
+
+
+		
 
 		// ------------------------------------------------------------------------------
 		/**
