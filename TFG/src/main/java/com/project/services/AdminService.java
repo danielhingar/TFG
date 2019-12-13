@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.domain.Admin;
+
 import com.project.domain.Role;
+
 import com.project.repositories.AdminRepository;
 
 @Service
@@ -19,31 +21,32 @@ public class AdminService {
 	// Repository------------------------------------------------------------------------------------------------
 	@Autowired
 	private AdminRepository adminRepository;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	// Services----------------------------------------------------------------------------------------------------
-	
+
 	@Autowired
 	private RoleService roleService;
+
 	
 
 	// CRUD--------------------------------------------------------------------------------------------------------
-	
-	//-----------------------------------------Save----------------------------------------------------------------
+
+	// -----------------------------------------Save----------------------------------------------------------------
 	@Transactional
 	public Admin save(Admin admin) {
 		admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
-		List<Role> r=new ArrayList<>();
-		Role role=roleService.findById(2);
+		List<Role> r = new ArrayList<>();
+		Role role = roleService.findById(2);
 		r.add(role);
 		admin.setRoles(r);
-		
+
 		return adminRepository.save(admin);
 	}
-	
-	// ----------------------------------------List ------------------------------------------------------------------
+
+	// ----------------------------------------List--------------------------------------------------
 	@Transactional(readOnly = true)
 	public List<Admin> findAll() {
 		return (List<Admin>) adminRepository.findAll();

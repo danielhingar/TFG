@@ -1,5 +1,6 @@
 package com.project.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.domain.Company;
 import com.project.domain.Product;
+import com.project.services.CompanyService;
 import com.project.services.ProductService;
 
 @RestController
@@ -24,6 +27,9 @@ public class ProductController {
 	// Servicies----------------------------------------------------------------------------------------------
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private CompanyService companyService;
  
 	// -------------------------------------Methods-------------------------------------------------------------
 
@@ -37,9 +43,25 @@ public class ProductController {
 	// --------------------------List product by company-------------------------------------------------
 	@CrossOrigin
 	@RequestMapping(value = "/list/{companyId}", method = RequestMethod.GET)
-	public List<Product> listProductsCompany(@PathVariable int companyId) {
-		return productService.findAllByCompany(companyId);
+	public ResponseEntity<?> listProductsCompany(@PathVariable int companyId) {
+		List<Product> product = new ArrayList<Product>();
+		Map<String, Object> response = new HashMap<>();
+		try {
+			product = productService.findAllByCompany(companyId);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		Company c=companyService.findById(companyId);
+		if (c.getProducts() == null) {
+			response.put("mensaje", "This company hasn't products");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<List<Product>>( product, HttpStatus.OK);
 	}
+	
+	
 
 	// -------------------------- Show detail of a product----------------------------------
 	@CrossOrigin

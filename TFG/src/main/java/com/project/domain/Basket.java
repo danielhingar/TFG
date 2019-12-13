@@ -1,6 +1,7 @@
 package com.project.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,6 +22,10 @@ public class Basket implements Serializable {
 	// Attributes------------------------------------------------------------------
 
 	private int id;
+	
+	public Basket() {
+		this.itemBaskets=new ArrayList<ItemBasket>();
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

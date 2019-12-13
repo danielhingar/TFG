@@ -1,13 +1,14 @@
 package com.project.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.project.domain.Client;
-
+import com.project.domain.Role;
 import com.project.repositories.ClientRepository;
 
 @Service
@@ -17,9 +18,14 @@ public class ClientService {
 	// Repository------------------------------------------------------------------------------------------------
 	@Autowired
 	private ClientRepository clientRepository;
-
+	
 	// Services----------------------------------------------------------------------------------------------------
-
+	
+	@Autowired
+	private RoleService roleService;
+	
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	// CRUD--------------------------------------------------------------------------------------------------------
 
 	// ----------------------------------------LIST------------------------------------------------------------------
@@ -33,6 +39,17 @@ public class ClientService {
 	public Client findById(int id) {
 		return clientRepository.findById(id).orElse(null);
 
+	}
+	
+	//----------------------------------------Create--------------------------------------------------------
+	@Transactional
+	public Client save(Client client) {
+		client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
+		List<Role> r=new ArrayList<>();
+		Role role=roleService.findById(1);
+		r.add(role);
+		client.setRoles(r);
+		return clientRepository.save(client);
 	}
 
 }

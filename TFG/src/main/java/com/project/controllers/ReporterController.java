@@ -17,37 +17,30 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import com.project.domain.Company;
+import com.project.domain.Reporter;
 import com.project.domain.Usuario;
-import com.project.services.CompanyService;
+import com.project.services.ReporterService;
 import com.project.services.UsuarioService;
 
 @RestController
-@RequestMapping("/company")
-public class CompanyController {
+@RequestMapping("/reporter")
+public class ReporterController {
 
 	// Services--------------------------------------------------------------------------------------
 	@Autowired
-	private CompanyService companyService;
-	
+	private ReporterService reporterService;
+
 	@Autowired
 	private UsuarioService usuarioService;
 
-	// -------------------------- List ----------------------------------
-	@CrossOrigin
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public List<Company> list() {
-		return companyService.findAllRandom();
-	}
+	// ------------------------------CRUD--------------------------------------------------//
 
-	// -----------------------------Create
-	// Company-------------------------------------------------
+	// -----------------------------Create-------------------------------------------------
 	@CrossOrigin
 	@PostMapping("/create")
-	public ResponseEntity<?> create(@Valid @RequestBody Company company, BindingResult bindingResult) {
-		Company companyNew = null;
+	public ResponseEntity<?> create(@Valid @RequestBody Reporter reporter, BindingResult bindingResult) {
+		Reporter reporterNew = null;
 		Map<String, Object> response = new HashMap<>();
 
 		List<String> usernames = new ArrayList<String>();
@@ -65,22 +58,22 @@ public class CompanyController {
 			response.put("errors", errors);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
-		
-		if(usernames.contains(company.getUsername())) {
+
+		if (usernames.contains(reporter.getUsername())) {
 			response.put("mensaje", "No puede usar ese username");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 		try {
-			companyNew = companyService.save(company);
+			reporterNew = this.reporterService.save(reporter);
 
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar el insert en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje", "La compañía ha sido creado con éxito");
-		response.put("company", companyNew);
+		response.put("mensaje", "El reporter ha sido creado con éxito");
+		response.put("reporter", reporterNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 
 	}

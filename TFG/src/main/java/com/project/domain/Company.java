@@ -1,5 +1,6 @@
 package com.project.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -21,6 +22,10 @@ public class Company extends Usuario{
 	private String category;
 	private String image;
 
+	public Company() {
+		this.about=new About();
+		this.products=new ArrayList<Product>();
+	}
 	
 	@NotBlank
 	public String getBusinessName() {
@@ -66,7 +71,7 @@ public class Company extends Usuario{
 	}
 
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name="about_id")
 	public About getAbout() {
 		return about;

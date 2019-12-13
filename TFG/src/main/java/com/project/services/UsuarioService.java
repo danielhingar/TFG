@@ -57,5 +57,11 @@ public class UsuarioService implements UserDetailsService{
 		return usuarioRepository.findByUsername(username);
 	}
 	
+	@Transactional
+	public Usuario save(Usuario user) {
+		
+		return this.usuarioRepository.save(user);
+	}
+	
 
 }

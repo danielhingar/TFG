@@ -58,7 +58,14 @@ public class AdminController {
 	public ResponseEntity<?> create(@Valid @RequestBody Admin admin, BindingResult bindingResult) {
 		Admin adminNew = null;
 		Map<String, Object> response = new HashMap<>();
-
+		
+		List<String> usernames=  new ArrayList<String>();
+		List<Usuario> users=this.usuarioService.findAll();
+		
+		for(int i=0;i<users.size();i++) {
+			usernames.add(users.get(i).getUsername());
+		}
+		
 		if (bindingResult.hasErrors()) {
 			List<String> errors = new ArrayList<String>();
 			for (FieldError err : bindingResult.getFieldErrors()) {
@@ -67,8 +74,16 @@ public class AdminController {
 			response.put("errors", errors);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
+		
+		if(usernames.contains(admin.getUsername())) {
+			response.put("mensaje", "No puede usar ese username");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 		try {
-			adminNew = adminService.save(admin);
+			adminNew = this.adminService.save(admin);
+			
+		
 
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar el insert en la base de datos");
