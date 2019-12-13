@@ -5,14 +5,19 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
 import com.project.domain.Usuario;
 import com.project.repositories.UsuarioRepository;
 
@@ -38,6 +43,7 @@ public class UsuarioService implements UserDetailsService{
 		return (List<Usuario>) usuarioRepository.findAll();
 	}
 
+	//----------------------------------------Load user-----------------------------------------------
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -51,17 +57,21 @@ public class UsuarioService implements UserDetailsService{
 		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true, authorities);
 	}
 	
+	//-----------------------------------Find user by username-------------------------------------------
 	@Transactional(readOnly = true)
 	public Usuario findByUsername(String username) {
 		
 		return usuarioRepository.findByUsername(username);
 	}
 	
-	@Transactional
-	public Usuario save(Usuario user) {
-		
-		return this.usuarioRepository.save(user);
+	//----------------------------------- Get principal-------------------------------------------------
+	public static String getPrincipal() {
+		Object principal= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails userDetails=null;
+		if(principal instanceof UserDetails) {
+			userDetails=(UserDetails) principal;
+		}
+		return userDetails.getUsername();
 	}
-	
 
 }

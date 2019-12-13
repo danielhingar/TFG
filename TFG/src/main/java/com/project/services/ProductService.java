@@ -1,5 +1,6 @@
 package com.project.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,13 @@ public class ProductService {
 
 	}
 	//-----------------------------------------Save----------------------------------------------------------
+	@Transactional
+	public Product saveProduct(Product product,int companyId) {
+		product.setCompany(this.companyService.findById(companyId));
+		product.setCreateDate(new Date());
+		return productRepository.save(product);
+	}
+	//----------------------------------------Save update-----------------------------------------------------
 	@Transactional
 	public Product saveProduct(Product product) {
 		return productRepository.save(product);

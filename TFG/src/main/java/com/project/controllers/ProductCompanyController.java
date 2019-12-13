@@ -2,7 +2,6 @@ package com.project.controllers;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +26,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.domain.Company;
+
 import com.project.domain.Product;
-import com.project.services.CompanyService;
+import com.project.domain.Usuario;
 import com.project.services.ProductService;
+import com.project.services.UsuarioService;
 
 
 @RestController
@@ -42,7 +42,7 @@ public class ProductCompanyController {
 	private ProductService productService;
 	
 	@Autowired
-	private CompanyService companyService;
+	private UsuarioService usuarioService;
 
 	// -------------------------- List ----------------------------------
 //	@CrossOrigin
@@ -65,9 +65,9 @@ public class ProductCompanyController {
 	public ResponseEntity<?> crear(@Valid @RequestBody Product product, BindingResult bindingResult) {
 		Product productNew = null;
 		Map<String, Object> response = new HashMap<>();
-		int idCompany = 1;
-		Company company=companyService.findById(idCompany);
-		product.setCompany(company);
+		final Usuario a=this.usuarioService.findByUsername(UsuarioService.getPrincipal());
+		final int companyId=a.getId();
+		
 		if (bindingResult.hasErrors()) {
 			List<String> errors = new ArrayList<String>();
 			for (FieldError err : bindingResult.getFieldErrors()) {
@@ -77,9 +77,9 @@ public class ProductCompanyController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 		try {
-			product.setCreateDate(new Date());
 			
-			productNew = productService.saveProduct(product);
+			
+			productNew = productService.saveProduct(product,companyId);
 
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al añadir el nuevo producto");
@@ -122,7 +122,7 @@ public class ProductCompanyController {
 			productActually.setBrand(product.getBrand());
 			productActually.setCapacity(product.getCapacity());
 			productActually.setCategory(product.getCategory());
-			productActually.setCreateDate(new Date());
+			productActually.setCreateDate(product.getCreateDate());
 			productActually.setDescription(product.getDescription());
 			productActually.setHeight(product.getHeight());
 			productActually.setInch(product.getInch());
@@ -133,6 +133,8 @@ public class ProductCompanyController {
 			productActually.setSize(product.getSize());
 			productActually.setWeight(product.getWeight());
 			productActually.setWidth(product.getWidth());
+			productActually.setCompany(product.getCompany());
+		
 
 			productUpdated = productService.saveProduct(productActually);
 		} catch (DataAccessException e) {
