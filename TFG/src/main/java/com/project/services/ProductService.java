@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.domain.Basket;
+import com.project.domain.Client;
 import com.project.domain.Company;
 import com.project.domain.Product;
 import com.project.repositories.ProductRepository;
@@ -25,6 +27,9 @@ public class ProductService {
 	// Services----------------------------------------------------------------------------------------------------
 	@Autowired
 	private CompanyService companyService;
+	
+	@Autowired
+	private ClientService clientService;
 	// CRUD--------------------------------------------------------------------------------------------------------
 
 	// ----------------------------------------List------------------------------------------------------
@@ -43,6 +48,14 @@ public class ProductService {
 	@Transactional
 	public Product saveProduct(Product product,int companyId) {
 		product.setCompany(this.companyService.findById(companyId));
+		product.setCreateDate(new Date());
+		return productRepository.save(product);
+	}
+	
+	//-----------------------------------------Save prueba------------------------------------------------------
+	@Transactional
+	public Product saveProductTest(Product product) {
+		product.setCompany(this.companyService.findById(992));
 		product.setCreateDate(new Date());
 		return productRepository.save(product);
 	}
@@ -70,5 +83,6 @@ public class ProductService {
 		List<Product> products=c.getProducts();
 		return products;
 	}
+
 
 }

@@ -15,6 +15,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		// TODO Auto-generated method stub
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/**").permitAll()
 		.antMatchers(HttpMethod.POST, "/**").permitAll()
+		.antMatchers(HttpMethod.PUT, "/**").permitAll()
+		.antMatchers(HttpMethod.DELETE, "/**").permitAll()
 //		.antMatchers(HttpMethod.GET, "/api/clientes/{id}").hasAnyRole("USER","ADMIN")
 //		.antMatchers(HttpMethod.POST, "/api/clientes/upload").hasAnyRole("USER","ADMIN")
 //		.antMatchers(HttpMethod.POST, "/api/clientes").hasRole("ADMIN")

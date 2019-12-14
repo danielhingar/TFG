@@ -62,11 +62,11 @@ public class ProductCompanyController {
 	// -------------------------------------Create a product----------------------------------------------------
 	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> crear(@Valid @RequestBody Product product, BindingResult bindingResult) {
+	public ResponseEntity<?> create(@Valid @RequestBody Product product, BindingResult bindingResult) {
 		Product productNew = null;
 		Map<String, Object> response = new HashMap<>();
-		final Usuario a=this.usuarioService.findByUsername(UsuarioService.getPrincipal());
-		final int companyId=a.getId();
+		//final Usuario a=this.usuarioService.findByUsername(UsuarioService.getPrincipal());
+		//final int companyId=a.getId();
 		
 		if (bindingResult.hasErrors()) {
 			List<String> errors = new ArrayList<String>();
@@ -78,8 +78,8 @@ public class ProductCompanyController {
 		}
 		try {
 			
-			
-			productNew = productService.saveProduct(product,companyId);
+		
+			productNew = productService.saveProductTest(product);
 
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al añadir el nuevo producto");
