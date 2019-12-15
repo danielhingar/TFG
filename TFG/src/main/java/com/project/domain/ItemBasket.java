@@ -45,7 +45,6 @@ public class ItemBasket implements Serializable {
 	
 	
 	//Relationships----------------------------------------------------------------------------------------------------------
-	@NotNull
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="product_id")

@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.domain.Basket;
-import com.project.domain.Client;
 import com.project.domain.Company;
 import com.project.domain.Product;
 import com.project.repositories.ProductRepository;
@@ -28,8 +26,6 @@ public class ProductService {
 	@Autowired
 	private CompanyService companyService;
 	
-	@Autowired
-	private ClientService clientService;
 	// CRUD--------------------------------------------------------------------------------------------------------
 
 	// ----------------------------------------List------------------------------------------------------

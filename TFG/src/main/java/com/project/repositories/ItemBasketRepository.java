@@ -3,10 +3,9 @@ package com.project.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.project.domain.Product;
+import com.project.domain.ItemBasket;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+public interface ItemBasketRepository extends JpaRepository<ItemBasket, Integer>{
 
-	
 }

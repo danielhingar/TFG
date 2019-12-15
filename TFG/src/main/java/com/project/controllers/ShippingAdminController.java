@@ -59,7 +59,7 @@ public class ShippingAdminController {
 		}
 
 		if (shipping == null) {
-			response.put("mensaje", "El producto no existe");
+			response.put("mensaje", "El métado de compra no existe");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Shipping>(shipping, HttpStatus.OK);
