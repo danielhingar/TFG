@@ -15,48 +15,51 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.project.domain.Configuration;
-import com.project.services.ConfigurationService;
+
+import com.project.domain.About;
+import com.project.services.AboutService;
 
 @RestController
-@RequestMapping("/admin/configuration")
-public class ConfigurationAdminController {
+@RequestMapping("/company/about")
+public class AboutCompanyController {
 
-	// Services--------------------------------------------------------------------------------------
+	// Servicies----------------------------------------------------------------------------------------------
 	@Autowired
-	private ConfigurationService configurationService;
+	private AboutService aboutService;
 
-	// -------------------------- show configuration-----------------------------------
+	// ------------------Show about--------------
 	@CrossOrigin
-	@GetMapping("/show")
-	public ResponseEntity<?> show() {
-		Configuration configuration = null;
+	@GetMapping("/show/{id}")
+	public ResponseEntity<?> show(@PathVariable int id) {
+		About about = null;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			configuration = configurationService.findOne();
+			about = aboutService.findById(id);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		if (configuration == null) {
-			response.put("mensaje", "La configuración no existe");
+		if (about == null) {
+			response.put("mensaje", "El about no existe");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Configuration>(configuration, HttpStatus.OK);
+		return new ResponseEntity<About>(about, HttpStatus.OK);
 	}
 
-	// --------------------------------Update shipping------------------------
+	// --------------------------------Update about------
 	@CrossOrigin
-	@PutMapping("/update")
-	public ResponseEntity<?> update(@Valid @RequestBody Configuration configuration, BindingResult bindingResult) {
-		Configuration configurationActually = this.configurationService.findOne();
-		Configuration configurationUpdated = null;
+	@PutMapping("/update/{id}")
+	public ResponseEntity<?> update(@Valid @RequestBody About about, BindingResult bindingResult,
+			@PathVariable int id) {
+		About aboutActually = this.aboutService.findById(id);
+		About aboutUpdated = null;
 
 		Map<String, Object> response = new HashMap<>();
 
@@ -69,26 +72,30 @@ public class ConfigurationAdminController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 
-		if (configurationActually == null) {
-			response.put("mensaje", "Error: no se pudo editar la configuración no existe ");
+		if (aboutActually == null) {
+			response.put("mensaje", "Error: no se pudo editar el carrito, no existe ");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 
 		try {
-			configurationActually.setEmail(configuration.getEmail());
-			configurationActually.setPhone(configuration.getPhone());
-
-			configurationUpdated = this.configurationService.save(configurationActually);
+			aboutActually.setAddress(about.getAddress());
+			aboutActually.setDescription(about.getDescription());
+			aboutActually.setFacebook(about.getFacebook());
+			aboutActually.setImages(about.getImages());
+			aboutActually.setInstagram(about.getInstagram());
+			
+			aboutUpdated = this.aboutService.save(aboutActually);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		response.put("mensaje", "La configuración ha sido actualizado");
-		response.put("configuration", configurationUpdated);
+		response.put("mensaje", "El about ha sido actualizado");
+		response.put("about", aboutUpdated);
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
+	
 
 }

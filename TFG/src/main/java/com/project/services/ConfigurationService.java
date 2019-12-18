@@ -24,5 +24,11 @@ public class ConfigurationService {
 		List<Configuration> configurations= this.configurationRepository.findAll();
 		return configurations.get(0);
 	}
+	
+	//----------------------------------------Create ----------------------------------------------------
+	@Transactional
+	public Configuration save(Configuration configuration) {
+		return configurationRepository.save(configuration);
+	}
 
 }

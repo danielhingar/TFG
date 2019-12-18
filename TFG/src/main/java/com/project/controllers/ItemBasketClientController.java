@@ -131,7 +131,7 @@ public class ItemBasketClientController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		}
 
-		// ---------------------------------Delete shipping-----------------------
+		// ---------------------------------Delete item-----------------------
 		@CrossOrigin
 		@DeleteMapping("/delete/{id}")
 		public ResponseEntity<?> delete(@PathVariable int id) {
