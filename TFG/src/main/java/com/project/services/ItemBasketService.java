@@ -33,10 +33,11 @@ public class ItemBasketService {
 	public ItemBasket save(ItemBasket itemBasket, int productId) {
 		itemBasket.setProduct(this.productService.findById(productId));
 		itemBasket.setQuantity(1);
+		this.itemBasketRepository.flush();
 		return itemBasketRepository.save(itemBasket);
 	}
 
-	// -----------------------------------------Save----------------------------------------------------------
+	// -----------------------------------------Save Update----------------------------------------------------------
 	@Transactional
 	public ItemBasket save(ItemBasket itemBasket) {
 		return itemBasketRepository.save(itemBasket);

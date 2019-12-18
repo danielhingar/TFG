@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.ItemBasket;
-import com.project.domain.Shipping;
 import com.project.services.ItemBasketService;
 
 
@@ -37,7 +36,7 @@ public class ItemBasketClientController {
 	@Autowired
 	private ItemBasketService itemBasketService;
 	
-	// ------------------Show shipping--------------
+	// ------------------Show item--------------
 		@CrossOrigin
 		@GetMapping("/show/{id}")
 		public ResponseEntity<?> show(@PathVariable int id) {
