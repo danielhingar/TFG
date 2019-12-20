@@ -136,10 +136,15 @@ public class ClaimReporterController {
 			response.put("mensaje", "Error: no se pudo editar la queja,".concat(id1.toString().concat(" no existe ")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
+		
+		if(claimActually.getReporter()!=null) {
+			response.put("mensaje", "Error: no pudistes asignarte la queja porque ya tiene un reporter ");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CONFLICT);
+		}
 
 		try {
 
-			claimUpdated = this.claimService.assign(claimActually,1);
+			claimUpdated = this.claimService.assign(claimActually,998);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

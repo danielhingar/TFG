@@ -123,11 +123,7 @@ public class ClaimClientController {
 			claimActually.setAttachment(claim.getAttachment());
 			claimActually.setDescription(claim.getDescription());
 			claimActually.setTitle(claim.getTitle());
-			claimActually.setAnswer(claim.getAnswer());
-			claimActually.setCreateDate(claim.getCreateDate());
-			claimActually.setFacture(claim.getFacture());
-			claimActually.setReporter(claim.getReporter());
-			claimActually.setStatus(claim.getStatus());
+			
 
 			claimUpdated = this.claimService.saveClaim(claimActually);
 		} catch (DataAccessException e) {
