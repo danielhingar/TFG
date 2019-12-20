@@ -10,6 +10,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,7 +66,7 @@ public class ProductController {
 
 	// -------------------------- Show detail of a product----------------------------------
 	@CrossOrigin
-	@RequestMapping("/show/{id}")
+	@GetMapping("/show/{id}")
 	public ResponseEntity<?> show(@PathVariable int id) {
 		Product product = null;
 		Map<String, Object> response = new HashMap<>();

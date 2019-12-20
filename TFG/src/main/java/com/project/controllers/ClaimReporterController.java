@@ -14,87 +14,69 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.project.domain.ItemBasket;
-import com.project.services.ItemBasketService;
+import com.project.domain.Claim;
+import com.project.services.ClaimService;
 
 @RestController
-@RequestMapping("/client/itemBasket")
-public class ItemBasketClientController {
+@RequestMapping("/reporter/claim")
+public class ClaimReporterController {
 
-	// Servicies----------------------------------------------------------------------------------------------
+	// Services--------------------------------------------------------------------------------------
 	@Autowired
-	private ItemBasketService itemBasketService;
+	private ClaimService claimService;
 
-	// ------------------Show item--------------
+	// -------------------------- List Admin ----------------------------------
+	@CrossOrigin
+	@RequestMapping(value = "/listMyClaims", method = RequestMethod.GET)
+	public List<Claim> listMyClaims() {
+		// final Usuario
+		// a=this.usuarioService.findByUsername(UsuarioService.getPrincipal());
+		// final int reporterId=a.getId();
+		return claimService.findClaimByReporter(998);
+	}
+
+	// -------------------------- List Admin ----------------------------------
+	@CrossOrigin
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public List<Claim> list() {
+		return claimService.findAll();
+	}
+
+	// -------------------------- Show Claim ----------------------------------
 	@CrossOrigin
 	@GetMapping("/show/{id}")
 	public ResponseEntity<?> show(@PathVariable int id) {
-		ItemBasket itemBasket = null;
+		Claim claim = null;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			itemBasket = itemBasketService.findById(id);
+			claim = claimService.findById(id);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		if (itemBasket == null) {
-			response.put("mensaje", "El item no existe");
+		if (claim == null) {
+			response.put("mensaje", "La queja no existe");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<ItemBasket>(itemBasket, HttpStatus.OK);
-	}
-
-	// ------------------------Create a item of the
-	// basket-----------------------------------
-	@PostMapping("/create/{idProduct}")
-	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> create(@Valid @RequestBody ItemBasket itemBasket, BindingResult bindingResult,
-			@PathVariable int idProduct) {
-		ItemBasket itemBasketNew = null;
-		Map<String, Object> response = new HashMap<>();
-
-		if (bindingResult.hasErrors()) {
-			List<String> errors = new ArrayList<String>();
-			for (FieldError err : bindingResult.getFieldErrors()) {
-				errors.add("El campo " + err.getField() + " " + err.getDefaultMessage());
-			}
-			response.put("errors", errors);
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
-		}
-		try {
-
-			itemBasketNew = this.itemBasketService.save(itemBasket, idProduct);
-
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al añadir el nuevo item");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		response.put("mensaje", "El item ha sido creado con éxito");
-		response.put("itemBasket", itemBasketNew);
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
-
+		return new ResponseEntity<Claim>(claim, HttpStatus.OK);
 	}
 
 	// --------------------------------Update shipping------------------------
 	@CrossOrigin
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@Valid @RequestBody ItemBasket itemBasket, BindingResult bindingResult,
+	public ResponseEntity<?> update(@Valid @RequestBody Claim claim, BindingResult bindingResult,
 			@PathVariable int id) {
-		ItemBasket itemBasketActually = this.itemBasketService.findById(id);
-		ItemBasket itemBasketUpdated = null;
+		Claim claimActually = this.claimService.findById(id);
+		Claim claimUpdated = null;
 
 		Map<String, Object> response = new HashMap<>();
 
@@ -107,45 +89,66 @@ public class ItemBasketClientController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 
-		if (itemBasketActually == null) {
+		if (claimActually == null) {
 			Integer id1 = (Integer) id;
-			response.put("mensaje", "Error: no se pudo editar el item,".concat(id1.toString().concat(" no existe ")));
+			response.put("mensaje", "Error: no se pudo editar la queja,".concat(id1.toString().concat(" no existe ")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 
 		try {
-			itemBasketActually.setQuantity(itemBasket.getQuantity());
+			claimActually.setStatus(claim.getStatus());
+			claimActually.setAnswer(claim.getAnswer());
 
-			itemBasketUpdated = this.itemBasketService.save(itemBasketActually);
+			claimUpdated = this.claimService.saveClaim(claimActually);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		response.put("mensaje", "El método de envío ha sido actualizado");
-		response.put("itemBasket", itemBasketUpdated);
+		response.put("mensaje", "La queja ha sido actualizada");
+		response.put("claim", claimUpdated);
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-	// ---------------------------------Delete item-----------------------
+	// --------------------------------Update shipping------------------------
 	@CrossOrigin
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete(@PathVariable int id) {
+	@PutMapping("/assign/{id}")
+	public ResponseEntity<?> assign(@Valid @RequestBody Claim claim, BindingResult bindingResult,
+			@PathVariable int id) {
+		Claim claimActually = this.claimService.findById(id);
+		Claim claimUpdated = null;
+		
 		Map<String, Object> response = new HashMap<>();
+
+		if (bindingResult.hasErrors()) {
+			List<String> errors = new ArrayList<String>();
+			for (FieldError err : bindingResult.getFieldErrors()) {
+				errors.add("El campo " + err.getField() + " " + err.getDefaultMessage());
+			}
+			response.put("errors", errors);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+		}
+
+		if (claimActually == null) {
+			Integer id1 = (Integer) id;
+			response.put("mensaje", "Error: no se pudo editar la queja,".concat(id1.toString().concat(" no existe ")));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+
 		try {
-			this.itemBasketService.delete(id);
+
+			claimUpdated = this.claimService.assign(claimActually,1);
 		} catch (DataAccessException e) {
-			// TODO: handle exception
-			response.put("mensaje", "Error al borrar el item");
+			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje", "El item ha sido eliminado con éxito");
 
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+		response.put("mensaje", "La queja ha sido actualizada");
+		response.put("claim", claimUpdated);
 
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-
 }

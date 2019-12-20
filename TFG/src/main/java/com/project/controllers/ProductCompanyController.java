@@ -41,8 +41,8 @@ public class ProductCompanyController {
 	@Autowired
 	private ProductService productService;
 	
-	@Autowired
-	private UsuarioService usuarioService;
+//	@Autowired
+//	private UsuarioService usuarioService;
 
 	// -------------------------- List ----------------------------------
 //	@CrossOrigin

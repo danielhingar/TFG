@@ -44,7 +44,7 @@ INSERT INTO `configuration` (id,phone,email) VALUES (1,'673456721','showcase@gma
 
 /*CLAIMS---------------------------------------------------------------------------------*/
 
-INSERT INTO `claim` (id,reporter_id,title,description,create_date,attachment,facture_id) VALUES (1,998,'PEDIDO NO HA LLEGADO','SE HA PASADO EL TIEMPO DE ENVÍO','2019-11-21',null,2);
+INSERT INTO `claim` (id,reporter_id,title,description,create_date,attachment,facture_id,status,answer) VALUES (1,998,'PEDIDO NO HA LLEGADO','SE HA PASADO EL TIEMPO DE ENVÍO','2019-11-21',null,2,'REJECTED','No cumple las bases legales');
 
 /*PRODUCTS-------------------------------------------------------------------------------*/
 
@@ -69,8 +69,8 @@ INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (3,3,6);
 
 /*FACTURE--------------------------------------------------------------------------------*/
 
-INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (1,'2019-11-22','PENDING','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',4,1,991);
-INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (2,'2019-11-22','ACCEPTED','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',4,1,992);
+INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (1,'2019-11-22','PENDING','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',994,1,991);
+INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (2,'2019-11-22','ACCEPTED','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',994,1,991);
 
 /*Usuario_role*/
 INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (991,4);

@@ -22,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 public class Claim implements Serializable {
 
-
 	// Attributes--------------------------------------------------------------------------
 
 	private int id;
@@ -31,6 +30,8 @@ public class Claim implements Serializable {
 	@Column(name = "create_date")
 	private Date createDate;
 	private String attachment;
+	private String status;
+	private String answer;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,7 +61,7 @@ public class Claim implements Serializable {
 		this.description = description;
 	}
 
-	@NotNull
+
 	@Temporal(TemporalType.DATE)
 	@Past
 	public Date getCreateDate() {
@@ -78,16 +79,31 @@ public class Claim implements Serializable {
 	public void setAttachment(String attachment) {
 		this.attachment = attachment;
 	}
-
-	// Relationships--------------------------------------------------------------------
 	
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
+
+	// Relationships-------------------------------------------------------------------
+
 	private Reporter reporter;
 	private Facture facture;
 
-	
 	@JsonIgnoreProperties({ "claims", "hibernateLazyInitializer", "hadler" })
 	@ManyToOne(fetch = FetchType.LAZY)
-	@NotNull
 	@Valid
 	public Reporter getReporter() {
 		return reporter;
@@ -99,7 +115,6 @@ public class Claim implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "hadler" })
-	@NotNull
 	public Facture getFacture() {
 		return facture;
 	}
@@ -107,9 +122,9 @@ public class Claim implements Serializable {
 	public void setFacture(Facture facture) {
 		this.facture = facture;
 	}
-	
-	//---------------------------------------------------------------------------------
-	
+
+	// ---------------------------------------------------------------------------------
+
 	/**
 	 * 
 	 */
