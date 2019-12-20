@@ -65,7 +65,7 @@ public class BasketClientController {
 		// final Usuario
 		// a=this.usuarioService.findByUsername(UsuarioService.getPrincipal());
 		// final int clientId=a.getId();
-		Basket basketActually = this.basketService.findById(1);
+		Basket basketActually = this.basketService.findById(2);
 		Basket basketUpdated = null;
 
 		Map<String, Object> response = new HashMap<>();

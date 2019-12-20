@@ -12,12 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
+@Entity 
 public class Facture implements Serializable {
 
 	// Attribute----------------------------------------------------------------------
@@ -44,9 +41,8 @@ public class Facture implements Serializable {
 		this.id = id;
 	}
 
-	@NotNull
+	
 	@Temporal(TemporalType.DATE)
-	@Past
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -55,7 +51,7 @@ public class Facture implements Serializable {
 		this.createDate = createDate;
 	}
 
-	@NotBlank
+	
 	public String getStatus() {
 		return status;
 	}
@@ -64,7 +60,7 @@ public class Facture implements Serializable {
 		this.status = status;
 	}
 
-	@NotBlank
+	
 	public String getAddress() {
 		return address;
 	}
@@ -73,7 +69,7 @@ public class Facture implements Serializable {
 		this.address = address;
 	}
 
-	@NotBlank
+	
 	public String getName() {
 		return name;
 	}
@@ -82,7 +78,7 @@ public class Facture implements Serializable {
 		this.name = name;
 	}
 
-	@NotBlank
+	
 	public String getSurnames() {
 		return surnames;
 	}
@@ -91,7 +87,7 @@ public class Facture implements Serializable {
 		this.surnames = surnames;
 	}
 
-	@NotBlank
+	
 	public String getPhone() {
 		return phone;
 	}
@@ -100,7 +96,7 @@ public class Facture implements Serializable {
 		this.phone = phone;
 	}
 
-	@NotBlank
+	
 	public String getLocality() {
 		return locality;
 	}
@@ -109,7 +105,7 @@ public class Facture implements Serializable {
 		this.locality = locality;
 	}
 
-	@NotBlank
+	
 	public String getProvince() {
 		return province;
 	}
@@ -118,7 +114,7 @@ public class Facture implements Serializable {
 		this.province = province;
 	}
 
-	@NotBlank
+	
 	public String getPostalCode() {
 		return postalCode;
 	}
@@ -127,7 +123,7 @@ public class Facture implements Serializable {
 		this.postalCode = postalCode;
 	}
 
-	@NotBlank
+	
 	public String getNumber() {
 		return number;
 	}
@@ -142,7 +138,7 @@ public class Facture implements Serializable {
 	private Basket basket;
 	private Company company;
 
-	@NotNull
+	
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="client_id")
@@ -154,7 +150,7 @@ public class Facture implements Serializable {
 		this.client = client;
 	}
 
-	@NotNull
+	
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="basket_id")
@@ -166,7 +162,7 @@ public class Facture implements Serializable {
 		this.basket = basket;
 	}
 
-	@NotNull
+	
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="company_id")

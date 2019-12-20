@@ -75,4 +75,10 @@ public class BasketService {
 		this.basketRepository.deleteById(id);
 	}
 
+	// ----------------------------------------Delete---------------------------
+	@Transactional
+	public Basket save(Basket basket) {
+		return this.basketRepository.save(basket);
+	}
+
 }

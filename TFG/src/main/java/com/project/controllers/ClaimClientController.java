@@ -132,7 +132,7 @@ public class ClaimClientController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		response.put("mensaje", "El método de envío ha sido actualizado");
+		response.put("mensaje", "La queja ha sido actualizado");
 		response.put("claim", claimUpdated);
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
