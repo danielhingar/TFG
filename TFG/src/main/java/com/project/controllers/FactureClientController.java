@@ -65,7 +65,7 @@ public class FactureClientController {
 		return new ResponseEntity<Facture>(facture, HttpStatus.OK);
 	}
 
-	// ------------------------Create a item of the
+	// ------------------------Create a factures of the
 	// basket-----------------------------------
 	@PostMapping("/create/{idBasket}")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -87,11 +87,11 @@ public class FactureClientController {
 			facturesNew = this.factureService.save(facture, idBasket);
 
 		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al añadir el nuevo item");
+			response.put("mensaje", "Error al añadir la nueva factura");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje", "El item ha sido creado con éxito");
+		response.put("mensaje", "Las facturas han sido creadas con éxito");
 		response.put("facture", facturesNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 
@@ -132,7 +132,9 @@ public class FactureClientController {
 			factureActually.setPostalCode(facture.getPostalCode());
 			factureActually.setProvince(facture.getProvince());
 			factureActually.setSurnames(facture.getSurnames());
-
+			factureActually.setStatus(facture.getStatus());
+			
+			
 			factureUpdated = this.factureService.save(factureActually);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");

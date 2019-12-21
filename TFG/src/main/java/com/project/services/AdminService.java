@@ -58,5 +58,11 @@ public class AdminService {
 		return adminRepository.findById(id).orElse(null);
 
 	}
+	
+	// ----------------------------------------Delete---------------------------
+	@Transactional
+	public void delete(int id) {
+		this.adminRepository.deleteById(id);
+	}
 
 }

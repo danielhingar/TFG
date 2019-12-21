@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.project.domain.Claim;
 import com.project.domain.Reporter;
 import com.project.domain.Role;
 import com.project.repositories.ReporterRepository;
-
 
 @Service
 @Transactional
@@ -23,13 +24,16 @@ public class ReporterService {
 	// Services----------------------------------------------------------------------------------------------------
 	@Autowired
 	private RoleService roleService;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private ClaimService claimService;
 
 	// CRUD--------------------------------------------------------------------------------------------------------
-	
-	//--------------------------------------Create-------------------------------------------------------
+
+	// --------------------------------------Create-------------------------------------------------------
 	@Transactional
 	public Reporter save(Reporter reporter) {
 		reporter.setPassword(bCryptPasswordEncoder.encode(reporter.getPassword()));
@@ -41,7 +45,7 @@ public class ReporterService {
 		return this.reporterRepository.save(reporter);
 	}
 
-	//---------------------------------------List---------------------------------------------------------
+	// ---------------------------------------List---------------------------------------------------------
 	@Transactional(readOnly = true)
 	public List<Reporter> findAll() {
 		return (List<Reporter>) reporterRepository.findAll();
@@ -52,6 +56,18 @@ public class ReporterService {
 	public Reporter findById(int id) {
 		return reporterRepository.findById(id).orElse(null);
 
+	}
+
+	// ----------------------------------------Delete---------------------------
+	@Transactional
+	public void delete(int id) {
+		List<Claim> claims=this.claimService.findClaimByReporter(id);
+		for(int i=0;i<claims.size();i++) {
+			Claim c=this.claimService.findById(claims.get(i).getId());
+			c.setReporter(null);
+			this.claimService.saveClaim(c);
+		}
+		this.reporterRepository.deleteById(id);
 	}
 
 }
