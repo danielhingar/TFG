@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.project.domain.About;
 import com.project.domain.Company;
+import com.project.domain.Product;
 import com.project.domain.Role;
 import com.project.repositories.CompanyRepository;
 
@@ -21,37 +24,44 @@ public class CompanyService {
 	private CompanyRepository companyRepository;
 
 	// Services----------------------------------------------------------------------------------------------------
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	@Autowired
 	private RoleService roleService;
 
-	//-------------------------------------List companies order random------------------------------------------------------------------
-	
+	@Autowired
+	private ProductService productService;
+
+	@Autowired
+	private AboutService aboutService;
+
+	// -------------------------------------List companies order
+	// random------------------------------------------------------------------
+
 	@Transactional(readOnly = true)
 	public List<Company> findAllRandom() {
-		List<Company> companies= companyRepository.findAll();
-		Random rdm=new Random();
-		Collections.shuffle(companies,rdm);
+		List<Company> companies = companyRepository.findAll();
+		Random rdm = new Random();
+		Collections.shuffle(companies, rdm);
 		return companies;
 	}
-	
-	//----------------------------------------Create--------------------------------------------------------
-		@Transactional
-		public Company save(Company company) {
-			company.setPassword(bCryptPasswordEncoder.encode(company.getPassword()));
-			List<Role> r=new ArrayList<>();
-			Role role=roleService.findById(4);
-			r.add(role);
-			company.setRoles(r);
-			return companyRepository.save(company);
-		}
 
-	
-	//-------------------------------------List companies order random------------------------------------------------------------------
-	
+	// ----------------------------------------Create--------------------------------------------------------
+	@Transactional
+	public Company save(Company company) {
+		company.setPassword(bCryptPasswordEncoder.encode(company.getPassword()));
+		List<Role> r = new ArrayList<>();
+		Role role = roleService.findById(4);
+		r.add(role);
+		company.setRoles(r);
+		return companyRepository.save(company);
+	}
+
+	// -------------------------------------List companies order
+	// random------------------------------------------------------------------
+
 	@Transactional(readOnly = true)
 	public List<Company> findAll() {
 		return (List<Company>) companyRepository.findAll();
@@ -64,4 +74,5 @@ public class CompanyService {
 
 	}
 
+	
 }

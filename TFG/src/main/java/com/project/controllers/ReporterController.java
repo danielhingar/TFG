@@ -82,7 +82,7 @@ public class ReporterController {
 
 	}
 
-	// --------------------------------Update admin------------------------
+	// --------------------------------Update reporter------------------------
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Reporter reporter, BindingResult bindingResult,
@@ -139,7 +139,7 @@ public class ReporterController {
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje", "El reporter ha sido eliminado con éxito");
+		response.put("mensaje", "El perfil ha sido eliminado con éxito");
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 
