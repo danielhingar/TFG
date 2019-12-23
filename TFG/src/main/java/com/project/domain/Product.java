@@ -70,7 +70,7 @@ public class Product implements Serializable {
 		this.description = description;
 	}
 
-	@NotBlank
+	
 	public String getPhoto() {
 		return photo;
 	}
@@ -90,7 +90,6 @@ public class Product implements Serializable {
 
 
 	@Temporal(TemporalType.DATE)
-	@Past
 	public Date getCreateDate() {
 		return createDate;
 	}

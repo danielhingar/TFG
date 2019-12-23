@@ -9,9 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.domain.About;
 import com.project.domain.Company;
-import com.project.domain.Product;
 import com.project.domain.Role;
 import com.project.repositories.CompanyRepository;
 
@@ -30,12 +28,6 @@ public class CompanyService {
 
 	@Autowired
 	private RoleService roleService;
-
-	@Autowired
-	private ProductService productService;
-
-	@Autowired
-	private AboutService aboutService;
 
 	// -------------------------------------List companies order
 	// random------------------------------------------------------------------
@@ -72,6 +64,12 @@ public class CompanyService {
 	public Company findById(int companyId) {
 		return companyRepository.findById(companyId).orElse(null);
 
+	}
+	
+	//--------update------------
+	@Transactional
+	public Company saveCompany(Company company) {
+		return companyRepository.save(company);
 	}
 
 	

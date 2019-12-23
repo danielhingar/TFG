@@ -1,10 +1,14 @@
 package com.project.controllers;
 
-
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -23,15 +27,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import com.project.domain.Product;
 import com.project.domain.Usuario;
 import com.project.services.ProductService;
 import com.project.services.UsuarioService;
-
 
 @RestController
 @RequestMapping("/company/product")
@@ -40,7 +44,7 @@ public class ProductCompanyController {
 	// Servicies----------------------------------------------------------------------------------------------
 	@Autowired
 	private ProductService productService;
-	
+
 //	@Autowired
 //	private UsuarioService usuarioService;
 
@@ -50,24 +54,25 @@ public class ProductCompanyController {
 //	public List<Product> list() {
 //		return productService.findAll();
 //	}
-	//--------------------------List product of my company----------------------------------------------------------
+	// --------------------------List product of my
+	// company----------------------------------------------------------
 	@CrossOrigin
 	@RequestMapping(value = "/myProducts/{companyId}", method = RequestMethod.GET)
 	public List<Product> listProductsCompany(@PathVariable int companyId) {
 		return productService.findAllByCompany(companyId);
 	}
 
-	
-
-	// -------------------------------------Create a product----------------------------------------------------
+	// -------------------------------------Create a
+	// product----------------------------------------------------
 	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> create(@Valid @RequestBody Product product, BindingResult bindingResult) {
 		Product productNew = null;
 		Map<String, Object> response = new HashMap<>();
-		//final Usuario a=this.usuarioService.findByUsername(UsuarioService.getPrincipal());
-		//final int companyId=a.getId();
-		
+		// final Usuario
+		// a=this.usuarioService.findByUsername(UsuarioService.getPrincipal());
+		// final int companyId=a.getId();
+
 		if (bindingResult.hasErrors()) {
 			List<String> errors = new ArrayList<String>();
 			for (FieldError err : bindingResult.getFieldErrors()) {
@@ -77,8 +82,7 @@ public class ProductCompanyController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 		try {
-			
-		
+
 			productNew = productService.saveProductTest(product);
 
 		} catch (DataAccessException e) {
@@ -92,7 +96,8 @@ public class ProductCompanyController {
 
 	}
 
-	// -------------------------------------Update a product----------------------------------------------------
+	// -------------------------------------Update a
+	// product----------------------------------------------------
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Product product, BindingResult bindingResult,
@@ -110,9 +115,9 @@ public class ProductCompanyController {
 			response.put("errors", errors);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
- 
+
 		if (productActually == null) {
-			Integer id1=(Integer) id;
+			Integer id1 = (Integer) id;
 			response.put("mensaje",
 					"Error: no se pudo editar el producto,".concat(id1.toString().concat(" no existe ")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
@@ -134,7 +139,6 @@ public class ProductCompanyController {
 			productActually.setWeight(product.getWeight());
 			productActually.setWidth(product.getWidth());
 			productActually.setCompany(product.getCompany());
-		
 
 			productUpdated = productService.saveProduct(productActually);
 		} catch (DataAccessException e) {
@@ -149,7 +153,8 @@ public class ProductCompanyController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-	// -------------------------------------Delete a product----------------------------------------------------
+	// -------------------------------------Delete a
+	// product----------------------------------------------------
 	@CrossOrigin
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable int id) {
@@ -176,5 +181,46 @@ public class ProductCompanyController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 
+	}
+
+	@CrossOrigin
+	@PostMapping("/upload")
+	public ResponseEntity<?> upload(@RequestParam("archivo") List<MultipartFile> archivo, @RequestParam("id") int id) {
+		Map<String, Object> response = new HashMap<>();
+
+		Product product = productService.findById(id);
+		String images = "";
+		for (MultipartFile file : archivo)
+			if (!archivo.isEmpty()) {
+				String nombreArchivo = UUID.randomUUID().toString() + "_" + file.getOriginalFilename().replace(" ", "");
+				Path rutaArchivo = Paths.get("uploads").resolve(nombreArchivo).toAbsolutePath();
+				try {
+					Files.copy(file.getInputStream(), rutaArchivo);
+					images = images + "," + nombreArchivo;
+				} catch (IOException e) {
+					response.put("mensaje", "Error al subir las imagenes del producto " + nombreArchivo);
+					response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
+					return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+
+//			String nombreFotoAnterior = company.getImage();
+
+//			if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0) {
+//				Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
+//				File archivoFotoAnterior = rutaFotoAnterior.toFile();
+//				if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
+//					archivoFotoAnterior.delete();
+//				}
+//			}
+				images.replaceFirst(images, "");
+				product.setPhoto(images);
+
+				productService.saveProduct(product);
+
+				response.put("producto", product);
+				response.put("mensaje", "Has subido correctamente las imagenes: " + images);
+			}
+
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 }
