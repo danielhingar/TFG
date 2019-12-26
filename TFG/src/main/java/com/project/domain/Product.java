@@ -178,7 +178,7 @@ public class Product implements Serializable {
 	
 	private Company company;
 	
-	@JsonIgnoreProperties({ "products", "hibernateLazyInitializer", "hadler" })
+	@JsonIgnoreProperties(value={ "products", "hibernateLazyInitializer", "hadler" },allowSetters = true)
 	@ManyToOne(fetch = FetchType.LAZY)
 	public Company getCompany() {
 		return company;

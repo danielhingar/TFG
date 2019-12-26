@@ -60,7 +60,7 @@ public class Company extends Usuario{
 	private List<Product> products;
 
 
-	@JsonIgnoreProperties(value = { "company", "hibernateLazyInitializer", "hadler" })
+	@JsonIgnoreProperties(value = { "company", "hibernateLazyInitializer", "hadler" },allowSetters = true)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.ALL)
 	public List<Product> getProducts() {
 		return products;
@@ -70,7 +70,7 @@ public class Company extends Usuario{
 		this.products = products;
 	}
 
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
+	@JsonIgnoreProperties(value={"hibernateLazyInitializer", "hadler" },allowSetters = true)
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name="about_id")
 	public About getAbout() {
