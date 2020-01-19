@@ -41,7 +41,7 @@ public class ReporterService {
 		Role role = roleService.findById(3);
 		r.add(role);
 		reporter.setRoles(r);
-
+		reporter.setEnabled(true);
 		return this.reporterRepository.save(reporter);
 	}
 

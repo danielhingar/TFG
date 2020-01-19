@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.domain.Claim;
 import com.project.services.ClaimService;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/reporter/claim")
 public class ClaimReporterController {

@@ -27,6 +27,7 @@ import com.project.domain.Usuario;
 import com.project.services.ReporterService;
 import com.project.services.UsuarioService;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/reporter")
 public class ReporterController {

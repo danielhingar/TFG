@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.domain.Configuration;
 import com.project.services.ConfigurationService;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/admin/configuration")
 public class ConfigurationAdminController {

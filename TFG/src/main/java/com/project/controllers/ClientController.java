@@ -28,6 +28,7 @@ import com.project.domain.Usuario;
 import com.project.services.ClientService;
 import com.project.services.UsuarioService;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/client")
 public class ClientController {
@@ -65,7 +66,6 @@ public class ClientController {
 	@CrossOrigin
 	@PostMapping("/create")
 	public ResponseEntity<?> create(@Valid @RequestBody Client client, BindingResult bindingResult) {
-		Client clientNew = null;
 		Map<String, Object> response = new HashMap<>();
 
 		List<String> usernames = new ArrayList<String>();
@@ -78,19 +78,20 @@ public class ClientController {
 		if (bindingResult.hasErrors()) {
 			List<String> errors = new ArrayList<String>();
 			for (FieldError err : bindingResult.getFieldErrors()) {
-				errors.add("El campo " + err.getField() + " " + err.getDefaultMessage());
+				errors.add("\nEl campo " + err.getDefaultMessage());
 			}
 			response.put("errors", errors);
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 
 		if (usernames.contains(client.getUsername())) {
-			response.put("mensaje", "No puede usar ese username");
+			response.put("mensaje", "No puede usar ese usuario");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		try {
-			clientNew = clientService.save(client);
+			
+			clientService.save(client);
 
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar el insert en la base de datos");
@@ -98,7 +99,7 @@ public class ClientController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		response.put("mensaje", "El cliente ha sido creado con éxito");
-		response.put("cliente", clientNew);
+		response.put("cliente", client);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 
 	}

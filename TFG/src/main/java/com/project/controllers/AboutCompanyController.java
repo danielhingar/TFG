@@ -32,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.project.domain.About;
 import com.project.services.AboutService;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/company/about")
 public class AboutCompanyController {

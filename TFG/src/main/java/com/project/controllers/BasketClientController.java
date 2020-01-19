@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.domain.Basket;
 import com.project.services.BasketService;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/client/basket")
 public class BasketClientController {

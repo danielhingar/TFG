@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.domain.Facture;
 import com.project.services.FactureService;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/client/facture")
 public class FactureClientController {

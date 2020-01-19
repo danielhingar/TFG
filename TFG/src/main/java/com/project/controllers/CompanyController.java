@@ -42,8 +42,7 @@ import com.project.domain.Usuario;
 import com.project.services.CompanyService;
 import com.project.services.UsuarioService;
 
-
-
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/company")
 public class CompanyController {

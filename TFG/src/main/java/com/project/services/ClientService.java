@@ -63,6 +63,7 @@ public class ClientService {
 		Role role = roleService.findById(1);
 		r.add(role);
 		client.setRoles(r);
+		client.setEnabled(true);
 		return clientRepository.save(client);
 	}
 

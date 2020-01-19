@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.domain.Shipping;
 import com.project.services.ShippingService;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/admin/shipping")
 public class ShippingAdminController {

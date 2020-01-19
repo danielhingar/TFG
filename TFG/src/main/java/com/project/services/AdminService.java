@@ -42,7 +42,7 @@ public class AdminService {
 		Role role = roleService.findById(2);
 		r.add(role);
 		admin.setRoles(r);
-
+		admin.setEnabled(true);
 		return adminRepository.save(admin);
 	}
 

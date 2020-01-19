@@ -1,6 +1,7 @@
 package com.project.controllers;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ import com.project.services.CompanyService;
 import com.project.services.ReporterService;
 import com.project.services.UsuarioService;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/admin")
 public class AdminController {

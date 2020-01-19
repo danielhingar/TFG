@@ -17,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 
@@ -47,7 +48,7 @@ public class Usuario implements Serializable {
 			this.id = id;
 		}
 
-		@NotBlank
+		@NotBlank(message = "nombre no puede estar vacío")
 		public String getName() {
 			return name;
 		}
@@ -57,8 +58,8 @@ public class Usuario implements Serializable {
 		}
 
 		@Column(unique = true)
-		@Size(min = 4, max = 20)
-		@NotBlank
+		@Size(min = 4, max = 20, message = "usuario tiene que tener una longitud entre 4 y 20 caracteres")
+		@NotBlank(message = "usuario no puede estar vacío")
 		public String getUsername() {
 			return username;
 		}
@@ -67,7 +68,8 @@ public class Usuario implements Serializable {
 			this.username = username;
 		}
 
-		@NotBlank
+		@NotBlank(message = "contraseña no puede estar vacío")
+		//@Pattern(regexp = "^ (? =. * [0-9] +. *) (? =. * [A-zA-Z] +. *) [0-9a-zA-Z] {6,} $", message = "La contraseña tiene que tener una longitud de 6 caracteres y contener al menos una letra")
 		public String getPassword() {
 			return password;
 		}
@@ -76,7 +78,7 @@ public class Usuario implements Serializable {
 			this.password = password;
 		}
 
-		@NotBlank
+		@NotBlank(message = "apellidos no puede estar vacío")
 		public String getSurnames() {
 			return surnames;
 		}
@@ -85,8 +87,8 @@ public class Usuario implements Serializable {
 			this.surnames = surnames;
 		}
 
-		@NotBlank
-		@Email
+		@NotBlank(message = "email no puede estar vacío")
+		@Email(message = "email no corresponde con un formato válido de email")
 		public String getEmail() {
 			return email;
 		}

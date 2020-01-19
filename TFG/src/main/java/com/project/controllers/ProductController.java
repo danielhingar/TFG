@@ -21,6 +21,7 @@ import com.project.domain.Product;
 import com.project.services.CompanyService;
 import com.project.services.ProductService;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/product")
 public class ProductController {

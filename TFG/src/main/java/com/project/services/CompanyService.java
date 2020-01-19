@@ -48,6 +48,7 @@ public class CompanyService {
 		Role role = roleService.findById(4);
 		r.add(role);
 		company.setRoles(r);
+		company.setEnabled(true);
 		return companyRepository.save(company);
 	}
 
