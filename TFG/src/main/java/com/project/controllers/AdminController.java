@@ -34,7 +34,7 @@ import com.project.services.CompanyService;
 import com.project.services.ReporterService;
 import com.project.services.UsuarioService;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -96,13 +96,6 @@ public class AdminController {
 		response.put("admin", adminNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 
-	}
-
-	// -------------------------- List Admin ----------------------------------
-	@CrossOrigin
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public List<Admin> list() {
-		return adminService.findAll();
 	}
 
 	// -------------------------- Show Admin ----------------------------------
@@ -196,9 +189,53 @@ public class AdminController {
 	// ---------------------------- List users
 	// ------------------------------------------------
 	@CrossOrigin
-	@RequestMapping(value = "/listUsuarios", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public List<Usuario> listUsuarios() {
 		return usuarioService.findAll();
+	}
+
+	// --------------------------------Disable user------------------------
+	@CrossOrigin
+	@DeleteMapping("/disable/{id}")
+	public ResponseEntity<?> disable(@PathVariable int id) {
+		Usuario usuarioActually = this.usuarioService.findById(id);
+		Map<String, Object> response = new HashMap<>();
+
+		try {
+			usuarioActually.setEnabled(false);
+			this.usuarioService.update(usuarioActually);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al actualizar en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		response.put("mensaje", "El usuario ha sido deshabilitado");
+		response.put("usuario", usuarioActually);
+
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
+	
+	// --------------------------------enable user------------------------
+	@CrossOrigin
+	@DeleteMapping("/enable/{id}")
+	public ResponseEntity<?> enable(@PathVariable int id) {
+		Usuario usuarioActually = this.usuarioService.findById(id);
+		Map<String, Object> response = new HashMap<>();
+
+		try {
+			usuarioActually.setEnabled(true);
+			this.usuarioService.update(usuarioActually);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al actualizar en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		response.put("mensaje", "El usuario ha sido habilitado");
+		response.put("usuario", usuarioActually);
+
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
 	// ---------------------------------Delete admin-----------------------

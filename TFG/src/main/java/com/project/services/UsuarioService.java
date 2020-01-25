@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.project.domain.Client;
 import com.project.domain.Usuario;
 import com.project.repositories.UsuarioRepository;
 
@@ -53,11 +55,17 @@ public class UsuarioService implements UserDetailsService{
 		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true, authorities);
 	}
 	
-	//-----------------------------------Find user by username-------------------------------------------
+	//-----------------------------------Find user -------------------------------------------
 	@Transactional(readOnly = true)
 	public Usuario findByUsername(String username) {
 		
 		return usuarioRepository.findByUsername(username);
+	}
+	
+	@Transactional(readOnly = true)
+	public Usuario findById(int id) {
+		return usuarioRepository.findById(id).orElse(null);
+
 	}
 	
 	//----------------------------------- Get principal-------------------------------------------------
@@ -69,5 +77,11 @@ public class UsuarioService implements UserDetailsService{
 		}
 		return userDetails.getUsername();
 	}
+	
+	// -------------------------------------Update---------------------------------------------------------
+		@Transactional
+		public Usuario update(Usuario usuario) {
+			return usuarioRepository.save(usuario);
+		}
 
 }

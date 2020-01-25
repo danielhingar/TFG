@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.project.domain.Company;
 import com.project.domain.Role;
 import com.project.repositories.CompanyRepository;
@@ -51,6 +50,12 @@ public class CompanyService {
 		company.setEnabled(true);
 		return companyRepository.save(company);
 	}
+	
+	// -------------------------------------Update---------------------------------------------------------
+	@Transactional
+	public Company update(Company company) {
+		return companyRepository.save(company);
+	}
 
 	// -------------------------------------List companies order
 	// random------------------------------------------------------------------
@@ -65,6 +70,11 @@ public class CompanyService {
 	public Company findById(int companyId) {
 		return companyRepository.findById(companyId).orElse(null);
 
+	}
+	
+	@Transactional(readOnly=true)
+	public Company findByUsername(String username) {
+		return companyRepository.findCompanyByUsername(username);
 	}
 	
 	//--------update------------

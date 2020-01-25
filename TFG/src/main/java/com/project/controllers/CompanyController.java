@@ -58,12 +58,12 @@ public class CompanyController {
 
 	// -------------------------- Show ----------------------------------
 	@CrossOrigin
-	@GetMapping("/show/{id}")
-	public ResponseEntity<?> show(@PathVariable int id) {
+	@GetMapping("/{username}")
+	public ResponseEntity<?> show(@PathVariable String username) {
 		Company company = null;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			company = companyService.findById(id);
+			company = companyService.findByUsername(username);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -160,7 +160,7 @@ public class CompanyController {
 			companyActually.setBusinessName(company.getBusinessName());
 			companyActually.setCategory(company.getCategory());
 
-			companyUpdated = this.companyService.save(companyActually);
+			companyUpdated = this.companyService.update(companyActually);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

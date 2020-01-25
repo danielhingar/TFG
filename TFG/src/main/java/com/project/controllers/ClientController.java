@@ -42,12 +42,12 @@ public class ClientController {
 
 	// -------------------------- Show ----------------------------------
 	@CrossOrigin
-	@GetMapping("/show/{id}")
-	public ResponseEntity<?> show(@PathVariable int id) {
+	@GetMapping("/{username}")
+	public ResponseEntity<?> show(@PathVariable String username) {
 		Client client = null;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			client = clientService.findById(id);
+			client = clientService.findByUsername(username);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -135,7 +135,7 @@ public class ClientController {
 			clientActually.setPhone(client.getPhone());
 			clientActually.setSurnames(client.getSurnames());
 
-			clientUpdated = this.clientService.save(clientActually);
+			clientUpdated = this.clientService.update(clientActually);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

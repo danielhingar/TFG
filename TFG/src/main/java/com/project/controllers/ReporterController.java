@@ -114,7 +114,7 @@ public class ReporterController {
 			reporterActually.setPhone(reporter.getPhone());
 			reporterActually.setSurnames(reporter.getSurnames());
 
-			reporterUpdated = this.reporterService.save(reporterActually);
+			reporterUpdated = this.reporterService.update(reporterActually);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -148,12 +148,12 @@ public class ReporterController {
 
 	// -------------------------- Show Admin ----------------------------------
 	@CrossOrigin
-	@RequestMapping("/show/{id}")
-	public ResponseEntity<?> show(@PathVariable int id) {
+	@RequestMapping("/{username}")
+	public ResponseEntity<?> show(@PathVariable String username) {
 		Reporter reporter = null;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			reporter = reporterService.findById(id);
+			reporter = reporterService.findByUsername(username);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

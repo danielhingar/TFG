@@ -27,7 +27,7 @@ public class ReporterService {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	@Autowired
 	private ClaimService claimService;
 
@@ -45,6 +45,12 @@ public class ReporterService {
 		return this.reporterRepository.save(reporter);
 	}
 
+	// -------------------------------------Update---------------------------------------------------------
+	@Transactional
+	public Reporter update(Reporter reporter) {
+		return reporterRepository.save(reporter);
+	}
+
 	// ---------------------------------------List---------------------------------------------------------
 	@Transactional(readOnly = true)
 	public List<Reporter> findAll() {
@@ -58,12 +64,17 @@ public class ReporterService {
 
 	}
 
+	@Transactional(readOnly = true)
+	public Reporter findByUsername(String username) {
+		return reporterRepository.findReporterByUsername(username);
+	}
+
 	// ----------------------------------------Delete---------------------------
 	@Transactional
 	public void delete(int id) {
-		List<Claim> claims=this.claimService.findClaimByReporter(id);
-		for(int i=0;i<claims.size();i++) {
-			Claim c=this.claimService.findById(claims.get(i).getId());
+		List<Claim> claims = this.claimService.findClaimByReporter(id);
+		for (int i = 0; i < claims.size(); i++) {
+			Claim c = this.claimService.findById(claims.get(i).getId());
 			c.setReporter(null);
 			this.claimService.saveClaim(c);
 		}

@@ -6,13 +6,26 @@ INSERT INTO `role` (id,nombre) VALUES (4,'ROLE_COMPANY');
 
 
 /*COMPANIES-----------------------------------------------------------------------------*/
-INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,about_id) VALUES (991,'daniel','hinojo garcía','danhingar','$2a$10$7nlxuDw39HBwdu0AQz0I/.qTOjI702AnqmZqzudGcMylrjBAn3qli',1,'672389123','danielhingar3397@gmail.com','showcase','foto1','deportes',1);
-INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,about_id) VALUES (992,'ramon','hinojo garcía','danhingar2','$2a$10$bLWWf4R6N61Q3XX9iF88t..pUG0PzUza4XZy2jdzFPOvejNk8e9rK',1,'672389123','danielhingar3397@gmail.com','showcase','foto1','deportes',2);
- 
+INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,about_id) VALUES (985,'alicia','hinojo garcía','danhingar5','$2a$10$bLWWf4R6N61Q3XX9iF88t..pUG0PzUza4XZy2jdzFPOvejNk8e9rK',1,'672389123','danielhingar3397@gmail.com','Feuvert','','Automoviles',5);
+INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,about_id) VALUES (986,'cristina','hinojo garcía','danhingar6','$2a$10$bLWWf4R6N61Q3XX9iF88t..pUG0PzUza4XZy2jdzFPOvejNk8e9rK',1,'672389123','danielhingar3397@gmail.com','Telefónica','https://images.unsplash.com/photo-1574315042617-f84e1847848a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60','Telefonía',6);
+INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,about_id) VALUES (987,'carmen','hinojo garcía','danhingar7','$2a$10$7nlxuDw39HBwdu0AQz0I/.qTOjI702AnqmZqzudGcMylrjBAn3qli',1,'672389123','danielhingar3397@gmail.com','Pull&Bear','https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80','Moda',7);
+INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,about_id) VALUES (988,'lucia','hinojo garcía','danhingar8','$2a$10$bLWWf4R6N61Q3XX9iF88t..pUG0PzUza4XZy2jdzFPOvejNk8e9rK',1,'672389123','danielhingar3397@gmail.com','Cristalbox','https://images.unsplash.com/photo-1477333183135-292dd5b3910f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=749&q=80','Automoviles',8);
+
+INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,about_id) VALUES (989,'patricio','hinojo garcía','danhingar4','$2a$10$bLWWf4R6N61Q3XX9iF88t..pUG0PzUza4XZy2jdzFPOvejNk8e9rK',1,'672389123','danielhingar3397@gmail.com','Carglass','','Automoviles',4);
+INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,about_id) VALUES (990,'juana','hinojo garcía','danhingar3','$2a$10$bLWWf4R6N61Q3XX9iF88t..pUG0PzUza4XZy2jdzFPOvejNk8e9rK',1,'672389123','danielhingar3397@gmail.com','Jazztel','https://images.unsplash.com/photo-1574315042617-f84e1847848a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60','Telefonía',3);
+INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,about_id) VALUES (991,'daniel','hinojo garcía','danhingar','$2a$10$7nlxuDw39HBwdu0AQz0I/.qTOjI702AnqmZqzudGcMylrjBAn3qli',1,'672389123','danielhingar3397@gmail.com','Zara','https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80','Moda',1);
+INSERT INTO `company` (id,name,surnames,username,password,enabled,phone,email,business_name,image,category,about_id) VALUES (992,'ramon','hinojo garcía','danhingar2','$2a$10$bLWWf4R6N61Q3XX9iF88t..pUG0PzUza4XZy2jdzFPOvejNk8e9rK',1,'672389123','danielhingar3397@gmail.com','Autodoc','https://images.unsplash.com/photo-1477333183135-292dd5b3910f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=749&q=80','Automoviles',2);
+
 /*ABOUTS--------------------------------------------------------------------------------*/
 INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (1,'calle Cuba','https://www.instagram.com/danielhingar/','https://facebook.com','Esta empresa comenzó hace ya 10 años',null);
 INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (2,'calle Cuba','https://www.instagram.com/danielhingar/','https://facebook.com','Esta empresa comenzó hace ya 10 años',null);
+INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (3,'calle Cuba','https://www.instagram.com/danielhingar/','https://facebook.com','Esta empresa comenzó hace ya 10 años',null);
+INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (4,'calle Cuba','https://www.instagram.com/danielhingar/','https://facebook.com','Esta empresa comenzó hace ya 10 años',null);
 
+INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (5,'calle Cuba','https://www.instagram.com/danielhingar/','https://facebook.com','Esta empresa comenzó hace ya 10 años',null);
+INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (6,'calle Cuba','https://www.instagram.com/danielhingar/','https://facebook.com','Esta empresa comenzó hace ya 10 años',null);
+INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (7,'calle Cuba','https://www.instagram.com/danielhingar/','https://facebook.com','Esta empresa comenzó hace ya 10 años',null);
+INSERT INTO `about`  (id,address,instagram,facebook,description,images) VALUES (8,'calle Cuba','https://www.instagram.com/danielhingar/','https://facebook.com','Esta empresa comenzó hace ya 10 años',null);
 /*ADMINS--------------------------------------------------------------------------------*/
 INSERT INTO `admin` (id,name,surnames,username,password,enabled,phone,email) VALUES (993,'Antonio','Pérez','admin','$2a$10$6XWAGJZ1dQ85TUIfEpUJ6u2nyNSltYAWuktcZYh6gGw71tEZLVpEO',1,'674839213', 'admin@gmail.com');
  
@@ -73,6 +86,12 @@ INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,localit
 INSERT INTO `facture` (id,create_date,status,address,name,surnames,phone,locality,province,postal_code,number,client_id,basket_id,company_id) VALUES (2,'2019-11-22','ACCEPTED','CALLE CIUDAD DE MÉJICO','DANIEL','HINOJO GARCÍA','673521671','DOS HERMANAS','SEVILLA','41701','51',994,1,991);
 
 /*Usuario_role*/
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (985,4);
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (986,4);
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (987,4);
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (988,4);
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (989,4);
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (990,4);
 INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (991,4);
 INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (992,4);
 INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (993,2);

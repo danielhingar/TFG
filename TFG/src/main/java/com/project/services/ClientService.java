@@ -54,6 +54,11 @@ public class ClientService {
 		return clientRepository.findById(id).orElse(null);
 
 	}
+	
+	@Transactional(readOnly=true)
+	public Client findByUsername(String username) {
+		return clientRepository.findClientByUsername(username);
+	}
 
 	// ----------------------------------------Create--------------------------------------------------------
 	@Transactional
@@ -64,6 +69,12 @@ public class ClientService {
 		r.add(role);
 		client.setRoles(r);
 		client.setEnabled(true);
+		return clientRepository.save(client);
+	}
+	
+	// -------------------------------------Update---------------------------------------------------------
+	@Transactional
+	public Client update(Client client) {
 		return clientRepository.save(client);
 	}
 
