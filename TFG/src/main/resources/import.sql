@@ -71,13 +71,13 @@ INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,ca
 INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,memory,brand,offert) VALUES (8,992,'SAL DEL HIMALAYA','Sal 100% natural procedente del himalaya en forma de escamas',null,30.21,'2019-11-23','FOOD',null,null,null,'250 gramos',null,null,null,'CARREFOUR',null);
  
 /*RELATION BASKET-PRODUCTS*/
-INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (1,1,1,1,'38',null); 
-INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (2,2,1,2,'39',null);
-INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (3,1,1,3,null,null);
-INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (4,3,2,4,'L',null);
-INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (5,1,2,5,'M',null);
-INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (6,8,3,7,null,'500GB');
-INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (7,3,3,6,null,'16GB');
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (1,1,1,1,'38','null'); 
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (2,2,1,2,'39','null');
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (3,1,1,3,'null','null');
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (4,3,2,4,'L','null');
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (5,1,2,5,'M','null');
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (6,8,3,7,'null','500GB');
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (7,3,3,6,'null','16GB');
 
 
 /*FACTURE--------------------------------------------------------------------------------*/

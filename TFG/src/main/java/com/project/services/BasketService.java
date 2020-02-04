@@ -28,7 +28,7 @@ public class BasketService {
 
 	@Autowired
 	private ItemBasketService itemBasketService;
-	
+
 	@Autowired
 	private ClientService clientService;
 
@@ -37,13 +37,11 @@ public class BasketService {
 	// -----------------------------------Show --------------------------------
 	@Transactional(readOnly = true)
 	public Basket findByClient(String username) {
-		Client c= clientService.findByUsername(username);
-		Basket b=c.getBasket();
+		Client c = clientService.findByUsername(username);
+		Basket b = c.getBasket();
 		return b;
 
 	}
-	
-	
 
 	// -----------------------------------------Update basket with a new
 	// product----------------------------------------------------------
@@ -62,22 +60,47 @@ public class BasketService {
 			newItem.setSize(size);
 			items.add(newItem);
 			this.itemBasketService.save(newItem);
-
-		} else {
-			incrementarCantidad(basket, productId);
+		} else if(ids.contains(productId) && !size.equals(null) && !size.equals("null")) {
+			if(addProduct(basket, productId, size)!=null) {
+			 items.add(addProduct(basket, productId, size));
+			}
+		}else {
+			incrementarCantidad(basket, productId,size);
 		}
 		return basketRepository.save(basket);
 	}
 
-	public void incrementarCantidad(Basket basket, int productId) {
+	public void incrementarCantidad(Basket basket, int productId,String size) {
 		List<ItemBasket> items = basket.getItemBaskets();
 		Product p = this.productService.findById(productId);
 		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i).getProduct().getId() == p.getId()) {
+			if (items.get(i).getProduct().getId() == p.getId() && size.equals("null")) {
 				items.get(i).setQuantity(items.get(i).getQuantity() + 1);
-				this.itemBasketService.save(items.get(i));
+				
 			}
 		}
+	}
+
+	public ItemBasket addProduct(Basket basket, int productId,String size) {
+		ItemBasket newItem = null;
+		List<ItemBasket> items = basket.getItemBaskets();
+		List<String> sizes= new ArrayList<>();
+		Product p = this.productService.findById(productId);
+		for (int i = 0; i < items.size(); i++) {
+			if(items.get(i).getProduct().getId() == p.getId() &&  !size.equals("null")) {
+				sizes.add(items.get(i).getSize());
+			}
+			if (items.get(i).getProduct().getId() == p.getId() &&  !size.equals("null") && !sizes.contains(size)) {
+				newItem = new ItemBasket();
+				newItem.setProduct(p);
+				newItem.setQuantity(1);
+				newItem.setSize(size);
+			}else if(items.get(i).getProduct().getId() == p.getId() &&  !size.equals("null") && size.contains(size) && size.equals(items.get(i).getSize())){
+				items.get(i).setQuantity(items.get(i).getQuantity()+1);
+				newItem=null;
+			}
+		}
+		return newItem;
 	}
 
 	// ----------------------------------------Delete---------------------------
