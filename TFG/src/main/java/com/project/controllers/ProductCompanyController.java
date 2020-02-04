@@ -26,16 +26,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.domain.Product;
-import com.project.domain.Usuario;
 import com.project.services.ProductService;
-import com.project.services.UsuarioService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
@@ -46,8 +43,7 @@ public class ProductCompanyController {
 	@Autowired
 	private ProductService productService;
 
-//	@Autowired
-//	private UsuarioService usuarioService;
+
 
 	// -------------------------- List ----------------------------------
 //	@CrossOrigin
@@ -57,22 +53,20 @@ public class ProductCompanyController {
 //	}
 	// --------------------------List product of my
 	// company----------------------------------------------------------
-	@CrossOrigin
-	@RequestMapping(value = "/myProducts/{companyId}", method = RequestMethod.GET)
-	public List<Product> listProductsCompany(@PathVariable int companyId) {
-		return productService.findAllByCompany(companyId);
-	}
+//	@CrossOrigin
+//	@RequestMapping(value = "/myProducts/{companyId}", method = RequestMethod.GET)
+//	public List<Product> listProductsCompany(@PathVariable int companyId) {
+//		return productService.findAllByCompany(companyId);
+//	}
 
 	// -------------------------------------Create a
 	// product----------------------------------------------------
-	@PostMapping("/create/{companyId}")
+	@CrossOrigin
+	@PostMapping("/create/{username}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> create(@Valid @RequestBody Product product, BindingResult bindingResult,@PathVariable int companyId) {
+	public ResponseEntity<?> create(@Valid @RequestBody Product product,@PathVariable String username, BindingResult bindingResult) {
 		Product productNew = null;
 		Map<String, Object> response = new HashMap<>();
-		// final Usuario
-		// a=this.usuarioService.findByUsername(UsuarioService.getPrincipal());
-		// final int companyId=a.getId();
 		if (bindingResult.hasErrors()) {
 			List<String> errors = new ArrayList<String>();
 			for (FieldError err : bindingResult.getFieldErrors()) {
@@ -83,7 +77,7 @@ public class ProductCompanyController {
 		}
 		try {
 
-			productNew = productService.saveProduct(product,companyId);
+			productNew = productService.saveProduct(product,username);
 
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al añadir el nuevo producto");
@@ -138,7 +132,7 @@ public class ProductCompanyController {
 			productActually.setSize(product.getSize());
 			productActually.setWeight(product.getWeight());
 			productActually.setWidth(product.getWidth());
-			productActually.setCompany(product.getCompany());
+			productActually.setMemory(product.getMemory());
 
 			productUpdated = productService.saveProduct(productActually);
 		} catch (DataAccessException e) {

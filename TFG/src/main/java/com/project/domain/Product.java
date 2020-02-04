@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
+
 
 import org.hibernate.validator.constraints.Range;
 
@@ -40,6 +40,7 @@ public class Product implements Serializable {
 	private String inch;
 	private String capacity;
 	private String brand;
+	private String memory;
 	private Integer offert;
 
 	@Id
@@ -153,6 +154,15 @@ public class Product implements Serializable {
 
 	public void setCapacity(String capacity) {
 		this.capacity = capacity;
+	}
+	
+
+	public String getMemory() {
+		return memory;
+	}
+
+	public void setMemory(String memory) {
+		this.memory = memory;
 	}
 
 	@NotBlank

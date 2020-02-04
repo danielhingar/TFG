@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -19,8 +19,9 @@ public class ItemBasket implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
 	private Integer quantity;
+	private String size;
+	private String capacity;
 	
 
 	public int getId() {
@@ -39,11 +40,25 @@ public class ItemBasket implements Serializable {
 		this.quantity = quantity;
 	}
 	
-	public Double getImporte() {
-		return quantity.doubleValue()*product.getPrice();
+	
+	public String getSize() {
+		return size;
 	}
-	
-	
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public String getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(String capacity) {
+		this.capacity = capacity;
+	}
+
+
+
+
 	//Relationships----------------------------------------------------------------------------------------------------------
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
 	@ManyToOne(fetch = FetchType.LAZY)

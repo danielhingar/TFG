@@ -14,20 +14,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.Basket;
+import com.project.domain.Client;
+import com.project.domain.ItemBasket;
 import com.project.services.BasketService;
+import com.project.services.ClientService;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/client/basket")
 public class BasketClientController {
@@ -36,22 +37,46 @@ public class BasketClientController {
 	@Autowired
 	private BasketService basketService;
 
-	// ------------------Show basket--------------
+	@Autowired
+	private ClientService clientService;
+
+	// ------------------Show itemBasket--------------
 	@CrossOrigin
-	@GetMapping("/show/{id}")
-	public ResponseEntity<?> show(@PathVariable int id) {
+	@RequestMapping(value = "/show/{username}", method = RequestMethod.GET)
+	public ResponseEntity<?> showBasketClient(@PathVariable String username) {
 		Basket basket = null;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			basket = basketService.findById(id);
+			basket = basketService.findByClient(username);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		Client c = clientService.findByUsername(username);
+		if (c.getBasket() == null) {
+			response.put("mensaje", "This client hasn't basket");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<List<ItemBasket>>(basket.getItemBaskets(), HttpStatus.OK);
+	}
 
-		if (basket == null) {
-			response.put("mensaje", "El carrito no existe");
+	// ------------------Show itemBasket--------------
+	@CrossOrigin
+	@RequestMapping(value = "/showBasket/{username}", method = RequestMethod.GET)
+	public ResponseEntity<?> showBasket(@PathVariable String username) {
+		Basket basket = null;
+		Map<String, Object> response = new HashMap<>();
+		try {
+			basket = basketService.findByClient(username);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		Client c = clientService.findByUsername(username);
+		if (c.getBasket() == null) {
+			response.put("mensaje", "This client hasn't basket");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Basket>(basket, HttpStatus.OK);
@@ -60,13 +85,10 @@ public class BasketClientController {
 	// --------------------------------Update basket adding a
 	// product------------------------
 	@CrossOrigin
-	@PutMapping("/update/{productId}")
+	@PutMapping("/update/{username}/{productId}/{size}")
 	public ResponseEntity<?> update(@Valid @RequestBody Basket basket, BindingResult bindingResult,
-			@PathVariable int productId) {
-		// final Usuario
-		// a=this.usuarioService.findByUsername(UsuarioService.getPrincipal());
-		// final int clientId=a.getId();
-		Basket basketActually = this.basketService.findById(2);
+			@PathVariable int productId, @PathVariable String username, @PathVariable String size) {
+		Basket basketActually = this.basketService.findByClient(username);
 		Basket basketUpdated = null;
 
 		Map<String, Object> response = new HashMap<>();
@@ -87,7 +109,7 @@ public class BasketClientController {
 
 		try {
 
-			basketUpdated = this.basketService.save(basketActually, productId);
+			basketUpdated = this.basketService.save(basketActually, productId, size);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

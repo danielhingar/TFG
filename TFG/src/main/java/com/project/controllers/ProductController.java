@@ -44,26 +44,26 @@ public class ProductController {
 
 	// --------------------------List product by company-------------------------------------------------
 	@CrossOrigin
-	@RequestMapping(value = "/list/{companyId}", method = RequestMethod.GET)
-	public ResponseEntity<?> listProductsCompany(@PathVariable int companyId) {
+	@RequestMapping(value = "/list/{username}", method = RequestMethod.GET)
+	public ResponseEntity<?> listProductsCompany(@PathVariable String username) {
 		List<Product> product = new ArrayList<Product>();
 		Map<String, Object> response = new HashMap<>();
 		try {
-			product = productService.findAllByCompany(companyId);
+			product = productService.findAllByCompany(username);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		Company c=companyService.findById(companyId);
+		Company c=companyService.findByUsername(username);
 		if (c.getProducts() == null) {
 			response.put("mensaje", "This company hasn't products");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<List<Product>>( product, HttpStatus.OK);
 	}
-	
-	
+//	
+//	
 
 	// -------------------------- Show detail of a product----------------------------------
 	@CrossOrigin

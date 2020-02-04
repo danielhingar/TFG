@@ -54,8 +54,8 @@ public class FactureService {
 	}
 
 	// ----------------Create a facture--------------------------------
-	public Set<Company> createsFactures(int basketId) {
-		Basket b = this.basketService.findById(basketId);
+	public Set<Company> createsFactures(String username) {
+		Basket b = this.basketService.findByClient(username);
 		List<ItemBasket> items = b.getItemBaskets();
 		Set<Company> companies = new HashSet<Company>();
 		for (int i = 0; i < items.size(); i++) {
@@ -65,10 +65,10 @@ public class FactureService {
 	}
 
 	@Transactional
-	public List<Facture> save(Facture facture, int basketId) {
+	public List<Facture> save(Facture facture, String username) {
 		List<Facture> factures = new ArrayList<Facture>();
-		Basket b = this.basketService.findById(basketId);
-		Set<Company> companies = this.createsFactures(basketId);
+		Basket b = this.basketService.findByClient(username);
+		Set<Company> companies = this.createsFactures(username);
 		List<Company> companies1 = new ArrayList<Company>(companies);
 		for (int x = 0; x < companies1.size(); x++) {
 			Facture facture1 = new Facture();

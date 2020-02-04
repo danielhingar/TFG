@@ -61,23 +61,23 @@ INSERT INTO `claim` (id,reporter_id,title,description,create_date,attachment,fac
 
 /*PRODUCTS-------------------------------------------------------------------------------*/
 
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (1,991,'NIKE AIR-MAX','zapatillas con suela ancha','photo1',100.7,'2019-11-23','SHOES','37,38,39,40,41',null,null,'550 gramos',null,null,'NIKE',null);
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (2,992,'ZAPATILLA ULTRABOOST','zapatillas perfecta para correr','photo1',120.7,'2019-11-23','SHOES','37,38,39,40,41',null,null,'550 gramos',null,null,'ADIDAS',null);
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (3,991,'LÁMPARA DE TECHO METAL','lámpara de aluminio perfecta para el salón','photo1',50.7,'2019-11-23','DECORATION',null,null,null,'300 gramos','20 pulgadas',null,'NIKE',null);
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (4,992,'CHAQUETA ACOLCHADA','chaqueta de lana perfecta para el invierno','photo1',69.7,'2019-11-23','CLOTHES','S,M,L,XL',null,null,'550 gramos',null,null,'SPRINGFIELD',20);
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (5,991,'CAMISETA MANGA CORTA','camiseta con logo de disney','photo1',30.7,'2019-11-23','CLOTHES','S,M',null,null,null,null,null,'PULL&BEARD',null);
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (6,992,'IPHONE 11','nuevo modelo de iphone','photo1',1000.7,'2019-11-23','TECNOLOGY',null,'18 cm','7 cm','750 gramos','10','36,64','IPHONE',null);
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (7,991,'PORTATIL HP','portatil hp de última generación','photo1',600.7,'2019-11-23','TECNOLOGY',null,'20 cm','40 cm','550 gramos','17',null,'HP',null);
-INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,brand,offert) VALUES (8,992,'SAL DEL HIMALAYA','sal del himalaya en escamas','photo1',6.7,'2019-11-23','FOOD',null,null,null,'250 gramos',null,null,'CARREFOUR',null);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,memory,brand,offert) VALUES (1,991,'NIKE AIR-MAX','Zapatillas Nike Air-Max último modelo con las nuevas plantillas adaptativas a tu pie','https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/tlizqept50fxcveltkbg/air-max-200-zapatillas-M5t3W6.jpg',100.70,'2019-11-23','SHOES','37,38,39,40,41',null,null,'550 gramos',null,null,null,'NIKE',null);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,memory,brand,offert) VALUES (2,992,'ZAPATILLA ULTRABOOST','Zapatillas para correr con suela Ultraboost para adaptarse mejor a las imperfecciones del suelo',null,120.70,'2019-11-23','SHOES','37,38,39,40,41',null,null,'550 gramos',null,null,null,'ADIDAS',null);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,memory,brand,offert) VALUES (3,991,'LÁMPARA DE TECHO METAL','Lámpara de aluminio perfecta para el salón, no incluye bombilla.','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3wkiBwBWjNKpQsnkFiHnIBr1ANTqXIDDr_CoT0_rpheKfSkYixQ&s',50.50,'2019-11-23','DECORATION',null,null,null,'300 gramos','20 pulgadas',null,null,'NIKE',null);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,memory,brand,offert) VALUES (4,992,'CHAQUETA ACOLCHADA','Chaqueta de lana nueva temporada invierno',null,69.7,'2019-11-23','CLOTHES','S,M,L,XL',null,null,'550 gramos',null,null,null,'SPRINGFIELD',20);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,memory,brand,offert) VALUES (5,991,'CAMISETA MANGA CORTA','Camiseta de algodón de manga corta con logo de mickey mouse, cuello redondo.','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgQJbxAk_a2gjMfmx2O4ld2XViGMIOcsHljtm9wwl-f5jWziA1&s',30.25,'2019-11-23','CLOTHES','S,M',null,null,null,null,null,null,'PULL&BEARD',null);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,memory,brand,offert) VALUES (6,992,'IPHONE 11','IPHONE 11 móvil de última genereción, 6.1" Liquid Retina HD, Chip A13 Bionic, iOS',null,1000.50,'2019-11-23','TECNOLOGY',null,'18 cm','7 cm','750 gramos','6.1',null,'32GB,64GB,128GB','IPHONE',null);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,memory,brand,offert) VALUES (7,991,'PORTATIL HP','Portatil HP con procesador de última generación i9, 16GB de RAM, 15.6" Full HD.',null,601.70,'2019-11-23','TECNOLOGY',null,'20 cm','40 cm','550 gramos','15.6',null,'250GB,500GB,1TB','HP',null);
+INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,memory,brand,offert) VALUES (8,992,'SAL DEL HIMALAYA','Sal 100% natural procedente del himalaya en forma de escamas',null,30.21,'2019-11-23','FOOD',null,null,null,'250 gramos',null,null,null,'CARREFOUR',null);
  
 /*RELATION BASKET-PRODUCTS*/
-INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (1,1,1); 
-INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (2,1,2);
-INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (1,1,3);
-INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (3,2,4);
-INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (1,2,5);
-INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (8,3,7);
-INSERT INTO `item_basket` (quantity,basket_id,product_id) VALUES (3,3,6);
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (1,1,1,1,'38',null); 
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (2,2,1,2,'39',null);
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (3,1,1,3,null,null);
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (4,3,2,4,'L',null);
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (5,1,2,5,'M',null);
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (6,8,3,7,null,'500GB');
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,size,capacity) VALUES (7,3,3,6,null,'16GB');
 
 
 /*FACTURE--------------------------------------------------------------------------------*/

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.domain.Basket;
+import com.project.domain.Client;
+import com.project.domain.Company;
 import com.project.domain.ItemBasket;
 import com.project.domain.Product;
 import com.project.repositories.BasketRepository;
@@ -26,20 +28,27 @@ public class BasketService {
 
 	@Autowired
 	private ItemBasketService itemBasketService;
+	
+	@Autowired
+	private ClientService clientService;
 
 	// ---------------------------------Methods---------------------------------------------------------
 
 	// -----------------------------------Show --------------------------------
 	@Transactional(readOnly = true)
-	public Basket findById(int id) {
-		return basketRepository.findById(id).orElse(null);
+	public Basket findByClient(String username) {
+		Client c= clientService.findByUsername(username);
+		Basket b=c.getBasket();
+		return b;
 
 	}
+	
+	
 
 	// -----------------------------------------Update basket with a new
 	// product----------------------------------------------------------
 	@Transactional
-	public Basket save(Basket basket, int productId) {
+	public Basket save(Basket basket, int productId, String size) {
 		List<ItemBasket> items = basket.getItemBaskets();
 		Product p = this.productService.findById(productId);
 		List<Integer> ids = new ArrayList<Integer>();
@@ -50,7 +59,9 @@ public class BasketService {
 			ItemBasket newItem = new ItemBasket();
 			newItem.setProduct(p);
 			newItem.setQuantity(1);
+			newItem.setSize(size);
 			items.add(newItem);
+			this.itemBasketService.save(newItem);
 
 		} else {
 			incrementarCantidad(basket, productId);

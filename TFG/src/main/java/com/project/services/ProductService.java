@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.project.domain.Basket;
+import com.project.domain.Client;
 import com.project.domain.Company;
 import com.project.domain.Product;
 import com.project.repositories.ProductRepository;
@@ -26,6 +28,10 @@ public class ProductService {
 	@Autowired
 	private CompanyService companyService;
 	
+	@Autowired
+	private ClientService clientService;
+	
+	
 	// CRUD--------------------------------------------------------------------------------------------------------
 
 	// ----------------------------------------List------------------------------------------------------
@@ -42,19 +48,13 @@ public class ProductService {
 	}
 	//-----------------------------------------Save----------------------------------------------------------
 	@Transactional
-	public Product saveProduct(Product product,int companyId) {
-		product.setCompany(this.companyService.findById(companyId));
+	public Product saveProduct(Product product,String username) {
+		product.setCompany(this.companyService.findByUsername(username));
 		product.setCreateDate(new Date());
 		return productRepository.save(product);
 	}
 	
-	//-----------------------------------------Save prueba------------------------------------------------------
-	@Transactional
-	public Product saveProductTest(Product product) {
-		product.setCompany(this.companyService.findById(992));
-		product.setCreateDate(new Date());
-		return productRepository.save(product);
-	}
+	
 	//----------------------------------------Save update-----------------------------------------------------
 	@Transactional
 	public Product saveProduct(Product product) {
@@ -64,6 +64,17 @@ public class ProductService {
 	//-----------------------------------------Delete----------------------------------------------------------
 	@Transactional
 	public void delete(int id) {
+		Product p=this.findById(id);
+		List<Client> clients=this.clientService.findAll();
+		for(Client t:clients) {
+			Basket b=t.getBasket();
+			for(int i=0;i<b.getItemBaskets().size();i++) {
+				if(p.getName().equals(b.getItemBaskets().get(i).getProduct().getName())) {
+					b.getItemBaskets().get(i).setProduct(null);
+					b.getItemBaskets().remove(b.getItemBaskets().get(i));
+				}
+			}
+		}
 		productRepository.deleteById(id);
 	}
 
@@ -74,8 +85,8 @@ public class ProductService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Product> findAllByCompany(int companyId){
-		Company c= companyService.findById(companyId);
+	public List<Product> findAllByCompany(String username){
+		Company c= companyService.findByUsername(username);
 		List<Product> products=c.getProducts();
 		return products;
 	}

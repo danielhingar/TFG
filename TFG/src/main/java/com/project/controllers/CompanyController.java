@@ -76,6 +76,27 @@ public class CompanyController {
 		}
 		return new ResponseEntity<Company>(company, HttpStatus.OK);
 	}
+	
+	// -------------------------- Show ----------------------------------
+	@CrossOrigin
+	@GetMapping("/show/{id}")
+	public ResponseEntity<?> show(@PathVariable int id) {
+		Company company = null;
+		Map<String, Object> response = new HashMap<>();
+		try {
+			company = companyService.findById(id);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		if (company == null) {
+			response.put("mensaje", "La compañía no existe");
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Company>(company, HttpStatus.OK);
+	}
 
 	// -------------------------- List ----------------------------------
 	@CrossOrigin

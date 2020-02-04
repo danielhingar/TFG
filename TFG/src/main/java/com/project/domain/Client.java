@@ -22,8 +22,9 @@ public class Client extends Usuario {
 		basket=new Basket();
 	}
 	
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "hadler" })
+	
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@JoinColumn(name = "basket_id")
 	public Basket getBasket() {
 		return basket;

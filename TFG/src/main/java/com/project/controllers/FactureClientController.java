@@ -71,7 +71,7 @@ public class FactureClientController {
 	@PostMapping("/create/{idBasket}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> create(@Valid @RequestBody Facture facture, BindingResult bindingResult,
-			@PathVariable int idBasket) {
+			@PathVariable String username) {
 		List<Facture> facturesNew = null;
 		Map<String, Object> response = new HashMap<>();
 
@@ -85,7 +85,7 @@ public class FactureClientController {
 		}
 		try {
 
-			facturesNew = this.factureService.save(facture, idBasket);
+			facturesNew = this.factureService.save(facture, username);
 
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al añadir la nueva factura");
