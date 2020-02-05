@@ -85,9 +85,9 @@ public class BasketClientController {
 	// --------------------------------Update basket adding a
 	// product------------------------
 	@CrossOrigin
-	@PutMapping("/update/{username}/{productId}/{size}")
+	@PutMapping("/update/{username}/{productId}/{size}/{capacity}")
 	public ResponseEntity<?> update(@Valid @RequestBody Basket basket, BindingResult bindingResult,
-			@PathVariable int productId, @PathVariable String username, @PathVariable String size) {
+			@PathVariable int productId, @PathVariable String username, @PathVariable String size, @PathVariable String capacity) {
 		Basket basketActually = this.basketService.findByClient(username);
 		Basket basketUpdated = null;
 
@@ -109,7 +109,7 @@ public class BasketClientController {
 
 		try {
 
-			basketUpdated = this.basketService.save(basketActually, productId, size);
+			basketUpdated = this.basketService.save(basketActually, productId, size,capacity);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
