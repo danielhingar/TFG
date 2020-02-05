@@ -40,6 +40,12 @@ public class FactureService {
 		return factureRepository.findFacturesByClient(clientId);
 	}
 
+	// ----------------------list factures by client-----------------------
+	@Transactional(readOnly = true)
+	public List<Facture> findFacturesPendingByClient(String username) {
+		return factureRepository.findFacturesPendingByClient(username);
+	}
+
 	// ------------------list factures by company-----------------------
 	@Transactional(readOnly = true)
 	public List<Facture> findFactureByCompany(int companyId) {
@@ -80,18 +86,22 @@ public class FactureService {
 					items.add(b.getItemBaskets().get(i));
 				}
 			}
-			Basket b1 = new Basket();
-			b1.setItemBaskets(items);
-			this.basketService.save(b1);
-			this.factureRepository.flush();
-			facture1.setBasket(b1);
+//			Basket b1 = new Basket();
+//			b1.setItemBaskets(items);
+//			this.basketService.save(b1);
+			// this.factureRepository.flush();
+			facture1.setItemBaskets(items);
 			facture1.setCreateDate(new Date());
 			facture1.setStatus("PENDING");
-			facture1.setClient(this.clientService.findById(995));
+			facture1.setClient(this.clientService.findByUsername(username));
 			this.factureRepository.save(facture1);
 			factures.add(facture1);
+			
 		}
+		b.setItemBaskets(new ArrayList<>());
+		this.basketService.save(b);
 		return factures;
+		
 
 	}
 

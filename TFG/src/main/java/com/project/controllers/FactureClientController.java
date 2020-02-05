@@ -24,10 +24,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.domain.Basket;
+import com.project.domain.Client;
+import com.project.domain.Company;
 import com.project.domain.Facture;
+import com.project.domain.ItemBasket;
+import com.project.domain.Product;
 import com.project.services.FactureService;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/client/facture")
 public class FactureClientController {
@@ -44,6 +49,22 @@ public class FactureClientController {
 		return factureService.findFactureByClient(clientId);
 	}
 
+	// -------------------------- List Facture PENDING by Client
+	// ----------------------------------
+	@CrossOrigin
+	@RequestMapping(value = "/myFacturesPending/{username}", method = RequestMethod.GET)
+	public ResponseEntity<?> findFacturesPendingByClient(@PathVariable String username) {
+		List<Facture> factures = new ArrayList<Facture>();
+		Map<String, Object> response = new HashMap<>();
+		try {
+			factures = factureService.findFacturesPendingByClient(username);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<List<Facture>>( factures, HttpStatus.OK);
+	}
 	// ---------------------------- Show
 	// facture----------------------------------------------------------
 	@CrossOrigin
@@ -68,7 +89,7 @@ public class FactureClientController {
 
 	// ------------------------Create a factures of the
 	// basket-----------------------------------
-	@PostMapping("/create/{idBasket}")
+	@PostMapping("/create/{username}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> create(@Valid @RequestBody Facture facture, BindingResult bindingResult,
 			@PathVariable String username) {
@@ -134,8 +155,7 @@ public class FactureClientController {
 			factureActually.setProvince(facture.getProvince());
 			factureActually.setSurnames(facture.getSurnames());
 			factureActually.setStatus(facture.getStatus());
-			
-			
+
 			factureUpdated = this.factureService.save(factureActually);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");

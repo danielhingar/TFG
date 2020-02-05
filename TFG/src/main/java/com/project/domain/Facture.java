@@ -2,6 +2,9 @@ package com.project.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -135,8 +139,19 @@ public class Facture implements Serializable {
 	// Relationships-------------------------------------------------------------------
 
 	private Client client;
-	private Basket basket;
 	private Company company;
+	private List<ItemBasket> itemBaskets; 
+
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JoinColumn(name="facture_id")
+	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "hadler" })
+	public List<ItemBasket> getItemBaskets() {
+		return itemBaskets;
+	}
+
+	public void setItemBaskets(List<ItemBasket> itemBaskets) {
+		this.itemBaskets = itemBaskets;
+	}
 
 	
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
@@ -149,19 +164,6 @@ public class Facture implements Serializable {
 	public void setClient(Client client) {
 		this.client = client;
 	}
-
-	
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="basket_id")
-	public Basket getBasket() {
-		return basket;
-	}
-
-	public void setBasket(Basket basket) {
-		this.basket = basket;
-	}
-
 	
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
 	@ManyToOne(fetch = FetchType.LAZY)

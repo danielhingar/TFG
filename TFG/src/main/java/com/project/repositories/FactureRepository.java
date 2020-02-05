@@ -17,5 +17,6 @@ public interface FactureRepository extends JpaRepository<Facture, Integer> {
 	@Query("select f from Facture f where f.status='ACCEPTED' and f.company.id =?1")
 	List<Facture> findFactureByCompany(int companyId);
 	
-
+	@Query("select f from Facture f where f.status='PENDING' and f.client.username = ?1")
+	List<Facture> findFacturesPendingByClient(String username);
 }
