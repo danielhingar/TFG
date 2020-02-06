@@ -32,7 +32,7 @@ public class FactureService {
 
 	@Autowired
 	private ClientService clientService;
-	
+
 	@Autowired
 	private ItemBasketService itemBasketService;
 
@@ -57,6 +57,17 @@ public class FactureService {
 	@Transactional(readOnly = true)
 	public List<Facture> findFactureByCompany(String username) {
 		return factureRepository.findFactureByCompany(username);
+	}
+
+	// ------------------list factures by company-----------------------
+	@Transactional(readOnly = true)
+	public List<Facture> findFacturesAllClients() {
+		List<Facture> factures = factureRepository.findAll();
+		List<Facture> facturesPending = factureRepository.findFacturesAllPending();
+		List<Facture> facturesPagadas = factureRepository.findFacturesAllPagada();
+		factures.removeAll(facturesPending);
+		factures.removeAll(facturesPagadas);
+		return factures;
 	}
 
 	// ----------------------Show a facture--------------------------------
@@ -91,12 +102,12 @@ public class FactureService {
 			for (int i = 0; i < b.getItemBaskets().size(); i++) {
 				companies.add(b.getItemBaskets().get(i).getProduct().getCompany());
 				if (b.getItemBaskets().get(i).getProduct().getCompany().getId() == (companies1.get(x).getId())) {
-					ItemBasket itemNew=new ItemBasket();
+					ItemBasket itemNew = new ItemBasket();
 					itemNew.setCapacity(b.getItemBaskets().get(i).getCapacity());
 					itemNew.setProduct(b.getItemBaskets().get(i).getProduct());
 					itemNew.setQuantity(b.getItemBaskets().get(i).getQuantity());
 					itemNew.setSize(b.getItemBaskets().get(i).getSize());
-					this.itemBasketService.save(itemNew); 
+					this.itemBasketService.save(itemNew);
 					items.add(itemNew);
 				}
 			}
@@ -106,33 +117,33 @@ public class FactureService {
 			// this.factureRepository.flush();
 			facture1.setItemBaskets(items);
 			facture1.setCreateDate(new Date());
-			facture1.setStatus("PAY");
-			facture1.setClient(this.clientService.findByUsername(username));
+			facture1.setStatus("PAGADA");
+			facture1.setClient(null);
 			this.factureRepository.save(facture1);
 			factures.add(facture1);
 
 		}
-		b.setItemBaskets(new ArrayList<>()); 
+		b.setItemBaskets(new ArrayList<>());
 		this.basketService.save(b);
 		return factures;
 
-	}    
+	}
 
 	@Transactional
 	public Facture saveFactureUnify(Facture facture, String username) {
 		Client c = this.clientService.findByUsername(username);
 		List<ItemBasket> items = c.getBasket().getItemBaskets();
 		List<ItemBasket> newItems = new ArrayList<>();
-		for(int i= 0;i<items.size();i++) {
+		for (int i = 0; i < items.size(); i++) {
 			newItems.add(items.get(i));
-		} 
+		}
 
 		facture.setItemBaskets(newItems);
-		facture.setCreateDate(new Date()); 
+		facture.setCreateDate(new Date());
 		facture.setStatus("PENDING");
 		facture.setClient(this.clientService.findByUsername(username));
 		facture.setCompany(null);
-		
+
 		this.factureRepository.save(facture);
 		return facture;
 
@@ -141,6 +152,12 @@ public class FactureService {
 	// --------------------Save update-------------------
 	@Transactional
 	public Facture save(Facture facture) {
+		return this.factureRepository.save(facture);
+	}
+
+	@Transactional
+	public Facture saveUpdateClient(Facture facture) {
+		facture.setStatus("PAGADO");
 		return this.factureRepository.save(facture);
 	}
 

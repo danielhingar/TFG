@@ -34,6 +34,9 @@ public class Facture implements Serializable {
 	private String province;
 	private String postalCode;
 	private String number;
+	private String block;
+	private String stairs;
+	private String floor;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -135,6 +138,37 @@ public class Facture implements Serializable {
 	public void setNumber(String number) {
 		this.number = number;
 	}
+	
+	public String getBlock() {
+		return block;
+	}
+
+	public void setBlock(String block) {
+		this.block = block;
+	}
+
+	public String getStairs() {
+		return stairs;
+	}
+
+	public void setStairs(String stairs) {
+		this.stairs = stairs;
+	}
+
+	public String getFloor() {
+		return floor;
+	}
+
+	public void setFloor(String floor) {
+		this.floor = floor;
+	}
+
+
+	
+	
+	
+	
+	
 
 	// Relationships-------------------------------------------------------------------
 

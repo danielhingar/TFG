@@ -154,7 +154,7 @@ public class FactureClientController {
 
 		}
 
-	// --------------------------------Update shipping------------------------
+	// --------------------------------Update facture------------------------
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Facture facture, BindingResult bindingResult,
@@ -189,9 +189,11 @@ public class FactureClientController {
 			factureActually.setPostalCode(facture.getPostalCode());
 			factureActually.setProvince(facture.getProvince());
 			factureActually.setSurnames(facture.getSurnames());
-			factureActually.setStatus(facture.getStatus());
+			factureActually.setBlock(facture.getBlock());
+			factureActually.setStairs(facture.getStairs());
+			factureActually.setFloor(facture.getFloor());
 
-			factureUpdated = this.factureService.save(factureActually);
+			factureUpdated = this.factureService.saveUpdateClient(factureActually);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
