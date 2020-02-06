@@ -51,7 +51,7 @@ public class ClaimService {
 	@Transactional(readOnly = true)
 	public Claim findById(int id) {
 		return claimRepository.findById(id).orElse(null);
-
+ 
 	}
 
 	// ----------------------------------------Save

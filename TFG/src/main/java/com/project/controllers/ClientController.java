@@ -150,11 +150,11 @@ public class ClientController {
 
 	// ---------------------------------Delete client-----------------------
 	@CrossOrigin
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete(@PathVariable int id) {
+	@DeleteMapping("/delete/{username}")
+	public ResponseEntity<?> delete(@PathVariable String username) {
 		Map<String, Object> response = new HashMap<>();
 		try {
-			this.clientService.delete(id);
+			this.clientService.delete(username);
 		} catch (DataAccessException e) {
 			// TODO: handle exception
 			response.put("mensaje", "Error al borrar el reporter");

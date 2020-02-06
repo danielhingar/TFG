@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.project.domain.Basket;
+import com.project.domain.Client;
 import com.project.domain.Company;
 import com.project.domain.Facture;
 import com.project.domain.ItemBasket;
@@ -31,25 +32,31 @@ public class FactureService {
 
 	@Autowired
 	private ClientService clientService;
+	
+	@Autowired
+	private ItemBasketService itemBasketService;
 
 	// --------------------------------------------Methods----------------------------------------------------------
 
 	// ----------------------list factures by client-----------------------
 	@Transactional(readOnly = true)
-	public List<Facture> findFactureByClient(int clientId) {
-		return factureRepository.findFacturesByClient(clientId);
+	public List<Facture> findFactureByClient(String username) {
+		List<Facture> factures = factureRepository.findFacturesByClient(username);
+		Facture facturesPending = factureRepository.findFacturesPendingByClient(username);
+		factures.remove(facturesPending);
+		return factures;
 	}
 
 	// ----------------------list factures by client-----------------------
 	@Transactional(readOnly = true)
-	public List<Facture> findFacturesPendingByClient(String username) {
+	public Facture findFacturesPendingByClient(String username) {
 		return factureRepository.findFacturesPendingByClient(username);
 	}
 
 	// ------------------list factures by company-----------------------
 	@Transactional(readOnly = true)
-	public List<Facture> findFactureByCompany(int companyId) {
-		return factureRepository.findFactureByCompany(companyId);
+	public List<Facture> findFactureByCompany(String username) {
+		return factureRepository.findFactureByCompany(username);
 	}
 
 	// ----------------------Show a facture--------------------------------
@@ -73,7 +80,8 @@ public class FactureService {
 	@Transactional
 	public List<Facture> save(Facture facture, String username) {
 		List<Facture> factures = new ArrayList<Facture>();
-		Basket b = this.basketService.findByClient(username);
+		Client c = this.clientService.findByUsername(username);
+		Basket b = c.getBasket();
 		Set<Company> companies = this.createsFactures(username);
 		List<Company> companies1 = new ArrayList<Company>(companies);
 		for (int x = 0; x < companies1.size(); x++) {
@@ -83,7 +91,13 @@ public class FactureService {
 			for (int i = 0; i < b.getItemBaskets().size(); i++) {
 				companies.add(b.getItemBaskets().get(i).getProduct().getCompany());
 				if (b.getItemBaskets().get(i).getProduct().getCompany().getId() == (companies1.get(x).getId())) {
-					items.add(b.getItemBaskets().get(i));
+					ItemBasket itemNew=new ItemBasket();
+					itemNew.setCapacity(b.getItemBaskets().get(i).getCapacity());
+					itemNew.setProduct(b.getItemBaskets().get(i).getProduct());
+					itemNew.setQuantity(b.getItemBaskets().get(i).getQuantity());
+					itemNew.setSize(b.getItemBaskets().get(i).getSize());
+					this.itemBasketService.save(itemNew); 
+					items.add(itemNew);
 				}
 			}
 //			Basket b1 = new Basket();
@@ -92,16 +106,35 @@ public class FactureService {
 			// this.factureRepository.flush();
 			facture1.setItemBaskets(items);
 			facture1.setCreateDate(new Date());
-			facture1.setStatus("PENDING");
+			facture1.setStatus("PAY");
 			facture1.setClient(this.clientService.findByUsername(username));
 			this.factureRepository.save(facture1);
 			factures.add(facture1);
-			
+
 		}
-		b.setItemBaskets(new ArrayList<>());
+		b.setItemBaskets(new ArrayList<>()); 
 		this.basketService.save(b);
 		return factures;
+
+	}    
+
+	@Transactional
+	public Facture saveFactureUnify(Facture facture, String username) {
+		Client c = this.clientService.findByUsername(username);
+		List<ItemBasket> items = c.getBasket().getItemBaskets();
+		List<ItemBasket> newItems = new ArrayList<>();
+		for(int i= 0;i<items.size();i++) {
+			newItems.add(items.get(i));
+		} 
+
+		facture.setItemBaskets(newItems);
+		facture.setCreateDate(new Date()); 
+		facture.setStatus("PENDING");
+		facture.setClient(this.clientService.findByUsername(username));
+		facture.setCompany(null);
 		
+		this.factureRepository.save(facture);
+		return facture;
 
 	}
 

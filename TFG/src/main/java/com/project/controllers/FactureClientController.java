@@ -24,12 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.domain.Basket;
-import com.project.domain.Client;
-import com.project.domain.Company;
 import com.project.domain.Facture;
-import com.project.domain.ItemBasket;
-import com.project.domain.Product;
 import com.project.services.FactureService;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -44,17 +39,25 @@ public class FactureClientController {
 	// -------------------------- List Facture by Client
 	// ----------------------------------
 	@CrossOrigin
-	@RequestMapping(value = "/myFactures/{clientId}", method = RequestMethod.GET)
-	public List<Facture> listFactureByClient(@PathVariable int clientId) {
-		return factureService.findFactureByClient(clientId);
+	@RequestMapping(value = "/myFactures/{username}", method = RequestMethod.GET)
+	public ResponseEntity<?> findFacturesByClient(@PathVariable String username) {
+		List<Facture> factures = new ArrayList<Facture>();
+		Map<String, Object> response = new HashMap<>();
+		try {
+			factures = factureService.findFactureByClient(username);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<List<Facture>>( factures, HttpStatus.OK);
 	}
-
 	// -------------------------- List Facture PENDING by Client
 	// ----------------------------------
 	@CrossOrigin
 	@RequestMapping(value = "/myFacturesPending/{username}", method = RequestMethod.GET)
 	public ResponseEntity<?> findFacturesPendingByClient(@PathVariable String username) {
-		List<Facture> factures = new ArrayList<Facture>();
+		Facture factures = null;
 		Map<String, Object> response = new HashMap<>();
 		try {
 			factures = factureService.findFacturesPendingByClient(username);
@@ -63,7 +66,7 @@ public class FactureClientController {
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<List<Facture>>( factures, HttpStatus.OK);
+		return new ResponseEntity<Facture>( factures, HttpStatus.OK);
 	}
 	// ---------------------------- Show
 	// facture----------------------------------------------------------
@@ -117,7 +120,39 @@ public class FactureClientController {
 		response.put("facture", facturesNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 
-	}
+	}  
+	
+	// ------------------------Create a factures of the
+		// basket-----------------------------------
+		@PostMapping("/createFactureUnify/{username}")
+		@ResponseStatus(HttpStatus.CREATED) 
+		public ResponseEntity<?> createFactureUnify(@Valid @RequestBody Facture facture, BindingResult bindingResult,
+				@PathVariable String username) {
+			Facture facturesNew = null;
+			Map<String, Object> response = new HashMap<>();
+
+			if (bindingResult.hasErrors()) {
+				List<String> errors = new ArrayList<String>();
+				for (FieldError err : bindingResult.getFieldErrors()) {
+					errors.add("El campo " + err.getField() + " " + err.getDefaultMessage());
+				}
+				response.put("errors", errors);
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+			}
+			try {
+
+				facturesNew = this.factureService.saveFactureUnify(facture, username);
+
+			} catch (DataAccessException e) {
+				response.put("mensaje", "Error al añadir la nueva factura");
+				response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			response.put("mensaje", "La factura han sido creada con éxito");
+			response.put("facture", facturesNew);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+
+		}
 
 	// --------------------------------Update shipping------------------------
 	@CrossOrigin

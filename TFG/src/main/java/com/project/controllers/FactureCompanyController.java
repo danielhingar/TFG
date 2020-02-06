@@ -1,5 +1,6 @@
 package com.project.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,10 +30,20 @@ public class FactureCompanyController {
 	// -------------------------- List Facture by Client
 	// ----------------------------------
 	@CrossOrigin
-	@RequestMapping(value = "/myFactures/{companyId}", method = RequestMethod.GET)
-	public List<Facture> listFactureByCompany(@PathVariable int companyId) {
-		return factureService.findFactureByCompany(companyId);
-	} 
+	@RequestMapping(value = "/myFactures/{username}", method = RequestMethod.GET)
+	public ResponseEntity<?> listFactureByCompany(@PathVariable String username) {
+		List<Facture> factures = new ArrayList<Facture>();
+		Map<String, Object> response = new HashMap<>();
+		try {
+			factures = factureService.findFactureByCompany(username);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<List<Facture>>( factures, HttpStatus.OK);
+	}
+	
 
 	// ---------------------------- Show facture----------------------------------------------------------
 	@CrossOrigin
