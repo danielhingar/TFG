@@ -128,23 +128,23 @@ public class ReporterController {
 	}
 
 	// ---------------------------------Delete reporter-----------------------
-	@CrossOrigin
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete(@PathVariable int id) {
-		Map<String, Object> response = new HashMap<>();
-		try {
-			this.reporterService.delete(id);
-		} catch (DataAccessException e) {
-			// TODO: handle exception
-			response.put("mensaje", "Error al borrar el reporter");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		response.put("mensaje", "El perfil ha sido eliminado con éxito");
-
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
-
-	}
+//	@CrossOrigin
+//	@DeleteMapping("/delete/{id}")
+//	public ResponseEntity<?> delete(@PathVariable int id) {
+//		Map<String, Object> response = new HashMap<>();
+//		try {
+//			this.reporterService.delete(id);
+//		} catch (DataAccessException e) {
+//			// TODO: handle exception
+//			response.put("mensaje", "Error al borrar el reporter");
+//			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+//			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//		response.put("mensaje", "El perfil ha sido eliminado con éxito");
+//
+//		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+//
+//	}
 
 	// -------------------------- Show Admin ----------------------------------
 	@CrossOrigin

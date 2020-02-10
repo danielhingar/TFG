@@ -70,6 +70,12 @@ public class FactureService {
 		return factures;
 	}
 
+	// ------------------list factures by company-----------------------
+	@Transactional(readOnly = true)
+	public List<Facture> findFactureAllCompany() {
+		return factureRepository.findFacturesAllPagada();
+	}
+
 	// ----------------------Show a facture--------------------------------
 	@Transactional(readOnly = true)
 	public Facture findById(int id) {
@@ -117,7 +123,7 @@ public class FactureService {
 			// this.factureRepository.flush();
 			facture1.setItemBaskets(items);
 			facture1.setCreateDate(new Date());
-			facture1.setStatus("PAGADA");
+			facture1.setStatus("PENDIENTE DE PAGO");
 			facture1.setClient(null);
 			this.factureRepository.save(facture1);
 			factures.add(facture1);
@@ -158,6 +164,12 @@ public class FactureService {
 	@Transactional
 	public Facture saveUpdateClient(Facture facture) {
 		facture.setStatus("PAGADO");
+		return this.factureRepository.save(facture);
+	}
+	
+	@Transactional
+	public Facture payCompany(Facture facture) {
+		facture.setStatus("PAGADA");
 		return this.factureRepository.save(facture);
 	}
 

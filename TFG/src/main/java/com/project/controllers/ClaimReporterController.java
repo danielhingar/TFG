@@ -22,9 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.project.domain.Claim;
+import com.project.domain.Facture;
 import com.project.services.ClaimService;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/reporter/claim")
 public class ClaimReporterController {
@@ -33,21 +34,39 @@ public class ClaimReporterController {
 	@Autowired
 	private ClaimService claimService;
 
-	// -------------------------- List Admin ----------------------------------
-	@CrossOrigin
-	@RequestMapping(value = "/listMyClaims", method = RequestMethod.GET)
-	public List<Claim> listMyClaims() {
-		// final Usuario
-		// a=this.usuarioService.findByUsername(UsuarioService.getPrincipal());
-		// final int reporterId=a.getId();
-		return claimService.findClaimByReporter(998);
-	}
 
-	// -------------------------- List Admin ----------------------------------
+	// -------------------------- List claim by reporter
+		// ----------------------------------
+		@CrossOrigin
+		@RequestMapping(value = "/myClaims/{username}", method = RequestMethod.GET)
+		public ResponseEntity<?> findClaimByReporter(@PathVariable String username) {
+			List<Claim> claims = new ArrayList<Claim>();
+			Map<String, Object> response = new HashMap<>();
+			try {
+				claims = claimService.findClaimByReporter(username);
+			} catch (DataAccessException e) {
+				response.put("mensaje", "Error al realizar la consulta en la base de datos");
+				response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			return new ResponseEntity<List<Claim>>( claims, HttpStatus.OK);
+		}
+
+	// -------------------------- List claim
+	// ----------------------------------
 	@CrossOrigin
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public List<Claim> list() {
-		return claimService.findAll();
+	public ResponseEntity<?> findAllClaims() {
+		List<Claim> claims = new ArrayList<Claim>();
+		Map<String, Object> response = new HashMap<>();
+		try {
+			claims = claimService.findAll();
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<List<Claim>>(claims, HttpStatus.OK);
 	}
 
 	// -------------------------- Show Claim ----------------------------------
@@ -71,7 +90,7 @@ public class ClaimReporterController {
 		return new ResponseEntity<Claim>(claim, HttpStatus.OK);
 	}
 
-	// --------------------------------Update shipping------------------------
+	// --------------------------------Update claim------------------------
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Claim claim, BindingResult bindingResult,
@@ -115,12 +134,12 @@ public class ClaimReporterController {
 
 	// --------------------------------Update shipping------------------------
 	@CrossOrigin
-	@PutMapping("/assign/{id}")
+	@PutMapping("/assign/{id}/{username}")
 	public ResponseEntity<?> assign(@Valid @RequestBody Claim claim, BindingResult bindingResult,
-			@PathVariable int id) {
+			@PathVariable int id, @PathVariable String username) {
 		Claim claimActually = this.claimService.findById(id);
 		Claim claimUpdated = null;
-		
+
 		Map<String, Object> response = new HashMap<>();
 
 		if (bindingResult.hasErrors()) {
@@ -137,15 +156,15 @@ public class ClaimReporterController {
 			response.put("mensaje", "Error: no se pudo editar la queja,".concat(id1.toString().concat(" no existe ")));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
-		
-		if(claimActually.getReporter()!=null) {
+
+		if (claimActually.getReporter() != null) {
 			response.put("mensaje", "Error: no pudistes asignarte la queja porque ya tiene un reporter ");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CONFLICT);
 		}
 
 		try {
 
-			claimUpdated = this.claimService.assign(claimActually,998);
+			claimUpdated = this.claimService.assign(claimActually, username);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

@@ -33,14 +33,19 @@ public class ClaimService {
 	}
 
 	// ----------------------------------------List claims by
-	// facture------------------------------------------------------------------
+	// reporter------------------------------------------------------------------
 	@Transactional(readOnly = true)
-	public List<Claim> findClaimByReporter(int reporterId) {
-		return (List<Claim>) claimRepository.findClaimByReporter(reporterId);
+	public List<Claim> findClaimByReporter(String username) {
+		return (List<Claim>) claimRepository.findClaimByReporter(username);
+	}
+	
+	// ----------------------------------------List claims by client------------------------------------------------------------------
+	@Transactional(readOnly = true)
+	public List<Claim> findClaimByClient(String username) {
+		return (List<Claim>) claimRepository.findClaimByClient(username);
 	}
 
-	// ----------------------------------------List claims by
-	// facture------------------------------------------------------------------
+	// ----------------------------------------List claims------------------------------
 	@Transactional(readOnly = true)
 	public List<Claim> findAll() {
 		return (List<Claim>) claimRepository.findAll();
@@ -79,8 +84,8 @@ public class ClaimService {
 	
 	//-------------------------------Assign claim-------------------
 	@Transactional
-	public Claim assign(Claim claim, int reporterId) {
-		claim.setReporter(reporterService.findById(reporterId));
+	public Claim assign(Claim claim, String username) {
+		claim.setReporter(reporterService.findByUsername(username));
 		return claimRepository.save(claim);
 	}
 	

@@ -70,15 +70,15 @@ public class ReporterService {
 	}
 
 	// ----------------------------------------Delete---------------------------
-	@Transactional
-	public void delete(int id) {
-		List<Claim> claims = this.claimService.findClaimByReporter(id);
-		for (int i = 0; i < claims.size(); i++) {
-			Claim c = this.claimService.findById(claims.get(i).getId());
-			c.setReporter(null);
-			this.claimService.saveClaim(c);
-		}
-		this.reporterRepository.deleteById(id);
-	}
+//	@Transactional
+//	public void delete(int id) {
+//		List<Claim> claims = this.claimService.findClaimByReporter(id);
+//		for (int i = 0; i < claims.size(); i++) {
+//			Claim c = this.claimService.findById(claims.get(i).getId());
+//			c.setReporter(null);
+//			this.claimService.saveClaim(c);
+//		}
+//		this.reporterRepository.deleteById(id);
+//	}
 
 }

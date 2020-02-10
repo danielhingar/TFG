@@ -57,7 +57,6 @@ INSERT INTO `configuration` (id,phone,email) VALUES (1,'673456721','showcase@gma
 
 /*CLAIMS---------------------------------------------------------------------------------*/
 
-INSERT INTO `claim` (id,reporter_id,title,description,create_date,attachment,facture_id,status,answer) VALUES (1,998,'PEDIDO NO HA LLEGADO','SE HA PASADO EL TIEMPO DE ENVÍO','2019-01-01',null,2,'REJECTED','No cumple las bases legales');
 
 /*PRODUCTS-------------------------------------------------------------------------------*/
 

@@ -13,6 +13,9 @@ public interface ClaimRepository extends JpaRepository<Claim, Integer> {
 	@Query("select c from Claim c where c.facture.id = ?1")
 	List<Claim> findClaimByFacture(int factureId);
 	
-	@Query("select c from Claim c where c.reporter.id= ?1")
-	List<Claim> findClaimByReporter(int reporterId);
+	@Query("select c from Claim c where c.reporter.username= ?1")
+	List<Claim> findClaimByReporter(String reporterId);
+	
+	@Query("select c from Claim c where c.facture.client.username = ?1")
+	List<Claim> findClaimByClient(String username);
 }

@@ -57,12 +57,39 @@ public class ClaimClientController {
 		return new ResponseEntity<Claim>(claim, HttpStatus.OK);
 	}
 
-	// -------------------------- List claim by client -------------------------
+	// -------------------------- List claim by client -------------------------	
 	@CrossOrigin
-	@RequestMapping(value = "/list/{factureId}", method = RequestMethod.GET)
-	public List<Claim> list(@PathVariable int factureId) {
-		return claimService.findClaimByFacture(factureId);
+	@RequestMapping(value = "/claimByFacture/{factureId}", method = RequestMethod.GET)
+	public ResponseEntity<?> findClaimByReporter(@PathVariable int factureId) {
+		List<Claim> claims = new ArrayList<Claim>();
+		Map<String, Object> response = new HashMap<>();
+		try {
+			claims = claimService.findClaimByFacture(factureId);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<List<Claim>>( claims, HttpStatus.OK);
 	}
+
+	// -------------------------- List claim by client
+	// ----------------------------------
+	@CrossOrigin
+	@RequestMapping(value = "/myClaims/{username}", method = RequestMethod.GET)
+	public ResponseEntity<?> findClaimByClient(@PathVariable String username) {
+		List<Claim> claims = new ArrayList<Claim>();
+		Map<String, Object> response = new HashMap<>();
+		try {
+			claims = claimService.findClaimByClient(username);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<List<Claim>>( claims, HttpStatus.OK);
+	}
+
 
 	// ------------------------Create a claim--------------------------------
 	@PostMapping("/create/{idFacture}")
