@@ -65,7 +65,7 @@ public class ClaimService {
 	public Claim save(Claim claim, int factureId) {
 		claim.setFacture(this.factureService.findById(factureId));
 		claim.setCreateDate(new Date());
-		claim.setStatus("PENDING");
+		claim.setStatus("Pendiente de respuesta");
 		return claimRepository.save(claim);
 	}
 
