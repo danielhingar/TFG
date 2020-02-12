@@ -25,10 +25,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.domain.Claim;
 import com.project.domain.Shipping;
 import com.project.services.ShippingService;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/admin/shipping")
 public class ShippingAdminController {
@@ -45,6 +46,7 @@ public class ShippingAdminController {
 		return shippingService.findAll();
 	}
 
+	
 	// ------------------Show shipping--------------
 	@CrossOrigin
 	@GetMapping("/show/{id}")
@@ -65,7 +67,6 @@ public class ShippingAdminController {
 		}
 		return new ResponseEntity<Shipping>(shipping, HttpStatus.OK);
 	}
-	
 
 	// ------------------------Create
 	// shipping----------------------------------------------

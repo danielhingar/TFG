@@ -47,9 +47,9 @@ INSERT INTO `reporter` (id,name,surnames,username,password,enabled,phone,email) 
 
 /*SHIPPING------------------------------------------------------------------------------*/
 
-INSERT INTO `shipping` (id,date_max,date_min,title,observation,price) VALUES (1,2,5,'Envío Express',null,10.0);
-INSERT INTO `shipping` (id,date_max,date_min,title,observation,price) VALUES (2,4,7,'Envío Normal',null,5.0);
-INSERT INTO `shipping` (id,date_max,date_min,title,observation,price) VALUES (3,5,14,'Envío Gratis',null,0.0);
+INSERT INTO `shipping` (id,date_max,date_min,title,observation,price) VALUES (1,5,2,'Envío Express',null,10.0);
+INSERT INTO `shipping` (id,date_max,date_min,title,observation,price) VALUES (2,7,4,'Envío Normal',null,5.0);
+INSERT INTO `shipping` (id,date_max,date_min,title,observation,price) VALUES (3,14,7,'Envío Gratis',null,0.0);
 
 /*CONFIGURATIONS-------------------------------------------------------------------------*/
 

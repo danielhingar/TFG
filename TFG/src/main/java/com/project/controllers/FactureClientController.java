@@ -192,6 +192,7 @@ public class FactureClientController {
 			factureActually.setBlock(facture.getBlock());
 			factureActually.setStairs(facture.getStairs());
 			factureActually.setFloor(facture.getFloor());
+			factureActually.setShipping(facture.getShipping());
 
 			factureUpdated = this.factureService.saveUpdateClient(factureActually);
 		} catch (DataAccessException e) {

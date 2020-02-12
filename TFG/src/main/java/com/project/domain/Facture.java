@@ -175,6 +175,8 @@ public class Facture implements Serializable {
 	private Client client;
 	private Company company;
 	private List<ItemBasket> itemBaskets; 
+	private Shipping shipping;
+	
 
 	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name="facture_id")
@@ -209,6 +211,24 @@ public class Facture implements Serializable {
 	public void setCompany(Company company) {
 		this.company = company;
 	}
+	
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "hadler" })
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="shipping_id")
+	public Shipping getShipping() {
+		return shipping;
+	}
+
+	public void setShipping(Shipping shipping) {
+		this.shipping = shipping;
+	}
+
+
+
+
+
+
+
 
 	// -----------------------------------------------------------------------------------
 	/**
