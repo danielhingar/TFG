@@ -15,8 +15,12 @@ public class About implements Serializable {
 	private String address;
 	private String facebook;
 	private String instagram;
+	private String twitter;
+	private String youtube;
+	private String polity;
+	private String compromise;
 	private String description;
-	private String images;
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,17 +67,47 @@ public class About implements Serializable {
 		this.description = description;
 	}
 
+
 	
-	public String getImages() {
-		return images;
+	public String getTwitter() {
+		return twitter;
 	}
 
-	public void setImages(String images) {
-		this.images = images;
+	public void setTwitter(String twitter) {
+		this.twitter = twitter;
 	}
+
+	public String getYoutube() {
+		return youtube;
+	}
+
+	public void setYoutube(String youtube) {
+		this.youtube = youtube;
+	}
+
+	public String getPolity() {
+		return polity;
+	}
+
+	public void setPolity(String polity) {
+		this.polity = polity;
+	}
+
+	public String getCompromise() {
+		return compromise;
+	}
+
+	public void setCompromise(String compromise) {
+		this.compromise = compromise;
+	}
+
+
+
 
 	// Relationships------------------------------------------------------------
-	
+
+
+
 	// -------------------------------------------------------------
 	/**
 	 * 

@@ -15,7 +15,7 @@ public class Shipping implements Serializable {
 	private int id;
 	private String title;
 	private double price;
-	private int dateMin;
+	private int dateMin; 
 	private int dateMax;
 	private String observation;
 

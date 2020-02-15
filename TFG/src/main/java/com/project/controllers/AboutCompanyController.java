@@ -90,8 +90,11 @@ public class AboutCompanyController {
 			aboutActually.setAddress(about.getAddress());
 			aboutActually.setDescription(about.getDescription());
 			aboutActually.setFacebook(about.getFacebook());
-			aboutActually.setImages(about.getImages());
 			aboutActually.setInstagram(about.getInstagram());
+			aboutActually.setCompromise(about.getCompromise());
+			aboutActually.setPolity(about.getPolity());
+			aboutActually.setTwitter(about.getTwitter());
+			aboutActually.setYoutube(about.getYoutube());
 
 			aboutUpdated = this.aboutService.save(aboutActually);
 		} catch (DataAccessException e) {
@@ -106,44 +109,6 @@ public class AboutCompanyController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-	@PostMapping("/upload")
-	public ResponseEntity<?> upload(@RequestParam("archivo") List<MultipartFile> archivo, @RequestParam("id") int id) {
-		Map<String, Object> response = new HashMap<>();
-
-		About about = aboutService.findById(id);
-		String images = "";
-		for (MultipartFile file : archivo)
-			if (!archivo.isEmpty()) {
-				String nombreArchivo = UUID.randomUUID().toString() + "_" + file.getOriginalFilename().replace(" ", "");
-				Path rutaArchivo = Paths.get("uploads").resolve(nombreArchivo).toAbsolutePath();
-				try {
-					Files.copy(file.getInputStream(), rutaArchivo);
-					images = images + "," + nombreArchivo;
-				} catch (IOException e) {
-					response.put("mensaje", "Error al subir las imagenes del producto " + nombreArchivo);
-					response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
-					return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-				}
-
-//			String nombreFotoAnterior = company.getImage();
-
-//			if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0) {
-//				Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
-//				File archivoFotoAnterior = rutaFotoAnterior.toFile();
-//				if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
-//					archivoFotoAnterior.delete();
-//				}
-//			}
-				images.replaceFirst(images, "");
-				about.setImages(images);
-
-				aboutService.save(about);
-
-				response.put("about", about);
-				response.put("mensaje", "Has subido correctamente las imagenes: " + images);
-			}
-
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
-	}
+	
 
 }

@@ -78,7 +78,14 @@ public class ConfigurationAdminController {
 		try {
 			configurationActually.setEmail(configuration.getEmail());
 			configurationActually.setPhone(configuration.getPhone());
-
+			configurationActually.setFacebook(configuration.getFacebook());
+			configurationActually.setInstagram(configuration.getInstagram());
+			configurationActually.setTwitter(configuration.getTwitter());
+			configurationActually.setNameSystem(configuration.getNameSystem());
+			configurationActually.setAddress(configuration.getAddress());
+			configurationActually.setFailSystem(configuration.getFailSystem());
+			configurationActually.setBanner(configuration.getBanner());
+			
 			configurationUpdated = this.configurationService.save(configurationActually);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
