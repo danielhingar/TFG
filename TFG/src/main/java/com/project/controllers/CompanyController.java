@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +45,10 @@ import com.project.domain.Usuario;
 import com.project.services.CompanyService;
 import com.project.services.UsuarioService;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+
+
+
+@CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/company")
 public class CompanyController {
@@ -54,7 +60,7 @@ public class CompanyController {
 	@Autowired
 	private UsuarioService usuarioService;
 
-	private final Logger log= LoggerFactory.getLogger(CompanyController.class);
+	private final Logger log = LoggerFactory.getLogger(CompanyController.class);
 
 	// -------------------------- Show ----------------------------------
 	@CrossOrigin
@@ -76,7 +82,7 @@ public class CompanyController {
 		}
 		return new ResponseEntity<Company>(company, HttpStatus.OK);
 	}
-	
+
 	// -------------------------- Show ----------------------------------
 	@CrossOrigin
 	@GetMapping("/show/{id}")
@@ -103,6 +109,13 @@ public class CompanyController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public List<Company> list() {
 		return companyService.findAllRandom();
+	}
+
+	// -------------------------- List ----------------------------------
+	@CrossOrigin
+	@RequestMapping(value = "/list/page/{page}", method = RequestMethod.GET)
+	public Page<Company> list(@PathVariable Integer page) {
+		return companyService.findAll(PageRequest.of(page, 6));
 	}
 
 	// -----------------------------Create
@@ -250,33 +263,33 @@ public class CompanyController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping("/uploads/img/{nombreFoto:.+}")
-	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto){
+	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
 		Path rutaArchivo = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
 		log.info(rutaArchivo.toString());
-		Resource recurso= null;
-		
+		Resource recurso = null;
+
 		try {
-			recurso= new UrlResource(rutaArchivo.toUri());
+			recurso = new UrlResource(rutaArchivo.toUri());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		if(!recurso.exists() && !recurso.isReadable()) {
+
+		if (!recurso.exists() && !recurso.isReadable()) {
 			rutaArchivo = Paths.get("src/main/resources/static/images").resolve("no-usuario.png").toAbsolutePath();
 			try {
-				recurso= new UrlResource(rutaArchivo.toUri());
+				recurso = new UrlResource(rutaArchivo.toUri());
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			log.error("Error no se pudo cargar la imagen: "+ nombreFoto);
+			log.error("Error no se pudo cargar la imagen: " + nombreFoto);
 		}
-		HttpHeaders cabecera= new HttpHeaders();
-		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+recurso.getFilename()+"\"");
-		return new ResponseEntity<Resource>(recurso,cabecera,HttpStatus.OK);
+		HttpHeaders cabecera = new HttpHeaders();
+		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
+		return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
 	}
-	
+
 }
