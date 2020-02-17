@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -41,27 +43,33 @@ public class ProductController {
 //	public List<Product> list() {
 //		return productService.findAll();
 //	}
+	
+	@CrossOrigin
+	@RequestMapping(value = "/list/page/{page}/{username}", method = RequestMethod.GET)
+	public Page<Product> list(@PathVariable Integer page,@PathVariable String username ) {
+		return productService.findAllByCompany(username,PageRequest.of(page, 9));
+	}
 
 	// --------------------------List product by company-------------------------------------------------
-	@CrossOrigin
-	@RequestMapping(value = "/list/{username}", method = RequestMethod.GET)
-	public ResponseEntity<?> listProductsCompany(@PathVariable String username) {
-		List<Product> product = new ArrayList<Product>();
-		Map<String, Object> response = new HashMap<>();
-		try {
-			product = productService.findAllByCompany(username);
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al realizar la consulta en la base de datos");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		Company c=companyService.findByUsername(username);
-		if (c.getProducts() == null) {
-			response.put("mensaje", "This company hasn't products");
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<List<Product>>( product, HttpStatus.OK);
-	}
+//	@CrossOrigin
+//	@RequestMapping(value = "/list/{username}", method = RequestMethod.GET)
+//	public ResponseEntity<?> listProductsCompany(@PathVariable String username) {
+//		List<Product> product = new ArrayList<Product>();
+//		Map<String, Object> response = new HashMap<>();
+//		try {
+//			product = productService.findAllByCompany(username);
+//		} catch (DataAccessException e) {
+//			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+//			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+//			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//		Company c=companyService.findByUsername(username);
+//		if (c.getProducts() == null) {
+//			response.put("mensaje", "This company hasn't products");
+//			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+//		}
+//		return new ResponseEntity<List<Product>>( product, HttpStatus.OK);
+//	}
 //	
 //	
 

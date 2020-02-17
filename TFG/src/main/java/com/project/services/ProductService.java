@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -85,10 +86,8 @@ public class ProductService {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Product> findAllByCompany(String username){
-		Company c= companyService.findByUsername(username);
-		List<Product> products=c.getProducts();
-		return products;
+	public Page<Product> findAllByCompany(String username, Pageable pageable){
+		return productRepository.findProductByCompany(username, pageable);
 	}
 
 
