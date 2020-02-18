@@ -55,7 +55,7 @@ public class FactureService {
 
 	// ------------------list factures by company-----------------------
 	@Transactional(readOnly = true)
-	public List<Facture> findFactureByCompany(String username) {
+	public List<Facture> findFactureByCompany(String username) { 
 		return factureRepository.findFactureByCompany(username);
 	}
 

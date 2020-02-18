@@ -1,8 +1,8 @@
 package com.project.controllers;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +32,8 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 	
-	@Autowired
-	private CompanyService companyService;
+//	@Autowired
+//	private CompanyService companyService;
  
 	// -------------------------------------Methods-------------------------------------------------------------
 
