@@ -46,7 +46,7 @@ public class BasketClientController {
 	public ResponseEntity<?> showBasketClient(@PathVariable String username) {
 		Basket basket = null;
 		Map<String, Object> response = new HashMap<>();
-		try {
+		try { 
 			basket = basketService.findByClient(username);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");

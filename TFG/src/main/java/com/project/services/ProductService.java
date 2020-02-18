@@ -16,7 +16,6 @@ import com.project.domain.Company;
 import com.project.domain.Product;
 import com.project.repositories.ProductRepository;
 
-
 @Service
 @Transactional
 public class ProductService {
@@ -28,11 +27,13 @@ public class ProductService {
 	// Services----------------------------------------------------------------------------------------------------
 	@Autowired
 	private CompanyService companyService;
-	
+
 	@Autowired
 	private ClientService clientService;
-	
-	
+
+	@Autowired
+	private ItemBasketService itemBasketService;
+
 	// CRUD--------------------------------------------------------------------------------------------------------
 
 	// ----------------------------------------List------------------------------------------------------
@@ -47,48 +48,52 @@ public class ProductService {
 		return this.productRepository.findById(id).orElse(null);
 
 	}
-	//-----------------------------------------Save----------------------------------------------------------
+
+	// -----------------------------------------Save----------------------------------------------------------
 	@Transactional
-	public Product saveProduct(Product product,String username) {
+	public Product saveProduct(Product product, String username) {
 		product.setCompany(this.companyService.findByUsername(username));
 		product.setCreateDate(new Date());
 		return productRepository.save(product);
 	}
-	
-	
-	//----------------------------------------Save update-----------------------------------------------------
+
+	// ----------------------------------------Save
+	// update-----------------------------------------------------
 	@Transactional
 	public Product saveProduct(Product product) {
 		return productRepository.save(product);
 	}
 
-	//-----------------------------------------Delete----------------------------------------------------------
+	// -----------------------------------------Delete----------------------------------------------------------
 	@Transactional
 	public void delete(int id) {
-		Product p=this.findById(id);
-		List<Client> clients=this.clientService.findAll();
-		for(Client t:clients) {
-			Basket b=t.getBasket();
-			for(int i=0;i<b.getItemBaskets().size();i++) {
-				if(p.getName().equals(b.getItemBaskets().get(i).getProduct().getName())) {
+		Product p = this.findById(id);
+		List<Client> clients = this.clientService.findAll();
+		for (Client t : clients) {
+			Basket b = t.getBasket();
+			for (int i = 0; i < b.getItemBaskets().size(); i++) {
+				if (p.getName().equals(b.getItemBaskets().get(i).getProduct().getName())) {
 					b.getItemBaskets().get(i).setProduct(null);
 					b.getItemBaskets().remove(b.getItemBaskets().get(i));
+					this.itemBasketService.delete(b.getItemBaskets().get(i).getId());
+	
 				}
+					
+				
 			}
 		}
-		productRepository.deleteById(id);
+			productRepository.deleteById(id);
 	}
 
-	//-----------------------------------------Pagination----------------------------------------------------------
+	// -----------------------------------------Pagination----------------------------------------------------------
 	@Transactional(readOnly = true)
-	public Page<Product> findAll(Pageable pageable){
+	public Page<Product> findAll(Pageable pageable) {
 		return productRepository.findAll(pageable);
 	}
-	
+
 	@Transactional(readOnly = true)
-	public Page<Product> findAllByCompany(String username, Pageable pageable){
+	public Page<Product> findAllByCompany(String username, Pageable pageable) {
 		return productRepository.findProductByCompany(username, pageable);
 	}
-
 
 }
