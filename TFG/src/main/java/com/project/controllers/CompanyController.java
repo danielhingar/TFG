@@ -41,6 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.domain.Company;
+import com.project.domain.Product;
 import com.project.domain.Usuario;
 import com.project.services.CompanyService;
 import com.project.services.UsuarioService;
@@ -235,11 +236,11 @@ public class CompanyController {
 		if (!archivo.isEmpty()) {
 			String nombreArchivo = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename().replace(" ", "");
 			Path rutaArchivo = Paths.get("uploads").resolve(nombreArchivo).toAbsolutePath();
-			log.info(rutaArchivo.toString());
+			
 			try {
 				Files.copy(archivo.getInputStream(), rutaArchivo);
 			} catch (IOException e) {
-				response.put("mensaje", "Error al subir la imagen del cliente " + nombreArchivo);
+				response.put("mensaje", "Error al subir la imagen del producto " + nombreArchivo);
 				response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
@@ -255,7 +256,7 @@ public class CompanyController {
 			}
 			company.setImage(nombreArchivo);
 
-			companyService.saveCompany(company);
+			companyService.update(company);
 
 			response.put("company", company);
 			response.put("mensaje", "Has subido correctamente la imagen: " + nombreArchivo);
@@ -263,33 +264,24 @@ public class CompanyController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-
+	
 	@GetMapping("/uploads/img/{nombreFoto:.+}")
-	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
+	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto){
 		Path rutaArchivo = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
-		log.info(rutaArchivo.toString());
-		Resource recurso = null;
-
+		
+		Resource recurso= null;
+		
 		try {
-			recurso = new UrlResource(rutaArchivo.toUri());
+			recurso= new UrlResource(rutaArchivo.toUri());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		if (!recurso.exists() && !recurso.isReadable()) {
-			rutaArchivo = Paths.get("src/main/resources/static/images").resolve("no-usuario.png").toAbsolutePath();
-			try {
-				recurso = new UrlResource(rutaArchivo.toUri());
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			log.error("Error no se pudo cargar la imagen: " + nombreFoto);
-		}
-		HttpHeaders cabecera = new HttpHeaders();
-		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + recurso.getFilename() + "\"");
-		return new ResponseEntity<Resource>(recurso, cabecera, HttpStatus.OK);
+		
+		
+		HttpHeaders cabecera= new HttpHeaders();
+		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+recurso.getFilename()+"\"");
+		return new ResponseEntity<Resource>(recurso,cabecera,HttpStatus.OK);
 	}
 
 }
