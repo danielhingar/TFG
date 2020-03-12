@@ -46,14 +46,14 @@ public class FactureService {
 	@Transactional(readOnly = true)
 	public List<Facture> findFactureByClient(String username) {
 		List<Facture> factures = factureRepository.findFacturesByClient(username);
-		Facture facturesPending = factureRepository.findFacturesPendingByClient(username);
-		factures.remove(facturesPending);
+//		List<Facture> facturesPending = factureRepository.findFacturesPendingByClient(username);
+//		factures.remove(facturesPending);
 		return factures;
 	}
 
 	// ----------------------list factures by client-----------------------
 	@Transactional(readOnly = true)
-	public Facture findFacturesPendingByClient(String username) {
+	public List<Facture> findFacturesPendingByClient(String username) {
 		return factureRepository.findFacturesPendingByClient(username);
 	}
 
@@ -113,24 +113,7 @@ public class FactureService {
 				companies.add(b.getItemBaskets().get(i).getProduct().getCompany());
 				if (b.getItemBaskets().get(i).getProduct().getCompany().getId() == (companies1.get(x).getId())) {
 					ItemBasket itemNew = new ItemBasket();
-//					Product productNew = new Product();
-//					productNew.setBrand(b.getItemBaskets().get(i).getProduct().getBrand());
-//					productNew.setCapacity(b.getItemBaskets().get(i).getProduct().getCapacity());
-//					productNew.setCategory(b.getItemBaskets().get(i).getProduct().getCategory());
-//					productNew.setCreateDate(b.getItemBaskets().get(i).getProduct().getCreateDate());
-//					productNew.setDescription(b.getItemBaskets().get(i).getProduct().getDescription());
-//					productNew.setHeight(b.getItemBaskets().get(i).getProduct().getHeight());
-//					productNew.setInch(b.getItemBaskets().get(i).getProduct().getInch());
-//					productNew.setName(b.getItemBaskets().get(i).getProduct().getName());
-//					productNew.setOffert(b.getItemBaskets().get(i).getProduct().getOffert());
-//					productNew.setPhoto(b.getItemBaskets().get(i).getProduct().getPhoto());
-//					productNew.setPrice(b.getItemBaskets().get(i).getProduct().getPrice());
-//					productNew.setSize(b.getItemBaskets().get(i).getProduct().getSize());
-//					productNew.setWeight(b.getItemBaskets().get(i).getProduct().getWeight());
-//					productNew.setWidth(b.getItemBaskets().get(i).getProduct().getWidth());
-//					productNew.setMemory(b.getItemBaskets().get(i).getProduct().getMemory());
-//					productNew.setCompany(null);
-//					this.productService.saveProduct(productNew);
+
 					itemNew.setCapacity(b.getItemBaskets().get(i).getCapacity());
 					itemNew.setProduct(b.getItemBaskets().get(i).getProduct());
 					itemNew.setQuantity(b.getItemBaskets().get(i).getQuantity());
@@ -139,10 +122,7 @@ public class FactureService {
 					items.add(itemNew);
 				}
 			}
-//			Basket b1 = new Basket();
-//			b1.setItemBaskets(items);
-//			this.basketService.save(b1);
-			// this.factureRepository.flush();
+
 			facture1.setItemBaskets(items);
 			facture1.setCreateDate(new Date());
 			facture1.setStatus("PENDIENTE DE PAGO");
@@ -151,8 +131,7 @@ public class FactureService {
 			factures.add(facture1);
 
 		}
-		b.setItemBaskets(new ArrayList<>());
-		this.basketService.save(b);
+		
 		return factures;
 
 	}
@@ -163,29 +142,18 @@ public class FactureService {
 		List<ItemBasket> items = c.getBasket().getItemBaskets();
 		List<ItemBasket> newItems = new ArrayList<>();
 		for (int i = 0; i < items.size(); i++) {
-//			Product product= new Product();
-//			product.setBrand(items.get(i).getProduct().getBrand());
-//			product.setCapacity(items.get(i).getProduct().getCapacity());
-//			product.setCategory(items.get(i).getProduct().getCategory());
-//			product.setCreateDate(items.get(i).getProduct().getCreateDate());
-//			product.setDescription(items.get(i).getProduct().getDescription());
-//			product.setHeight(items.get(i).getProduct().getHeight());
-//			product.setInch(items.get(i).getProduct().getInch());
-//			product.setName(items.get(i).getProduct().getName());
-//			product.setOffert(items.get(i).getProduct().getOffert());
-//			product.setPhoto(items.get(i).getProduct().getPhoto());
-//			product.setPrice(items.get(i).getProduct().getPrice());
-//			product.setSize(items.get(i).getProduct().getSize());
-//			product.setWeight(items.get(i).getProduct().getWeight());
-//			product.setWidth(items.get(i).getProduct().getWidth());
-//			product.setMemory(items.get(i).getProduct().getMemory());
-//			product.setCompany(null);
-//			this.productService.saveProduct(product);
-//			items.get(i).setProduct(product);
+
 			this.itemBasketService.save(items.get(i));
 			newItems.add(items.get(i));
 		}
-
+		facture.setAddress(c.getAddress());
+		facture.setLocality(c.getLocality());
+		facture.setNumber(c.getNumber());
+		facture.setPostalCode(c.getCodePostal());
+		facture.setProvince(c.getProvince());
+		facture.setName(c.getName());
+		facture.setSurnames(c.getSurnames());
+		facture.setPhone(c.getPhone());
 		facture.setItemBaskets(newItems);
 		facture.setCreateDate(new Date());
 		facture.setStatus("PENDING");
@@ -193,6 +161,7 @@ public class FactureService {
 		facture.setCompany(null);
 
 		this.factureRepository.save(facture);
+		
 		return facture;
 
 	}
@@ -204,8 +173,15 @@ public class FactureService {
 	}
 
 	@Transactional
-	public Facture saveUpdateClient(Facture facture) {
+	public Facture saveUpdateClient(Facture facture,String username) {
+		Client c = this.clientService.findByUsername(username);
+		c.getBasket().setItemBaskets(new ArrayList<>());
+		this.basketService.save(c.getBasket());
 		facture.setStatus("PAGADO");
+		List<Facture> factures = this.findFacturesPendingByClient(username);
+		for(Facture f:factures) {
+			factureRepository.delete(f);
+		}
 		return this.factureRepository.save(facture);
 	}
 	

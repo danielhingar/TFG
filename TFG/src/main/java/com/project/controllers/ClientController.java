@@ -130,6 +130,11 @@ public class ClientController {
 		}
 
 		try {
+			clientActually.setCodePostal(client.getCodePostal());
+			clientActually.setLocality(client.getLocality());
+			clientActually.setProvince(client.getProvince());
+			clientActually.setNumber(client.getNumber());
+			clientActually.setAddress(client.getAddress());
 			clientActually.setEmail(client.getEmail());
 			clientActually.setName(client.getName());
 			clientActually.setPhone(client.getPhone());

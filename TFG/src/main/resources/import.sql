@@ -40,10 +40,10 @@ INSERT INTO `basket` (id) VALUES (3);
 INSERT INTO `basket` (id) VALUES (4);
 
 /*CLIENT--------------------------------------------------------------------------------*/
-INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id) VALUES (994,'Ramón','Pérez','rampez','$2a$10$innlJ999oNhZGPVfFh2tMexaVkx/xfkPON17x9FPuhWQrzvckoQcO',1,'674839213', 'rampez@gmail.com',1);
-INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id) VALUES (995,'Pablo','Cabeza','pabcab','$2a$10$HvR2hVz1ScjkpZS8ZlUEf.0BgNSq/Ir0hkmeYuJz7bqZK6xNSQOXu',1,'67483973', 'pabcab@gmail.com',2);
-INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id) VALUES (996,'Marta','García','margar','$2a$10$1K5FCAUDCniomaZkSRLmm.Yl2B06UEpBMMr73C6hMofeqO9Iai66m',1,'674839908', 'margar@gmail.com',3);
-INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id) VALUES (997,'Clara','Hinojo','clahin','$2a$10$jR6DPrQLyrpQcocQwEIzIuEyGWTvsSddl83Ij3Na5o0expqh4pw5.',1,'674839672', 'clahin@gmail.com',4);
+INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,address,number,code_postal,province,locality) VALUES (994,'Ramón','Pérez','rampez','$2a$10$innlJ999oNhZGPVfFh2tMexaVkx/xfkPON17x9FPuhWQrzvckoQcO',1,'674839213', 'rampez@gmail.com',1,'Calle traiña','20','43892','Cádiz','Rota');
+INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,address,number,code_postal,province,locality) VALUES (995,'Pablo','Cabeza','pabcab','$2a$10$HvR2hVz1ScjkpZS8ZlUEf.0BgNSq/Ir0hkmeYuJz7bqZK6xNSQOXu',1,'67483973', 'pabcab@gmail.com',2,'Calle Lope de Vega','5','45000','Madrid','Madrid');
+INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,address,number,code_postal,province,locality) VALUES (996,'Marta','García','margar','$2a$10$1K5FCAUDCniomaZkSRLmm.Yl2B06UEpBMMr73C6hMofeqO9Iai66m',1,'674839908', 'margar@gmail.com',3,'Calle Lima','20','43892','Sevilla','Dos Hermanas');
+INSERT INTO `client` (id,name,surnames,username,password,enabled,phone,email,basket_id,address,number,code_postal,province,locality) VALUES (997,'Clara','Hinojo','clahin','$2a$10$jR6DPrQLyrpQcocQwEIzIuEyGWTvsSddl83Ij3Na5o0expqh4pw5.',1,'674839672', 'clahin@gmail.com',4,'Calle Cervantes','20','43892','Granada','Granada');
 
 /*REPORTER------------------------------------------------------------------------------*/
 INSERT INTO `reporter` (id,name,surnames,username,password,enabled,phone,email) VALUES (998,'Luis','García','lusgar','$2a$10$GQRY7aLGz5AEmSG1rUm7COXcd7r7OgFJSacOawSAX.kpjREtqzmjS',1,'674839213', 'lusgar@gmail.com');

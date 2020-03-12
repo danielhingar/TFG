@@ -60,7 +60,8 @@ public class FactureClientController {
 		Facture factures = null;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			factures = factureService.findFacturesPendingByClient(username);
+			List<Facture> factures1= factureService.findFacturesPendingByClient(username);
+			factures = factureService.findFacturesPendingByClient(username).get(factures1.size()-1);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -156,9 +157,9 @@ public class FactureClientController {
 
 	// --------------------------------Update facture------------------------
 	@CrossOrigin
-	@PutMapping("/update/{id}")
+	@PutMapping("/update/{id}/{username}")
 	public ResponseEntity<?> update(@Valid @RequestBody Facture facture, BindingResult bindingResult,
-			@PathVariable int id) {
+			@PathVariable int id,@PathVariable String username) {
 		Facture factureActually = this.factureService.findById(id);
 		Facture factureUpdated = null;
 
@@ -194,7 +195,7 @@ public class FactureClientController {
 			factureActually.setFloor(facture.getFloor());
 			factureActually.setShipping(facture.getShipping());
 
-			factureUpdated = this.factureService.saveUpdateClient(factureActually);
+			factureUpdated = this.factureService.saveUpdateClient(factureActually,username);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
