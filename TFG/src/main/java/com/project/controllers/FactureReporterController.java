@@ -7,15 +7,17 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.hibernate.annotations.UpdateTimestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.Facture;
-import com.project.domain.Usuario;
+
 import com.project.services.FactureService;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -39,35 +41,35 @@ public class FactureReporterController {
 	// -------------------------- List Facture by Client
 	// ----------------------------------
 	@CrossOrigin
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public ResponseEntity<?> findFacturesAllClients() {
-		List<Facture> factures = new ArrayList<Facture>();
+	@RequestMapping(value = "/all/page/{page}", method = RequestMethod.GET)
+	public ResponseEntity<?> findFacturesAllClients(@PathVariable Integer page) {
+		Page<Facture> factures;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			factures = factureService.findFacturesAllClients();
+			factures = factureService.findFacturesAllClients(PageRequest.of(page, 9));
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<List<Facture>>(factures, HttpStatus.OK);
+		return new ResponseEntity<Page<Facture>>(factures, HttpStatus.OK);
 	}
 
 	// -------------------------- List Facture by Client
 	// ----------------------------------
 	@CrossOrigin
-	@RequestMapping(value = "/allCompany", method = RequestMethod.GET)
-	public ResponseEntity<?> findFacturesAllCompany() {
-		List<Facture> factures = new ArrayList<Facture>();
+	@RequestMapping(value = "/allCompany/page/{page}", method = RequestMethod.GET)
+	public ResponseEntity<?> findFacturesAllCompany(@PathVariable Integer page) {
+		Page<Facture> factures;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			factures = factureService.findFactureAllCompany();
+			factures = factureService.findFactureAllCompany(PageRequest.of(page, 9));
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<List<Facture>>(factures, HttpStatus.OK);
+		return new ResponseEntity<Page<Facture>>(factures, HttpStatus.OK);
 	}
 
 	// --------------------------------Update facture------------------------

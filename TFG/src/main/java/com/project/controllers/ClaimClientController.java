@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -73,7 +75,7 @@ public class ClaimClientController {
 	// -------------------------- List claim by client -------------------------	
 	@CrossOrigin
 	@RequestMapping(value = "/claimByFacture/{factureId}", method = RequestMethod.GET)
-	public ResponseEntity<?> findClaimByReporter(@PathVariable int factureId) {
+	public ResponseEntity<?> findClaimByFacture(@PathVariable int factureId) {
 		List<Claim> claims = new ArrayList<Claim>();
 		Map<String, Object> response = new HashMap<>();
 		try {
@@ -89,18 +91,18 @@ public class ClaimClientController {
 	// -------------------------- List claim by client
 	// ----------------------------------
 	@CrossOrigin
-	@RequestMapping(value = "/myClaims/{username}", method = RequestMethod.GET)
-	public ResponseEntity<?> findClaimByClient(@PathVariable String username) {
-		List<Claim> claims = new ArrayList<Claim>();
+	@RequestMapping(value = "/myClaims/page/{page}/{username}", method = RequestMethod.GET)
+	public ResponseEntity<?> findClaimByClient(@PathVariable String username,@PathVariable Integer page) {
+		Page<Claim> claims;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			claims = claimService.findClaimByClient(username);
+			claims = claimService.findClaimByClient(username,PageRequest.of(page, 9));
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<List<Claim>>( claims, HttpStatus.OK);
+		return new ResponseEntity<Page<Claim>>( claims, HttpStatus.OK);
 	}
 
 

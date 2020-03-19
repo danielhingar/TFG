@@ -3,6 +3,8 @@ package com.project.services;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.project.domain.Claim;
@@ -35,20 +37,20 @@ public class ClaimService {
 	// ----------------------------------------List claims by
 	// reporter------------------------------------------------------------------
 	@Transactional(readOnly = true)
-	public List<Claim> findClaimByReporter(String username) {
-		return (List<Claim>) claimRepository.findClaimByReporter(username);
+	public Page<Claim> findClaimByReporter(String username,Pageable pageable) {
+		return claimRepository.findClaimByReporter(username,pageable);
 	}
 	
 	// ----------------------------------------List claims by client------------------------------------------------------------------
 	@Transactional(readOnly = true)
-	public List<Claim> findClaimByClient(String username) {
-		return (List<Claim>) claimRepository.findClaimByClient(username);
+	public Page<Claim> findClaimByClient(String username,Pageable pageable) {
+		return  claimRepository.findClaimByClient(username,pageable);
 	}
 
 	// ----------------------------------------List claims------------------------------
 	@Transactional(readOnly = true)
-	public List<Claim> findAll() {
-		return (List<Claim>) claimRepository.findAll();
+	public Page<Claim> findAll(Pageable pageable) {
+		return claimRepository.findAll(pageable);
 	}
 
 	// -----------------------------------------Show claim

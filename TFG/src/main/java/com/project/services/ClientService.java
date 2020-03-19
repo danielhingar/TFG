@@ -79,21 +79,21 @@ public class ClientService {
 	}
 
 	// ----------------------------------------Delete---------------------------
-	@Transactional
-	public void delete(String username) {
-		List<Facture> factures=this.factureService.findFactureByClient(username);
-		for(int i=0;i<factures.size();i++) {
-			List<Claim> claims=this.claimService.findClaimByFacture(factures.get(i).getId());
-			for(int j=0;j<claims.size();j++) {
-				this.claimService.delete(claims.get(j).getId());
-			}
-			
-			this.factureService.delete(factures.get(i).getId());
-		}
-		Client c=this.findByUsername(username);
-		Basket b=c.getBasket();
-		this.basketService.delete(b.getId());
-		this.clientRepository.deleteById(c.getId());
-	}
+//	@Transactional
+//	public void delete(String username) {
+//		List<Facture> factures=this.factureService.findFactureByClient(username);
+//		for(int i=0;i<factures.size();i++) {
+//			List<Claim> claims=this.claimService.findClaimByFacture(factures.get(i).getId());
+//			for(int j=0;j<claims.size();j++) {
+//				this.claimService.delete(claims.get(j).getId());
+//			}
+//			
+//			this.factureService.delete(factures.get(i).getId());
+//		}
+//		Client c=this.findByUsername(username);
+//		Basket b=c.getBasket();
+//		this.basketService.delete(b.getId());
+//		this.clientRepository.deleteById(c.getId());
+//	}
 
 }

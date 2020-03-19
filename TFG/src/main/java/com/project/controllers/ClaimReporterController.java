@@ -9,6 +9,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -38,35 +40,35 @@ public class ClaimReporterController {
 	// -------------------------- List claim by reporter
 		// ----------------------------------
 		@CrossOrigin
-		@RequestMapping(value = "/myClaims/{username}", method = RequestMethod.GET)
-		public ResponseEntity<?> findClaimByReporter(@PathVariable String username) {
-			List<Claim> claims = new ArrayList<Claim>();
+		@RequestMapping(value = "/myClaims/page/{page}/{username}", method = RequestMethod.GET)
+		public ResponseEntity<?> findClaimByReporter(@PathVariable String username,@PathVariable Integer page) {
+			Page<Claim> claims;
 			Map<String, Object> response = new HashMap<>();
 			try {
-				claims = claimService.findClaimByReporter(username);
+				claims = claimService.findClaimByReporter(username,PageRequest.of(page, 9));
 			} catch (DataAccessException e) {
 				response.put("mensaje", "Error al realizar la consulta en la base de datos");
 				response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-			return new ResponseEntity<List<Claim>>( claims, HttpStatus.OK);
+			return new ResponseEntity<Page<Claim>>( claims, HttpStatus.OK);
 		}
 
 	// -------------------------- List claim
 	// ----------------------------------
 	@CrossOrigin
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ResponseEntity<?> findAllClaims() {
-		List<Claim> claims = new ArrayList<Claim>();
+	@RequestMapping(value = "/list/page/{page}", method = RequestMethod.GET)
+	public ResponseEntity<?> findAllClaims(@PathVariable Integer page) {
+		Page<Claim> claims;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			claims = claimService.findAll();
+			claims = claimService.findAll(PageRequest.of(page, 9));
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<List<Claim>>(claims, HttpStatus.OK);
+		return new ResponseEntity<Page<Claim>>(claims, HttpStatus.OK);
 	}
 
 	// -------------------------- Show Claim ----------------------------------

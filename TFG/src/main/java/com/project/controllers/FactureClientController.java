@@ -9,6 +9,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -39,18 +41,18 @@ public class FactureClientController {
 	// -------------------------- List Facture by Client
 	// ----------------------------------
 	@CrossOrigin
-	@RequestMapping(value = "/myFactures/{username}", method = RequestMethod.GET)
-	public ResponseEntity<?> findFacturesByClient(@PathVariable String username) {
-		List<Facture> factures = new ArrayList<Facture>();
+	@RequestMapping(value = "/myFactures/page/{page}/{username}", method = RequestMethod.GET)
+	public ResponseEntity<?> findFacturesByClient(@PathVariable String username,@PathVariable Integer page) {
+		Page<Facture> factures;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			factures = factureService.findFactureByClient(username);
+			factures = factureService.findFactureByClient(username,PageRequest.of(page, 9));
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<List<Facture>>( factures, HttpStatus.OK);
+		return new ResponseEntity<Page<Facture>>( factures, HttpStatus.OK);
 	}
 	// -------------------------- List Facture PENDING by Client
 	// ----------------------------------

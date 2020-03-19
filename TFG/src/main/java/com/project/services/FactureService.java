@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +17,6 @@ import com.project.domain.Client;
 import com.project.domain.Company;
 import com.project.domain.Facture;
 import com.project.domain.ItemBasket;
-import com.project.domain.Product;
 import com.project.repositories.FactureRepository;
 
 @Service
@@ -36,18 +37,14 @@ public class FactureService {
 
 	@Autowired
 	private ItemBasketService itemBasketService;
-	
-	@Autowired 
-	private ProductService productService;
+
 
 	// --------------------------------------------Methods----------------------------------------------------------
 
 	// ----------------------list factures by client-----------------------
 	@Transactional(readOnly = true)
-	public List<Facture> findFactureByClient(String username) {
-		List<Facture> factures = factureRepository.findFacturesByClient(username);
-//		List<Facture> facturesPending = factureRepository.findFacturesPendingByClient(username);
-//		factures.remove(facturesPending);
+	public Page<Facture> findFactureByClient(String username,Pageable pageable) {
+		Page<Facture> factures = factureRepository.findFacturesByClient(username,pageable);
 		return factures;
 	}
 
@@ -59,25 +56,20 @@ public class FactureService {
 
 	// ------------------list factures by company-----------------------
 	@Transactional(readOnly = true)
-	public List<Facture> findFactureByCompany(String username) { 
-		return factureRepository.findFactureByCompany(username);
+	public Page<Facture> findFactureByCompany(String username,Pageable pageable) { 
+		return factureRepository.findFactureByCompany(username, pageable);
 	}
 
 	// ------------------list factures by company-----------------------
 	@Transactional(readOnly = true)
-	public List<Facture> findFacturesAllClients() {
-		List<Facture> factures = factureRepository.findAll();
-		List<Facture> facturesPending = factureRepository.findFacturesAllPending();
-		List<Facture> facturesPagadas = factureRepository.findFacturesAllPagada();
-		factures.removeAll(facturesPending);
-		factures.removeAll(facturesPagadas);
-		return factures;
+	public Page<Facture> findFacturesAllClients(Pageable pageable) {
+		return factureRepository.findFacturesAllClient(pageable);
 	}
 
 	// ------------------list factures by company-----------------------
 	@Transactional(readOnly = true)
-	public List<Facture> findFactureAllCompany() {
-		return factureRepository.findFacturesAllPagada();
+	public Page<Facture> findFactureAllCompany(Pageable pageable) {
+		return factureRepository.findFacturesAllPagada(pageable);
 	}
 
 	// ----------------------Show a facture--------------------------------

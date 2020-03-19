@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.domain.Company;
 import com.project.domain.Product;
-import com.project.services.CompanyService;
 import com.project.services.ProductService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
