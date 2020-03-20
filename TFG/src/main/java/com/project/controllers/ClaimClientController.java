@@ -23,6 +23,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -52,6 +53,7 @@ public class ClaimClientController {
 	private ClaimService claimService;
 
 	// -------------------------- Show Claim ----------------------------------
+	@Secured({"ROLE_CLIENT","ROLE_REPORTER"})
 	@CrossOrigin
 	@GetMapping("/show/{id}")
 	public ResponseEntity<?> show(@PathVariable int id) {
@@ -73,6 +75,7 @@ public class ClaimClientController {
 	}
 
 	// -------------------------- List claim by client -------------------------	
+	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@RequestMapping(value = "/claimByFacture/{factureId}", method = RequestMethod.GET)
 	public ResponseEntity<?> findClaimByFacture(@PathVariable int factureId) {
@@ -90,6 +93,7 @@ public class ClaimClientController {
 
 	// -------------------------- List claim by client
 	// ----------------------------------
+	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@RequestMapping(value = "/myClaims/page/{page}/{username}", method = RequestMethod.GET)
 	public ResponseEntity<?> findClaimByClient(@PathVariable String username,@PathVariable Integer page) {
@@ -107,6 +111,7 @@ public class ClaimClientController {
 
 
 	// ------------------------Create a claim--------------------------------
+	@Secured({"ROLE_CLIENT"})
 	@PostMapping("/create/{idFacture}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> create(@Valid @RequestBody Claim claim, BindingResult bindingResult,
@@ -138,6 +143,7 @@ public class ClaimClientController {
 	}
 
 	// --------------------------------Update claim------------------------
+	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Claim claim, BindingResult bindingResult,
@@ -181,7 +187,8 @@ public class ClaimClientController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-	// ---------------------------------Delete shipping-----------------------
+	// ---------------------------------Delete claim-----------------------
+	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable int id) {
@@ -200,6 +207,7 @@ public class ClaimClientController {
 
 	}
 	
+	@Secured({"ROLE_CLIENT"})
 	@PostMapping("/upload")
 	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") int id) {
 		Map<String, Object> response = new HashMap<>();
@@ -238,6 +246,7 @@ public class ClaimClientController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
+	@Secured({"ROLE_CLIENT","ROLE_REPORTER"})
 	@GetMapping("/uploads/img/{nombreFoto:.+}")
 	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto){
 		Path rutaArchivo = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();

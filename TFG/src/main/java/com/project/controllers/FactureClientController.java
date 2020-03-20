@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -40,39 +41,44 @@ public class FactureClientController {
 
 	// -------------------------- List Facture by Client
 	// ----------------------------------
+	@Secured({ "ROLE_CLIENT" })
 	@CrossOrigin
 	@RequestMapping(value = "/myFactures/page/{page}/{username}", method = RequestMethod.GET)
-	public ResponseEntity<?> findFacturesByClient(@PathVariable String username,@PathVariable Integer page) {
+	public ResponseEntity<?> findFacturesByClient(@PathVariable String username, @PathVariable Integer page) {
 		Page<Facture> factures;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			factures = factureService.findFactureByClient(username,PageRequest.of(page, 9));
+			factures = factureService.findFactureByClient(username, PageRequest.of(page, 9));
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<Page<Facture>>( factures, HttpStatus.OK);
+		return new ResponseEntity<Page<Facture>>(factures, HttpStatus.OK);
 	}
+
 	// -------------------------- List Facture PENDING by Client
 	// ----------------------------------
+	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@RequestMapping(value = "/myFacturesPending/{username}", method = RequestMethod.GET)
 	public ResponseEntity<?> findFacturesPendingByClient(@PathVariable String username) {
 		Facture factures = null;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			List<Facture> factures1= factureService.findFacturesPendingByClient(username);
-			factures = factureService.findFacturesPendingByClient(username).get(factures1.size()-1);
+			List<Facture> factures1 = factureService.findFacturesPendingByClient(username);
+			factures = factureService.findFacturesPendingByClient(username).get(factures1.size() - 1);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<Facture>( factures, HttpStatus.OK);
+		return new ResponseEntity<Facture>(factures, HttpStatus.OK);
 	}
+
 	// ---------------------------- Show
 	// facture----------------------------------------------------------
+	@Secured({ "ROLE_CLIENT", "ROLE_REPORTER", "ROLE_COMPANY" })
 	@CrossOrigin
 	@RequestMapping("/show/{id}")
 	public ResponseEntity<?> show(@PathVariable int id) {
@@ -95,6 +101,7 @@ public class FactureClientController {
 
 	// ------------------------Create a factures of the
 	// basket-----------------------------------
+	@Secured({ "ROLE_CLIENT" })
 	@PostMapping("/create/{username}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> create(@Valid @RequestBody Facture facture, BindingResult bindingResult,
@@ -123,45 +130,47 @@ public class FactureClientController {
 		response.put("facture", facturesNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 
-	}  
-	
+	}
+
 	// ------------------------Create a factures of the
-		// basket-----------------------------------
-		@PostMapping("/createFactureUnify/{username}")
-		@ResponseStatus(HttpStatus.CREATED) 
-		public ResponseEntity<?> createFactureUnify(@Valid @RequestBody Facture facture, BindingResult bindingResult,
-				@PathVariable String username) {
-			Facture facturesNew = null;
-			Map<String, Object> response = new HashMap<>();
+	// basket-----------------------------------
+	@Secured({ "ROLE_CLIENT" })
+	@PostMapping("/createFactureUnify/{username}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<?> createFactureUnify(@Valid @RequestBody Facture facture, BindingResult bindingResult,
+			@PathVariable String username) {
+		Facture facturesNew = null;
+		Map<String, Object> response = new HashMap<>();
 
-			if (bindingResult.hasErrors()) {
-				List<String> errors = new ArrayList<String>();
-				for (FieldError err : bindingResult.getFieldErrors()) {
-					errors.add("El campo " + err.getField() + " " + err.getDefaultMessage());
-				}
-				response.put("errors", errors);
-				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+		if (bindingResult.hasErrors()) {
+			List<String> errors = new ArrayList<String>();
+			for (FieldError err : bindingResult.getFieldErrors()) {
+				errors.add("El campo " + err.getField() + " " + err.getDefaultMessage());
 			}
-			try {
-
-				facturesNew = this.factureService.saveFactureUnify(facture, username);
-
-			} catch (DataAccessException e) {
-				response.put("mensaje", "Error al añadir la nueva factura");
-				response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-			response.put("mensaje", "La factura han sido creada con éxito");
-			response.put("facture", facturesNew);
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
-
+			response.put("errors", errors);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
+		try {
+
+			facturesNew = this.factureService.saveFactureUnify(facture, username);
+
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al añadir la nueva factura");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		response.put("mensaje", "La factura han sido creada con éxito");
+		response.put("facture", facturesNew);
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+
+	}
 
 	// --------------------------------Update facture------------------------
+	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@PutMapping("/update/{id}/{username}")
 	public ResponseEntity<?> update(@Valid @RequestBody Facture facture, BindingResult bindingResult,
-			@PathVariable int id,@PathVariable String username) {
+			@PathVariable int id, @PathVariable String username) {
 		Facture factureActually = this.factureService.findById(id);
 		Facture factureUpdated = null;
 
@@ -197,7 +206,7 @@ public class FactureClientController {
 			factureActually.setFloor(facture.getFloor());
 			factureActually.setShipping(facture.getShipping());
 
-			factureUpdated = this.factureService.saveUpdateClient(factureActually,username);
+			factureUpdated = this.factureService.saveUpdateClient(factureActually, username);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -211,6 +220,7 @@ public class FactureClientController {
 	}
 
 	// ---------------------------------Delete item-----------------------
+	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable int id) {

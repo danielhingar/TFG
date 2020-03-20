@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -41,6 +42,7 @@ public class ClientController {
 	private UsuarioService usuarioService;
 
 	// -------------------------- Show ----------------------------------
+	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@GetMapping("/{username}")
 	public ResponseEntity<?> show(@PathVariable String username) {
@@ -63,6 +65,7 @@ public class ClientController {
 
 	// -----------------------------Create
 	// Client-------------------------------------------------
+	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@PostMapping("/create")
 	public ResponseEntity<?> create(@Valid @RequestBody Client client, BindingResult bindingResult) {
@@ -105,6 +108,7 @@ public class ClientController {
 	}
 
 	// --------------------------------Update client------------------------
+	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Client client, BindingResult bindingResult,

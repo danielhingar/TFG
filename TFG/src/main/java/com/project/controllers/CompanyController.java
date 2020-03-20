@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +15,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -26,6 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -41,13 +41,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.domain.Company;
-import com.project.domain.Product;
+
 import com.project.domain.Usuario;
 import com.project.services.CompanyService;
 import com.project.services.UsuarioService;
-
-
-
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
@@ -61,9 +58,10 @@ public class CompanyController {
 	@Autowired
 	private UsuarioService usuarioService;
 
-	private final Logger log = LoggerFactory.getLogger(CompanyController.class);
+	//private final Logger log = LoggerFactory.getLogger(CompanyController.class);
 
 	// -------------------------- Show ----------------------------------
+	@Secured({"ROLE_COMPANY","ROLE_CLIENT","ROLE_ADMIN","ROLE_REPORTER"})
 	@CrossOrigin
 	@GetMapping("/{username}")
 	public ResponseEntity<?> show(@PathVariable String username) {
@@ -85,6 +83,7 @@ public class CompanyController {
 	}
 
 	// -------------------------- Show ----------------------------------
+	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@GetMapping("/show/{id}")
 	public ResponseEntity<?> show(@PathVariable int id) {
@@ -113,6 +112,7 @@ public class CompanyController {
 	}
 
 	// -------------------------- List ----------------------------------
+
 	@CrossOrigin
 	@RequestMapping(value = "/list/page/{page}", method = RequestMethod.GET)
 	public Page<Company> list(@PathVariable Integer page) {
@@ -121,6 +121,7 @@ public class CompanyController {
 
 	// -----------------------------Create
 	// Company-------------------------------------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@PostMapping("/create")
 	public ResponseEntity<?> create(@Valid @RequestBody Company company, BindingResult bindingResult) {
@@ -163,6 +164,7 @@ public class CompanyController {
 	}
 
 	// --------------------------------Update company------------------------
+	@Secured({"ROLE_COMPANY"})
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Company company, BindingResult bindingResult,
@@ -227,6 +229,7 @@ public class CompanyController {
 //
 //	}
 
+	@Secured({"ROLE_COMPANY"})
 	@PostMapping("/upload")
 	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") int id) {
 		Map<String, Object> response = new HashMap<>();

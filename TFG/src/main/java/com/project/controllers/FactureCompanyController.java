@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,7 @@ public class FactureCompanyController {
 
 	// -------------------------- List Facture by Client
 	// ----------------------------------
+	@Secured({"ROLE_COMPANY"})
 	@CrossOrigin
 	@RequestMapping(value = "/myFactures/page/{page}/{username}", method = RequestMethod.GET)
 	public ResponseEntity<?> listFactureByCompany(@PathVariable String username,@PathVariable Integer page) {
@@ -47,6 +49,7 @@ public class FactureCompanyController {
 	
 
 	// ---------------------------- Show facture----------------------------------------------------------
+	@Secured({"ROLE_COMPANY"})
 	@CrossOrigin
 	@RequestMapping("/show/{id}")
 	public ResponseEntity<?> show(@PathVariable int id) {

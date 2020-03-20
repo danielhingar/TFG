@@ -7,13 +7,13 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -40,6 +40,7 @@ public class FactureReporterController {
 
 	// -------------------------- List Facture by Client
 	// ----------------------------------
+	@Secured({ "ROLE_REPORTER" })
 	@CrossOrigin
 	@RequestMapping(value = "/all/page/{page}", method = RequestMethod.GET)
 	public ResponseEntity<?> findFacturesAllClients(@PathVariable Integer page) {
@@ -57,6 +58,7 @@ public class FactureReporterController {
 
 	// -------------------------- List Facture by Client
 	// ----------------------------------
+	@Secured({ "ROLE_REPORTER" })
 	@CrossOrigin
 	@RequestMapping(value = "/allCompany/page/{page}", method = RequestMethod.GET)
 	public ResponseEntity<?> findFacturesAllCompany(@PathVariable Integer page) {
@@ -73,6 +75,7 @@ public class FactureReporterController {
 	}
 
 	// --------------------------------Update facture------------------------
+	@Secured({ "ROLE_REPORTER" })
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Facture facture, BindingResult bindingResult,
@@ -113,28 +116,28 @@ public class FactureReporterController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-	
-	// --------------------------------enable user------------------------
-		@CrossOrigin
-		@PutMapping("/payCompany/{id}")
-		public ResponseEntity<?> enable(@PathVariable int id) {
-			Facture factureActually = this.factureService.findById(id);
-			Map<String, Object> response = new HashMap<>();
 
-			try {
-				factureActually.setStatus("PAGADA");
-				this.factureService.save(factureActually);
-			} catch (DataAccessException e) {
-				response.put("mensaje", "Error al actualizar en la base de datos");
-				response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+	// --------------------------------pay facture company------------------------
+	@Secured({"ROLE_REPORTER"})
+	@CrossOrigin
+	@PutMapping("/payCompany/{id}")
+	public ResponseEntity<?> enable(@PathVariable int id) {
+		Facture factureActually = this.factureService.findById(id);
+		Map<String, Object> response = new HashMap<>();
 
-			response.put("mensaje", "Has pagado a la compañía");
-			response.put("facture", factureActually);
-
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+		try {
+			factureActually.setStatus("PAGADA");
+			this.factureService.save(factureActually);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al actualizar en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
+		response.put("mensaje", "Has pagado a la compañía");
+		response.put("facture", factureActually);
+
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
 
 }

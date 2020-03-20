@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,6 +40,7 @@ public class ShippingAdminController {
 	private ShippingService shippingService;
 
 	// -------------------------- List shipping ----------------------------------
+	@Secured({"ROLE_ADMIN","ROLE_CLIENT"})
 	@CrossOrigin
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
@@ -48,6 +50,7 @@ public class ShippingAdminController {
 
 	
 	// ------------------Show shipping--------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@GetMapping("/show/{id}")
 	public ResponseEntity<?> show(@PathVariable int id) {
@@ -70,6 +73,7 @@ public class ShippingAdminController {
 
 	// ------------------------Create
 	// shipping----------------------------------------------
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> create(@Valid @RequestBody Shipping shipping, BindingResult bindingResult) {
@@ -100,6 +104,7 @@ public class ShippingAdminController {
 	}
 
 	// --------------------------------Update shipping------------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Shipping shipping, BindingResult bindingResult,
@@ -146,6 +151,7 @@ public class ShippingAdminController {
 	}
 
 	// ---------------------------------Delete shipping-----------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable int id) {

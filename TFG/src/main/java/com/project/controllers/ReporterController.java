@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,6 +43,7 @@ public class ReporterController {
 	// ------------------------------CRUD--------------------------------------------------//
 
 	// -----------------------------Create-------------------------------------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@PostMapping("/create")
 	public ResponseEntity<?> create(@Valid @RequestBody Reporter reporter, BindingResult bindingResult) {
@@ -84,6 +86,7 @@ public class ReporterController {
 	}
 
 	// --------------------------------Update reporter------------------------
+	@Secured({"ROLE_REPORTER"})
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Reporter reporter, BindingResult bindingResult,
@@ -146,7 +149,8 @@ public class ReporterController {
 //
 //	}
 
-	// -------------------------- Show Admin ----------------------------------
+	// -------------------------- Show REPORTER ----------------------------------
+	@Secured({"ROLE_REPORTER"})
 	@CrossOrigin
 	@RequestMapping("/{username}")
 	public ResponseEntity<?> show(@PathVariable String username) {

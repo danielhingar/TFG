@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -57,6 +58,7 @@ public class AdminController {
 
 	// -----------------------------Create
 	// Admin-------------------------------------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@PostMapping("/create")
 	public ResponseEntity<?> create(@Valid @RequestBody Admin admin, BindingResult bindingResult) {
@@ -99,6 +101,7 @@ public class AdminController {
 	}
 
 	// -------------------------- Show Admin ----------------------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@RequestMapping("/show/{id}")
 	public ResponseEntity<?> show(@PathVariable int id) {
@@ -120,6 +123,7 @@ public class AdminController {
 	}
 
 	// --------------------------------Update admin------------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Admin admin, BindingResult bindingResult,
@@ -165,6 +169,7 @@ public class AdminController {
 
 	// -----------------------------------------List all
 	// reporters------------------------------------------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@RequestMapping(value = "/listReporters", method = RequestMethod.GET)
 	public List<Reporter> listReporters() {
@@ -172,6 +177,7 @@ public class AdminController {
 	}
 
 	// -------------------------- List all clients----------------------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@RequestMapping(value = "/listClients", method = RequestMethod.GET)
 	public List<Client> listClients() {
@@ -180,6 +186,7 @@ public class AdminController {
 
 	// -------------------------- List all companies
 	// ----------------------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@RequestMapping(value = "/listCompanies", method = RequestMethod.GET)
 	public List<Company> listCompany() {
@@ -188,6 +195,7 @@ public class AdminController {
 
 	// ---------------------------- List users
 	// ------------------------------------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public List<Usuario> listUsuarios() {
@@ -195,6 +203,7 @@ public class AdminController {
 	}
 
 	// --------------------------------Disable user------------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@DeleteMapping("/disable/{id}")
 	public ResponseEntity<?> disable(@PathVariable int id) {
@@ -217,6 +226,7 @@ public class AdminController {
 	}
 	
 	// --------------------------------enable user------------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@DeleteMapping("/enable/{id}")
 	public ResponseEntity<?> enable(@PathVariable int id) {
@@ -239,6 +249,7 @@ public class AdminController {
 	}
 
 	// ---------------------------------Delete admin-----------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable int id) {

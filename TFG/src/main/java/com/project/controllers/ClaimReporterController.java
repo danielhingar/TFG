@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.project.domain.Claim;
-import com.project.domain.Facture;
 import com.project.services.ClaimService;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -39,6 +39,7 @@ public class ClaimReporterController {
 
 	// -------------------------- List claim by reporter
 		// ----------------------------------
+	@Secured({"ROLE_REPORTER"})
 		@CrossOrigin
 		@RequestMapping(value = "/myClaims/page/{page}/{username}", method = RequestMethod.GET)
 		public ResponseEntity<?> findClaimByReporter(@PathVariable String username,@PathVariable Integer page) {
@@ -56,6 +57,7 @@ public class ClaimReporterController {
 
 	// -------------------------- List claim
 	// ----------------------------------
+	@Secured({"ROLE_REPORTER"})
 	@CrossOrigin
 	@RequestMapping(value = "/list/page/{page}", method = RequestMethod.GET)
 	public ResponseEntity<?> findAllClaims(@PathVariable Integer page) {
@@ -72,6 +74,7 @@ public class ClaimReporterController {
 	}
 
 	// -------------------------- Show Claim ----------------------------------
+	@Secured({"ROLE_REPORTER"})
 	@CrossOrigin
 	@GetMapping("/show/{id}")
 	public ResponseEntity<?> show(@PathVariable int id) {
@@ -93,6 +96,7 @@ public class ClaimReporterController {
 	}
 
 	// --------------------------------Update claim------------------------
+	@Secured({"ROLE_REPORTER"})
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Claim claim, BindingResult bindingResult,
@@ -134,7 +138,8 @@ public class ClaimReporterController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-	// --------------------------------Update shipping------------------------
+	// --------------------------------Assign claim------------------------
+	@Secured({"ROLE_REPORTER"})
 	@CrossOrigin
 	@PutMapping("/assign/{id}/{username}")
 	public ResponseEntity<?> assign(@Valid @RequestBody Claim claim, BindingResult bindingResult,

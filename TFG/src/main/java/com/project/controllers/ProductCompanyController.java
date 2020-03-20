@@ -21,7 +21,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -68,6 +68,7 @@ public class ProductCompanyController {
 
 	// -------------------------------------Create a
 	// product----------------------------------------------------
+	@Secured({"ROLE_COMPANY"})
 	@CrossOrigin
 	@PostMapping("/create/{username}")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -99,6 +100,7 @@ public class ProductCompanyController {
 
 	// -------------------------------------Update a
 	// product----------------------------------------------------
+	@Secured({"ROLE_COMPANY"})
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody Product product, BindingResult bindingResult,
@@ -156,6 +158,7 @@ public class ProductCompanyController {
 
 	// -------------------------------------Delete a
 	// product----------------------------------------------------
+	@Secured({"ROLE_COMPANY"})
 	@CrossOrigin
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable int id) {
@@ -183,7 +186,8 @@ public class ProductCompanyController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 
 	}
-
+	
+	@Secured({"ROLE_COMPANY"})
 	@PostMapping("/upload")
 	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") int id) {
 		Map<String, Object> response = new HashMap<>();

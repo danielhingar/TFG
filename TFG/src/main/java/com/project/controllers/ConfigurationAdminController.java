@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,6 +33,7 @@ public class ConfigurationAdminController {
 	private ConfigurationService configurationService;
 
 	// -------------------------- show configuration-----------------------------------
+	
 	@CrossOrigin
 	@GetMapping("/show")
 	public ResponseEntity<?> show() {
@@ -53,6 +55,7 @@ public class ConfigurationAdminController {
 	}
 
 	// --------------------------------Update shipping------------------------
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@PutMapping("/update")
 	public ResponseEntity<?> update(@Valid @RequestBody Configuration configuration, BindingResult bindingResult) {

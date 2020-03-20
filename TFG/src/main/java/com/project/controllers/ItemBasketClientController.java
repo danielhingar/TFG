@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -37,6 +38,7 @@ public class ItemBasketClientController {
 	private ItemBasketService itemBasketService;
 
 	// ------------------Show item--------------
+	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@GetMapping("/show/{id}")
 	public ResponseEntity<?> show(@PathVariable int id) {
@@ -59,6 +61,7 @@ public class ItemBasketClientController {
 
 	// ------------------------Create a item of the
 	// basket-----------------------------------
+	@Secured({"ROLE_CLIENT"})
 	@PostMapping("/create/{idProduct}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<?> create(@Valid @RequestBody ItemBasket itemBasket, BindingResult bindingResult,
@@ -89,7 +92,8 @@ public class ItemBasketClientController {
 
 	}
 
-	// --------------------------------Update shipping------------------------
+	// --------------------------------Update item------------------------
+	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@PutMapping("/update/{id}")
 	public ResponseEntity<?> update(@Valid @RequestBody ItemBasket itemBasket, BindingResult bindingResult,
@@ -131,6 +135,7 @@ public class ItemBasketClientController {
 	}
 
 	// ---------------------------------Delete item-----------------------
+	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable int id) {
