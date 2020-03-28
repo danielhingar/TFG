@@ -1,9 +1,10 @@
 package com.project.domain;
 
 import java.io.Serializable;
-
+import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 
@@ -26,6 +29,8 @@ public class Comment implements Serializable {
 	private String title;
 	private String description;
 	private Double valoration;
+	@Column(name = "create_date")
+	private Date createDate;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,6 +68,16 @@ public class Comment implements Serializable {
 		return this.valoration;
 	}
 	
+	@Temporal(TemporalType.DATE)
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	
+	
 	//Relationship--------------------------------------------------------------------
 	
 	private Client client;
@@ -80,7 +95,7 @@ public class Comment implements Serializable {
 	}
 
 	@JsonIgnoreProperties(value={"hibernateLazyInitializer", "hadler" },allowSetters = true)
-	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="product_id")
 	public Product getProduct() {
 		return product;

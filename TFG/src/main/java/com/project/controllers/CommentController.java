@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.domain.Comment;
 import com.project.services.CommentService;
 
+
+
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/comment")
@@ -75,7 +77,7 @@ public class CommentController {
 		Page<Comment> comments;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			comments = commentService.findCommentByProduct(productId, PageRequest.of(page, 9));
+			comments = commentService.findCommentByProduct(productId, PageRequest.of(page, 9,org.springframework.data.domain.Sort.by("createDate").descending()));
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -116,7 +118,7 @@ public class CommentController {
 
 	}
 
-	
+	 
 	// ---------------------------------Delete claim-----------------------
 	@Secured({ "ROLE_CLIENT" })
 	@CrossOrigin

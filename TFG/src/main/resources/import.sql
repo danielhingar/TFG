@@ -81,9 +81,10 @@ INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capa
 INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity) VALUES (6,8,3,7,null,'null','500GB');
 INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity) VALUES (7,3,3,6,null,'null','16GB');
 
-
+ 
 /*Comment--------------------------------------------------------------------------------*/
-INSERT INTO `comment` (id,title,description,valoration,client_id,product_id) VALUES (1,'Perfecto','El producto me llego en perfecta condiciones y estoy muy contento con el',3.0,994,1);
+INSERT INTO `comment` (id,title,description,valoration,client_id,product_id, create_date) VALUES (1,'Perfecto','El producto me llego en perfecta condiciones y estoy muy contento con el',3.0,994,1,'2019-11-23');
+INSERT INTO `comment` (id,title,description,valoration,client_id,product_id,create_date) VALUES (2,'Muy bien','El producto me llego en perfecta condiciones y estoy muy contento con el',2.0,995,1,'2020-2-21');
 
 /*Usuario_role*/
 INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (985,4);

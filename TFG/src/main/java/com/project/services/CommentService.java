@@ -1,5 +1,6 @@
 package com.project.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,7 @@ public class CommentService {
 	// Create------------------------------------------------
 	@Transactional
 	public Comment save(Comment comment, int productId, String clientName) {
+		comment.setCreateDate(new Date());
 		comment.setProduct(this.productService.findById(productId));
 		comment.setClient(this.clientService.findByUsername(clientName));
 		return commentRepository.save(comment);
