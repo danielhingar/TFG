@@ -1,5 +1,7 @@
 package com.project.repositories;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,4 +16,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Query("select p from Product p where p.company.username = ?1")
 	Page<Product> findProductByCompany(String username, Pageable pageable);
 	
+	@Query("select p from Product p where p.category = ?1")
+	List<Product> findProductByCategory(String category);
 }

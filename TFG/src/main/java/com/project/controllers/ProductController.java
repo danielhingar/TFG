@@ -1,8 +1,7 @@
 package com.project.controllers;
 
-
 import java.util.HashMap;
-
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.domain.Product;
 import com.project.services.ProductService;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -29,10 +28,10 @@ public class ProductController {
 	// Servicies----------------------------------------------------------------------------------------------
 	@Autowired
 	private ProductService productService;
-	
+
 //	@Autowired
 //	private CompanyService companyService;
- 
+
 	// -------------------------------------Methods-------------------------------------------------------------
 
 //	// -------------------------- List all products ----------------------------------
@@ -41,14 +40,15 @@ public class ProductController {
 //	public List<Product> list() {
 //		return productService.findAll();
 //	}
-	
+
 	@CrossOrigin
 	@RequestMapping(value = "/list/page/{page}/{username}", method = RequestMethod.GET)
-	public Page<Product> list(@PathVariable Integer page,@PathVariable String username ) {
-		return productService.findAllByCompany(username,PageRequest.of(page, 9));
+	public Page<Product> list(@PathVariable Integer page, @PathVariable String username) {
+		return productService.findAllByCompany(username, PageRequest.of(page, 9));
 	}
 
-	// --------------------------List product by company-------------------------------------------------
+	// --------------------------List product by
+	// company-------------------------------------------------
 //	@CrossOrigin
 //	@RequestMapping(value = "/list/{username}", method = RequestMethod.GET)
 //	public ResponseEntity<?> listProductsCompany(@PathVariable String username) {
@@ -71,7 +71,8 @@ public class ProductController {
 //	
 //	
 
-	// -------------------------- Show detail of a product----------------------------------
+	// -------------------------- Show detail of a
+	// product----------------------------------
 	@CrossOrigin
 	@GetMapping("/show/{id}")
 	public ResponseEntity<?> show(@PathVariable int id) {
@@ -90,5 +91,13 @@ public class ProductController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Product>(product, HttpStatus.OK);
+	}
+
+	// -------------------------- List claim by client -------------------------
+	@CrossOrigin
+	@RequestMapping(value = "/recomendation/{productId}", method = RequestMethod.GET)
+	public List<Product> recomendation(@PathVariable int productId) {
+		return this.productService.findRecomendation(productId);
+
 	}
 }
