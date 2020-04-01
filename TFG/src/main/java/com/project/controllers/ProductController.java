@@ -1,8 +1,11 @@
 package com.project.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -15,8 +18,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.domain.Claim;
 import com.project.domain.Product;
 import com.project.services.ProductService;
 
@@ -96,8 +101,37 @@ public class ProductController {
 	// -------------------------- List claim by client -------------------------
 	@CrossOrigin
 	@RequestMapping(value = "/recomendation/{productId}", method = RequestMethod.GET)
-	public List<Product> recomendation(@PathVariable int productId) {
-		return this.productService.findRecomendation(productId);
-
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<?> recomendation(@PathVariable int productId) {
+		Set<Product> products= new HashSet<>();
+		Map<String, Object> response = new HashMap<>();
+		try {  
+			products = productService.findRecomendation(productId);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Set<Product>>( products, HttpStatus.OK);
 	}
+	
+	
+	// -------------------------- List claim by client -------------------------
+	@CrossOrigin
+	@RequestMapping(value = "/avgValoration/{productId}", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<?> avgValoration(@PathVariable int productId) {
+		Integer res;
+		Map<String, Object> response = new HashMap<>();
+		try {
+			res = productService.calculateAvgValoration(productId);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Integer>( res, HttpStatus.OK);
+	}
+	
+	
 }

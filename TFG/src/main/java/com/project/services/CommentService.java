@@ -42,6 +42,13 @@ public class CommentService {
 	public Page<Comment> findCommentByProduct(int productId, Pageable pageable) {
 		return commentRepository.findCommentByProduct(productId, pageable);
 	}
+	
+	// ----------------------------------------List comments by
+	// product------------------------------------------------------------------
+	@Transactional(readOnly = true)
+	public List<Comment> findCommentByProduct(int productId) {
+		return commentRepository.findCommentByProduct(productId);
+	}
 
 	// -----------------------------------------Show comment
 	// -----------------------------------------------------------------------------
