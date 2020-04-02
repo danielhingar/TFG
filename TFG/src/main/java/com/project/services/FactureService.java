@@ -38,13 +38,12 @@ public class FactureService {
 	@Autowired
 	private ItemBasketService itemBasketService;
 
-
 	// --------------------------------------------Methods----------------------------------------------------------
 
 	// ----------------------list factures by client-----------------------
 	@Transactional(readOnly = true)
-	public Page<Facture> findFactureByClient(String username,Pageable pageable) {
-		Page<Facture> factures = factureRepository.findFacturesByClient(username,pageable);
+	public Page<Facture> findFactureByClient(String username, Pageable pageable) {
+		Page<Facture> factures = factureRepository.findFacturesByClient(username, pageable);
 		return factures;
 	}
 
@@ -54,10 +53,22 @@ public class FactureService {
 		return factureRepository.findFacturesPendingByClient(username);
 	}
 
+	// ----------------------list factures by client-----------------------
+	@Transactional(readOnly = true)
+	public List<Facture> findFacturesClient(String username) {
+		return factureRepository.findFacturesClient(username);
+	}
+
 	// ------------------list factures by company-----------------------
 	@Transactional(readOnly = true)
-	public Page<Facture> findFactureByCompany(String username,Pageable pageable) { 
+	public Page<Facture> findFactureByCompany(String username, Pageable pageable) {
 		return factureRepository.findFactureByCompany(username, pageable);
+	}
+
+	// ------------------list factures by company-----------------------
+	@Transactional(readOnly = true)
+	public List<Facture> findFactureByCompany(String username) {
+		return factureRepository.findFactureByCompany(username);
 	}
 
 	// ------------------list factures by company-----------------------
@@ -110,7 +121,7 @@ public class FactureService {
 					itemNew.setProduct(b.getItemBaskets().get(i).getProduct());
 					itemNew.setQuantity(b.getItemBaskets().get(i).getQuantity());
 					itemNew.setSize(b.getItemBaskets().get(i).getSize());
-					this.itemBasketService.save(itemNew); 
+					this.itemBasketService.save(itemNew);
 					items.add(itemNew);
 				}
 			}
@@ -123,7 +134,7 @@ public class FactureService {
 			factures.add(facture1);
 
 		}
-		
+
 		return factures;
 
 	}
@@ -153,7 +164,7 @@ public class FactureService {
 		facture.setCompany(null);
 
 		this.factureRepository.save(facture);
-		
+
 		return facture;
 
 	}
@@ -165,18 +176,18 @@ public class FactureService {
 	}
 
 	@Transactional
-	public Facture saveUpdateClient(Facture facture,String username) {
+	public Facture saveUpdateClient(Facture facture, String username) {
 		Client c = this.clientService.findByUsername(username);
 		c.getBasket().setItemBaskets(new ArrayList<>());
 		this.basketService.save(c.getBasket());
 		facture.setStatus("PAGADO");
 		List<Facture> factures = this.findFacturesPendingByClient(username);
-		for(Facture f:factures) {
+		for (Facture f : factures) {
 			factureRepository.delete(f);
 		}
 		return this.factureRepository.save(facture);
 	}
-	
+
 	@Transactional
 	public Facture payCompany(Facture facture) {
 		facture.setStatus("PAGADA");

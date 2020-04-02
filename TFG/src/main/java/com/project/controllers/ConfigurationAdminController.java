@@ -2,8 +2,10 @@ package com.project.controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -16,11 +18,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.project.domain.Configuration;
+import com.project.domain.Product;
 import com.project.services.ConfigurationService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
@@ -101,5 +107,55 @@ public class ConfigurationAdminController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-
+	
+	//----------------------Stadistic------------------------------------------------------------
+	
+	@CrossOrigin
+	@RequestMapping(value = "/statistics/productByCompany", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<?> productByCompany() {
+		Map<String,Integer> estadistica= new HashMap<>();
+		Map<String, Object> response = new HashMap<>();
+		try {  
+			estadistica = configurationService.productByCompany();
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Map<String,Integer>>( estadistica, HttpStatus.OK);
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value = "/statistics/productByClient", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<?> productByClient() {
+		Map<String,Integer> estadistica= new HashMap<>();
+		Map<String, Object> response = new HashMap<>();
+		try {  
+			estadistica = configurationService.productByClient();
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Map<String,Integer>>( estadistica, HttpStatus.OK);
+	}
+	
+	@CrossOrigin
+	@RequestMapping(value = "/statistics/productSoldByCompany", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<?> productSoldByCompany() {
+		Map<String,Integer> estadistica= new HashMap<>();
+		Map<String, Object> response = new HashMap<>();
+		try {  
+			estadistica = configurationService.productSoldByCompany();
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al realizar la consulta en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Map<String,Integer>>( estadistica, HttpStatus.OK);
+	}
+  
 }

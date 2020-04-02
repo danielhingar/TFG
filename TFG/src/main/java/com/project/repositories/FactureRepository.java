@@ -30,4 +30,10 @@ public interface FactureRepository extends JpaRepository<Facture, Integer> {
 	
 	@Query("select f from Facture f where f.status!='PAGADA' and f.status!='PENDIENTE DE PAGO'")
 	Page<Facture> findFacturesAllClient(Pageable pageable);
+	
+	@Query("select f from Facture f where f.status!='PAGADA' and f.status!='PENDIENTE DE PAGO' and f.client.username = ?1 ")
+	List<Facture> findFacturesClient(String username);
+	
+	@Query("select f from Facture f where f.company.username =?1")
+	List<Facture> findFactureByCompany(String username);
 }
