@@ -113,17 +113,12 @@ public class ConfigurationAdminController {
 	@CrossOrigin
 	@RequestMapping(value = "/statistics/productByCompany", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<?> productByCompany() {
+	public Map<String,Integer> productByCompany() {
 		Map<String,Integer> estadistica= new HashMap<>();
-		Map<String, Object> response = new HashMap<>();
-		try {  
+		
 			estadistica = configurationService.productByCompany();
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al realizar la consulta en la base de datos");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		return new ResponseEntity<Map<String,Integer>>( estadistica, HttpStatus.OK);
+		
+		return estadistica;
 	}
 	
 	@CrossOrigin
