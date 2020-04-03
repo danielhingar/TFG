@@ -109,7 +109,7 @@ public class ConfigurationAdminController {
 	}
 	
 	//----------------------Stadistic------------------------------------------------------------
-	
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@RequestMapping(value = "/statistics/productByCompany", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
@@ -121,6 +121,7 @@ public class ConfigurationAdminController {
 		return estadistica;
 	}
 	
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@RequestMapping(value = "/statistics/productByClient", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
@@ -137,6 +138,7 @@ public class ConfigurationAdminController {
 		return new ResponseEntity<Map<String,Integer>>( estadistica, HttpStatus.OK);
 	}
 	
+	@Secured({"ROLE_ADMIN"})
 	@CrossOrigin
 	@RequestMapping(value = "/statistics/productSoldByCompany", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
