@@ -116,12 +116,12 @@ public class ProductController {
 	
 	
 	// -------------------------- List claim by client -------------------------
-//	@CrossOrigin
-//	@RequestMapping(value = "/avgValoration/{productId}", method = RequestMethod.GET)
-//	@ResponseStatus(HttpStatus.OK)
-//	public Integer avgValoration(@PathVariable int productId) {
-//		return productService.calculateAvgValoration(productId);
-//	}
-//	
+	@CrossOrigin
+	@RequestMapping(value = "/avgValoration/{id}", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public Integer avgValoration(@PathVariable int id) {
+		return productService.calculateAvgValoration(id);
+	}
+	
 	
 }

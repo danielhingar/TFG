@@ -165,14 +165,14 @@ public class ProductService {
 	}
 
 	// -----Valoration------------------------------------------------------------------------------------------------
-//	@Transactional(readOnly = true)
-//	public Integer calculateAvgValoration(int productId) {
-//		Double res = null;
-//		List<Comment> comments = this.commentService.findCommentByProduct(productId);
-//		for (Comment c : comments) {
-//			res = res + c.getValoration();
-//		}
-//		return (int) Math.round(res);
-//	}
+	@Transactional(readOnly = true)
+	public Integer calculateAvgValoration(int id) {
+		Double res = 0.0;
+		List<Comment> comments = this.commentService.findCommentByProduct(id);
+		for (Comment c : comments) {
+			res +=  c.getValoration();
+		}
+		return (int) Math.round(res/comments.size());
+	}
 
 }
