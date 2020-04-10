@@ -121,6 +121,7 @@ public class FactureService {
 					itemNew.setProduct(b.getItemBaskets().get(i).getProduct());
 					itemNew.setQuantity(b.getItemBaskets().get(i).getQuantity());
 					itemNew.setSize(b.getItemBaskets().get(i).getSize());
+					itemNew.setStatus("PAGADO");
 					this.itemBasketService.save(itemNew);
 					items.add(itemNew);
 				}

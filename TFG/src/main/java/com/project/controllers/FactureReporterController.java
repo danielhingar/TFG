@@ -43,11 +43,11 @@ public class FactureReporterController {
 	@Secured({ "ROLE_REPORTER" })
 	@CrossOrigin
 	@RequestMapping(value = "/all/page/{page}", method = RequestMethod.GET)
-	public ResponseEntity<?> findFacturesAllClients(@PathVariable Integer page) {
+	public ResponseEntity<?> findFacturesAllClients(@PathVariable Integer page) { 
 		Page<Facture> factures;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			factures = factureService.findFacturesAllClients(PageRequest.of(page, 9));
+			factures = factureService.findFacturesAllClients(PageRequest.of(page, 9,org.springframework.data.domain.Sort.by("createDate").descending()));
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -118,16 +118,16 @@ public class FactureReporterController {
 	}
 
 	// --------------------------------pay facture company------------------------
-	@Secured({"ROLE_REPORTER"})
+	
 	@CrossOrigin
 	@PutMapping("/payCompany/{id}")
 	public ResponseEntity<?> enable(@PathVariable int id) {
 		Facture factureActually = this.factureService.findById(id);
+		Facture factureUpdated = null;
 		Map<String, Object> response = new HashMap<>();
 
 		try {
-			factureActually.setStatus("PAGADA");
-			this.factureService.save(factureActually);
+			factureUpdated= this.factureService.payCompany(factureActually);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -135,7 +135,7 @@ public class FactureReporterController {
 		}
 
 		response.put("mensaje", "Has pagado a la compañía");
-		response.put("facture", factureActually);
+		response.put("facture", factureUpdated);
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}

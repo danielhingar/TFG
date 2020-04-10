@@ -22,7 +22,7 @@ public class ItemBasket implements Serializable {
 	private Integer quantity;
 	private String size;
 	private String capacity;
-	
+	private String status;
 
 	public int getId() {
 		return id;
@@ -75,7 +75,13 @@ public class ItemBasket implements Serializable {
 	}
 	
 	
-	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	
 
 	/**

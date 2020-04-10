@@ -46,7 +46,7 @@ public class ClaimReporterController {
 			Page<Claim> claims;
 			Map<String, Object> response = new HashMap<>();
 			try {
-				claims = claimService.findClaimByReporter(username,PageRequest.of(page, 9));
+				claims = claimService.findClaimByReporter(username,PageRequest.of(page, 9,org.springframework.data.domain.Sort.by("createDate").descending()));
 			} catch (DataAccessException e) {
 				response.put("mensaje", "Error al realizar la consulta en la base de datos");
 				response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

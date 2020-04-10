@@ -76,13 +76,13 @@ INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,ca
 INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,memory,brand,offert) VALUES (11,991,'CAMISETA NIKE','Camiseta nike de manga corta ultima temporada',null,100.70,'2019-11-23','MODA','37,38,39,40,41',null,null,'550 gramos',null,null,null,'ADIDAS',null);
 INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,memory,brand,offert) VALUES (12,992,'CHAQUETA DE CUERO','Chaqueta de lana nueva temporada invierno',null,69.7,'2019-11-23','MODA','S,M,L,XL',null,null,'550 gramos',null,null,null,'SPRINGFIELD',20);
 /*RELATION BASKET-PRODUCTS*/
-INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity) VALUES (1,1,1,1,null,'38','null'); 
-INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity) VALUES (2,2,1,2,null,'39','null');
-INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity) VALUES (3,1,1,3,null,'null','null');
-INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity) VALUES (4,3,2,4,null,'L','null');
-INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity) VALUES (5,1,2,5,null,'M','null');
-INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity) VALUES (6,8,3,7,null,'null','500GB');
-INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity) VALUES (7,3,3,6,null,'null','16GB');
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity,status) VALUES (1,1,1,1,null,'38','null',null); 
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity,status) VALUES (2,2,1,2,null,'39','null',null);
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity,status) VALUES (3,1,1,3,null,'null','null',null);
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity,status) VALUES (4,3,2,4,null,'L','null',null);
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity,status) VALUES (5,1,2,5,null,'M','null',null);
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity,status) VALUES (6,8,3,7,null,'null','500GB',null);
+INSERT INTO `item_basket` (id,quantity,basket_id,product_id,facture_id,size,capacity,status) VALUES (7,3,3,6,null,'null','16GB',null);
 
  
 /*Comment--------------------------------------------------------------------------------*/

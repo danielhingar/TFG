@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.domain.Facture;
 import com.project.domain.ItemBasket;
 import com.project.services.ItemBasketService;
 
@@ -133,6 +134,49 @@ public class ItemBasketClientController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
+	
+	// --------------------------------Update facture------------------------
+		@Secured({ "ROLE_REPORTER" })
+		@CrossOrigin
+		@PutMapping("/updateStatus/{id}")
+		public ResponseEntity<?> updateStatus(@Valid @RequestBody ItemBasket itemBasket, BindingResult bindingResult,
+				@PathVariable int id) {
+			ItemBasket itemBasketActually = this.itemBasketService.findById(id);
+			ItemBasket ItemBasketUpdated = null;
+
+			Map<String, Object> response = new HashMap<>();
+
+			if (bindingResult.hasErrors()) {
+				List<String> errors = new ArrayList<String>();
+				for (FieldError err : bindingResult.getFieldErrors()) {
+					errors.add("El campo " + err.getField() + " " + err.getDefaultMessage());
+				}
+				response.put("errors", errors);
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+			}
+
+			if (itemBasketActually == null) {
+				Integer id1 = (Integer) id;
+				response.put("mensaje",
+						"Error: no se pudo editar la factura,".concat(id1.toString().concat(" no existe ")));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			}
+
+			try {
+				itemBasketActually.setStatus(itemBasket.getStatus());
+
+				ItemBasketUpdated = this.itemBasketService.save(itemBasketActually);
+			} catch (DataAccessException e) {
+				response.put("mensaje", "Error al actualizar en la base de datos");
+				response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+
+			response.put("mensaje", "La factura ha sido actualizada");
+			response.put("facture", ItemBasketUpdated);
+
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+		}
 
 	// ---------------------------------Delete item-----------------------
 	@Secured({"ROLE_CLIENT"})

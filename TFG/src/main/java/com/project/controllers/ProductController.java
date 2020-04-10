@@ -48,7 +48,7 @@ public class ProductController {
 	@CrossOrigin
 	@RequestMapping(value = "/list/page/{page}/{username}", method = RequestMethod.GET)
 	public Page<Product> list(@PathVariable Integer page, @PathVariable String username) {
-		return productService.findAllByCompany(username, PageRequest.of(page, 9));
+		return productService.findAllByCompany(username, PageRequest.of(page, 9,org.springframework.data.domain.Sort.by("createDate").descending()));
 	}
 
 	// --------------------------List product by

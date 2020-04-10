@@ -48,7 +48,7 @@ public class FactureClientController {
 		Page<Facture> factures;
 		Map<String, Object> response = new HashMap<>();
 		try {
-			factures = factureService.findFactureByClient(username, PageRequest.of(page, 9));
+			factures = factureService.findFactureByClient(username, PageRequest.of(page, 9,org.springframework.data.domain.Sort.by("createDate").descending()));
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
