@@ -116,7 +116,7 @@ public class CompanyController {
 	@CrossOrigin
 	@RequestMapping(value = "/list/page/{page}", method = RequestMethod.GET)
 	public Page<Company> list(@PathVariable Integer page) {
-		return companyService.findAll(PageRequest.of(page, 6));
+		return companyService.findAll(PageRequest.of(page, 6,org.springframework.data.domain.Sort.by("createDate").descending()));
 	}
 
 	// -----------------------------Create

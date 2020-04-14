@@ -26,6 +26,7 @@ public class Product implements Serializable {
 
 	// Atributes-------------------------------------------------------------------
 	private int id;
+	private String status;
 	private String name;
 	private String description;
 	private String photo;
@@ -51,6 +52,14 @@ public class Product implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@NotBlank

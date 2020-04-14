@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,8 +53,13 @@ public class ProductCompanyController {
 	@Autowired
 	private ProductService productService;
 
-
-
+	//List
+	@Secured({"ROLE_COMPANY"})
+	@CrossOrigin
+	@RequestMapping(value = "/list/page/{page}/{username}", method = RequestMethod.GET)
+	public Page<Product> list(@PathVariable Integer page, @PathVariable String username) {
+		return productService.findAllByCompanyClient(username, PageRequest.of(page, 9,org.springframework.data.domain.Sort.by("createDate").descending()));
+	}
 
 
 	// -------------------------------------Create a
@@ -152,16 +160,16 @@ public class ProductCompanyController {
 	public ResponseEntity<?> delete(@PathVariable int id) {
 		Map<String, Object> response = new HashMap<>();
 		try {
-//			Product product = productService.findById(id);
-//			String nombreFotoAnterior = cliente.getFoto();
-//
-//			if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0) {
-//				Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
-//				File archivoFotoAnterior = rutaFotoAnterior.toFile();
-//				if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
-//					archivoFotoAnterior.delete();
-//				}
-//			}
+			Product product = productService.findById(id);
+			String nombreFotoAnterior = product.getPhoto();
+
+			if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0) {
+				Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
+				File archivoFotoAnterior = rutaFotoAnterior.toFile();
+				if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
+					archivoFotoAnterior.delete();
+				}
+			}
 			productService.delete(id);
 		} catch (DataAccessException e) {
 			// TODO: handle exception

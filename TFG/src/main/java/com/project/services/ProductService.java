@@ -123,6 +123,7 @@ public class ProductService {
 	public Product saveProduct(Product product, String username) {
 		product.setCompany(this.companyService.findByUsername(username));
 		product.setCreateDate(new Date());
+		product.setStatus("DISPONIBLE");
 		return productRepository.save(product);
 	}
 
@@ -137,20 +138,28 @@ public class ProductService {
 	@Transactional
 	public void delete(int id) {
 		Product p = this.findById(id);
+		Integer res= 0;
 		List<Client> clients = this.clientService.findAll();
 		for (Client t : clients) {
 			Basket b = t.getBasket();
 			for (int i = 0; i < b.getItemBaskets().size(); i++) {
 				if (p.getName().equals(b.getItemBaskets().get(i).getProduct().getName())) {
-					b.getItemBaskets().get(i).setProduct(null);
-					b.getItemBaskets().remove(b.getItemBaskets().get(i));
-					this.itemBasketService.delete(b.getItemBaskets().get(i).getId());
+					res= res+1;
 
+				}else {
+					res= res+0;
 				}
 
 			}
+		
 		}
+		if(res == 1) {
+			p.setStatus("ELIMINADO");
+			productRepository.save(p);
+		}
+		if(res == 0) {
 		productRepository.deleteById(id);
+		}
 	}
 
 	// -----------------------------------------Pagination----------------------------------------------------------
@@ -162,6 +171,11 @@ public class ProductService {
 	@Transactional(readOnly = true)
 	public Page<Product> findAllByCompany(String username, Pageable pageable) {
 		return productRepository.findProductByCompany(username, pageable);
+	}
+	
+	@Transactional(readOnly = true)
+	public Page<Product> findAllByCompanyClient(String username, Pageable pageable) {
+		return productRepository.findProductByCompanyClient(username, pageable);
 	}
 
 	// -----Valoration------------------------------------------------------------------------------------------------

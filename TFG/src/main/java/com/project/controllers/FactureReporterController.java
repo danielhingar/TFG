@@ -118,7 +118,7 @@ public class FactureReporterController {
 	}
 
 	// --------------------------------pay facture company------------------------
-	
+	@Secured({ "ROLE_REPORTER" })
 	@CrossOrigin
 	@PutMapping("/payCompany/{id}")
 	public ResponseEntity<?> enable(@PathVariable int id) {

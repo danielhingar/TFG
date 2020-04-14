@@ -1,14 +1,18 @@
 package com.project.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,6 +25,8 @@ public class Company extends Usuario{
 	private String businessName;
 	private String category;
 	private String image;
+	@Column(name = "create_date")
+	private Date createDate;
 
 	public Company() {
 		this.about=new About();
@@ -51,6 +57,15 @@ public class Company extends Usuario{
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 	// Relationships------------------------------------------------------------

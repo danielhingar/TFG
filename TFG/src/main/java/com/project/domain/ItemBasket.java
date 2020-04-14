@@ -56,7 +56,13 @@ public class ItemBasket implements Serializable {
 		this.capacity = capacity;
 	}
 
+	public String getStatus() {
+		return status;
+	}
 
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 
 	//Relationships----------------------------------------------------------------------------------------------------------
@@ -75,13 +81,7 @@ public class ItemBasket implements Serializable {
 	}
 	
 	
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
+	
 	
 
 	/**

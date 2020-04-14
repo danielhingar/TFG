@@ -2,6 +2,7 @@ package com.project.services;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,7 @@ public class CompanyService {
 		Role role = roleService.findById(4);
 		r.add(role);
 		company.setRoles(r);
+		company.setCreateDate(new Date());
 		company.setEnabled(true);
 		return companyRepository.save(company);
 	}
