@@ -17,6 +17,7 @@ import com.project.domain.Client;
 import com.project.domain.Company;
 import com.project.domain.Facture;
 import com.project.domain.ItemBasket;
+import com.project.domain.Product;
 import com.project.repositories.FactureRepository;
 
 @Service
@@ -37,6 +38,9 @@ public class FactureService {
 
 	@Autowired
 	private ItemBasketService itemBasketService;
+	
+	@Autowired
+	private ProductService productService;
 
 	// --------------------------------------------Methods----------------------------------------------------------
 
@@ -144,6 +148,15 @@ public class FactureService {
 	public Facture saveFactureUnify(Facture facture, String username) {
 		Client c = this.clientService.findByUsername(username);
 		List<ItemBasket> items = c.getBasket().getItemBaskets();
+		for(ItemBasket i: items) {
+			Product a = i.getProduct();
+			a.setStock(a.getStock()-i.getQuantity());
+			this.productService.saveProduct(a);
+			if(a.getStock()== 0) {
+				a.setStatus("SINSTOCK");
+				this.productService.saveProduct(a);
+			}
+		}
 		List<ItemBasket> newItems = new ArrayList<>();
 		for (int i = 0; i < items.size(); i++) {
 

@@ -138,7 +138,10 @@ public class ProductCompanyController {
 			productActually.setWeight(product.getWeight());
 			productActually.setWidth(product.getWidth());
 			productActually.setMemory(product.getMemory());
-
+			productActually.setStock(product.getStock());
+			if(product.getStock()>0) {
+				productActually.setStatus("DISPONIBLE");
+			}
 			productUpdated = productService.saveProduct(productActually);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");

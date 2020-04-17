@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.domain.Facture;
 import com.project.domain.ItemBasket;
+import com.project.domain.Product;
 import com.project.services.ItemBasketService;
+import com.project.services.ProductService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
@@ -37,6 +39,9 @@ public class ItemBasketClientController {
 	// Servicies----------------------------------------------------------------------------------------------
 	@Autowired
 	private ItemBasketService itemBasketService;
+	
+	@Autowired
+	private ProductService productService;
 
 	// ------------------Show item--------------
 	@Secured({"ROLE_CLIENT"})
@@ -121,8 +126,9 @@ public class ItemBasketClientController {
 
 		try {
 			itemBasketActually.setQuantity(itemBasket.getQuantity());
-
+			
 			itemBasketUpdated = this.itemBasketService.save(itemBasketActually);
+			
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

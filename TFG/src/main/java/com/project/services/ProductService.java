@@ -157,7 +157,7 @@ public class ProductService {
 			p.setStatus("ELIMINADO");
 			productRepository.save(p);
 		}
-		if(res == 0) {
+		if(res == 0) { 
 		productRepository.deleteById(id);
 		}
 	}

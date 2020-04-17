@@ -43,6 +43,7 @@ public class Product implements Serializable {
 	private String brand;
 	private String memory;
 	private Integer offert;
+	private Integer stock;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -191,10 +192,18 @@ public class Product implements Serializable {
 	public void setOffert(Integer offert) {
 		this.offert = offert;
 	}
+	
+	public Integer getStock() {
+		return stock;
+	}
+
+	public void setStock(Integer stock) {
+		this.stock = stock;
+	}
+	
 
 	// Relationships-----------------------------------------------------------------
 
-	
 	private Company company;
 	
 	@JsonIgnoreProperties(value={ "products", "hibernateLazyInitializer", "hadler" },allowSetters = true)
