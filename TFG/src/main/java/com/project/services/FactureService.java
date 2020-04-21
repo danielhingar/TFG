@@ -148,15 +148,7 @@ public class FactureService {
 	public Facture saveFactureUnify(Facture facture, String username) {
 		Client c = this.clientService.findByUsername(username);
 		List<ItemBasket> items = c.getBasket().getItemBaskets();
-		for(ItemBasket i: items) {
-			Product a = i.getProduct();
-			a.setStock(a.getStock()-i.getQuantity());
-			this.productService.saveProduct(a);
-			if(a.getStock()== 0) {
-				a.setStatus("SINSTOCK");
-				this.productService.saveProduct(a);
-			}
-		}
+		
 		List<ItemBasket> newItems = new ArrayList<>();
 		for (int i = 0; i < items.size(); i++) {
 
@@ -194,6 +186,15 @@ public class FactureService {
 		Client c = this.clientService.findByUsername(username);
 		c.getBasket().setItemBaskets(new ArrayList<>());
 		this.basketService.save(c.getBasket());
+		for(ItemBasket i: c.getBasket().getItemBaskets()) {
+			Product a = i.getProduct();
+			a.setStock(a.getStock()-i.getQuantity());
+			this.productService.saveProduct(a);
+			if(a.getStock()== 0) {
+				a.setStatus("SINSTOCK");
+				this.productService.saveProduct(a);
+			}
+		}
 		facture.setStatus("PAGADO");
 		List<Facture> factures = this.findFacturesPendingByClient(username);
 		for (Facture f : factures) {

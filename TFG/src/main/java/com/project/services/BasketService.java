@@ -109,7 +109,7 @@ public class BasketService {
 					&& size.equals(items.get(i).getSize())) {
 				items.get(i).setQuantity(items.get(i).getQuantity() + 1);
 				newItem = null;
-			}
+			} 
 		}
 		return newItem;
 	}

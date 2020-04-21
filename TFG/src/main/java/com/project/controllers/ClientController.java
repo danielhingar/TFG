@@ -65,7 +65,7 @@ public class ClientController {
 
 	// -----------------------------Create
 	// Client-------------------------------------------------
-	@Secured({"ROLE_CLIENT"})
+	
 	@CrossOrigin
 	@PostMapping("/create")
 	public ResponseEntity<?> create(@Valid @RequestBody Client client, BindingResult bindingResult) {
