@@ -196,7 +196,7 @@ public class CompanyController {
 			companyActually.setSurnames(company.getSurnames());
 			companyActually.setBusinessName(company.getBusinessName());
 			companyActually.setCategory(company.getCategory());
-
+			companyActually.setImage(company.getImage());
 			companyUpdated = this.companyService.update(companyActually);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
@@ -229,62 +229,62 @@ public class CompanyController {
 //
 //	}
 
-	@Secured({"ROLE_COMPANY"})
-	@PostMapping("/upload")
-	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") int id) {
-		Map<String, Object> response = new HashMap<>();
-
-		Company company = companyService.findById(id);
-
-		if (!archivo.isEmpty()) {
-			String nombreArchivo = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename().replace(" ", "");
-			Path rutaArchivo = Paths.get("uploads").resolve(nombreArchivo).toAbsolutePath();
-			
-			try {
-				Files.copy(archivo.getInputStream(), rutaArchivo);
-			} catch (IOException e) {
-				response.put("mensaje", "Error al subir la imagen del producto " + nombreArchivo);
-				response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
-				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-
-			String nombreFotoAnterior = company.getImage();
-
-			if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0) {
-				Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
-				File archivoFotoAnterior = rutaFotoAnterior.toFile();
-				if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
-					archivoFotoAnterior.delete();
-				}
-			}
-			company.setImage(nombreArchivo);
-
-			companyService.update(company);
-
-			response.put("company", company);
-			response.put("mensaje", "Has subido correctamente la imagen: " + nombreArchivo);
-		}
-
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
-	}
-	
-	@GetMapping("/uploads/img/{nombreFoto:.+}")
-	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto){
-		Path rutaArchivo = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
-		
-		Resource recurso= null;
-		
-		try {
-			recurso= new UrlResource(rutaArchivo.toUri());
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		HttpHeaders cabecera= new HttpHeaders();
-		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+recurso.getFilename()+"\"");
-		return new ResponseEntity<Resource>(recurso,cabecera,HttpStatus.OK);
-	}
+//	@Secured({"ROLE_COMPANY"})
+//	@PostMapping("/upload")
+//	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo, @RequestParam("id") int id) {
+//		Map<String, Object> response = new HashMap<>();
+//
+//		Company company = companyService.findById(id);
+//
+//		if (!archivo.isEmpty()) {
+//			String nombreArchivo = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename().replace(" ", "");
+//			Path rutaArchivo = Paths.get("uploads").resolve(nombreArchivo).toAbsolutePath();
+//			
+//			try {
+//				Files.copy(archivo.getInputStream(), rutaArchivo);
+//			} catch (IOException e) {
+//				response.put("mensaje", "Error al subir la imagen del producto " + nombreArchivo);
+//				response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
+//				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+//			}
+//
+//			String nombreFotoAnterior = company.getImage();
+//
+//			if (nombreFotoAnterior != null && nombreFotoAnterior.length() > 0) {
+//				Path rutaFotoAnterior = Paths.get("uploads").resolve(nombreFotoAnterior).toAbsolutePath();
+//				File archivoFotoAnterior = rutaFotoAnterior.toFile();
+//				if (archivoFotoAnterior.exists() && archivoFotoAnterior.canRead()) {
+//					archivoFotoAnterior.delete();
+//				}
+//			}
+//			company.setImage(nombreArchivo);
+//
+//			companyService.update(company);
+//
+//			response.put("company", company);
+//			response.put("mensaje", "Has subido correctamente la imagen: " + nombreArchivo);
+//		}
+//
+//		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+//	}
+//	
+//	@GetMapping("/uploads/img/{nombreFoto:.+}")
+//	public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto){
+//		Path rutaArchivo = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
+//		
+//		Resource recurso= null;
+//		
+//		try {
+//			recurso= new UrlResource(rutaArchivo.toUri());
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		
+//		HttpHeaders cabecera= new HttpHeaders();
+//		cabecera.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+recurso.getFilename()+"\"");
+//		return new ResponseEntity<Resource>(recurso,cabecera,HttpStatus.OK);
+//	}
 
 }

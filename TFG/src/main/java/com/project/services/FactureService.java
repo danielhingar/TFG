@@ -184,17 +184,18 @@ public class FactureService {
 	@Transactional
 	public Facture saveUpdateClient(Facture facture, String username) {
 		Client c = this.clientService.findByUsername(username);
-		c.getBasket().setItemBaskets(new ArrayList<>());
 		this.basketService.save(c.getBasket());
 		for(ItemBasket i: c.getBasket().getItemBaskets()) {
 			Product a = i.getProduct();
 			a.setStock(a.getStock()-i.getQuantity());
 			this.productService.saveProduct(a);
-			if(a.getStock()== 0) {
+			if(a.getStock() == 0) {
 				a.setStatus("SINSTOCK");
 				this.productService.saveProduct(a);
 			}
 		}
+		c.getBasket().setItemBaskets(new ArrayList<>());
+		
 		facture.setStatus("PAGADO");
 		List<Facture> factures = this.findFacturesPendingByClient(username);
 		for (Facture f : factures) {
