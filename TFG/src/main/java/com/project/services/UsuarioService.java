@@ -15,7 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.domain.Client;
+
 import com.project.domain.Usuario;
 import com.project.repositories.UsuarioRepository;
 
@@ -71,7 +71,7 @@ public class UsuarioService implements UserDetailsService{
 	//----------------------------------- Get principal-------------------------------------------------
 	public static String getPrincipal() {
 		Object principal= SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		UserDetails userDetails=null;
+		UserDetails userDetails = null;
 		if(principal instanceof UserDetails) {
 			userDetails=(UserDetails) principal;
 		}

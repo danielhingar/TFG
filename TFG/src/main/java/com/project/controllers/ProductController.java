@@ -33,17 +33,10 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-//	@Autowired
-//	private CompanyService companyService;
+
 
 	// -------------------------------------Methods-------------------------------------------------------------
 
-//	// -------------------------- List all products ----------------------------------
-//	@CrossOrigin
-//	@RequestMapping(value = "/list", method = RequestMethod.GET)
-//	public List<Product> list() {
-//		return productService.findAll();
-//	}
 
 	@CrossOrigin
 	@RequestMapping(value = "/list/page/{page}/{username}", method = RequestMethod.GET)
@@ -51,29 +44,7 @@ public class ProductController {
 		return productService.findAllByCompanyClient(username, PageRequest.of(page, 9,org.springframework.data.domain.Sort.by("createDate").descending()));
 	}
 
-	// --------------------------List product by
-	// company-------------------------------------------------
-//	@CrossOrigin
-//	@RequestMapping(value = "/list/{username}", method = RequestMethod.GET)
-//	public ResponseEntity<?> listProductsCompany(@PathVariable String username) {
-//		List<Product> product = new ArrayList<Product>();
-//		Map<String, Object> response = new HashMap<>();
-//		try {
-//			product = productService.findAllByCompany(username);
-//		} catch (DataAccessException e) {
-//			response.put("mensaje", "Error al realizar la consulta en la base de datos");
-//			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-//			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//		Company c=companyService.findByUsername(username);
-//		if (c.getProducts() == null) {
-//			response.put("mensaje", "This company hasn't products");
-//			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-//		}
-//		return new ResponseEntity<List<Product>>( product, HttpStatus.OK);
-//	}
-//	
-//	
+	
 
 	// -------------------------- Show detail of a
 	// product----------------------------------

@@ -8,10 +8,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.domain.Basket;
-import com.project.domain.Claim;
+
 import com.project.domain.Client;
-import com.project.domain.Facture;
+
 import com.project.domain.Role;
 import com.project.repositories.ClientRepository;
 
@@ -31,15 +30,8 @@ public class ClientService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	@Autowired
-	private FactureService factureService;
-	
-	@Autowired
-	private ClaimService claimService;
-	
-	@Autowired
-	private BasketService basketService;
-	
+
+
 	// CRUD--------------------------------------------------------------------------------------------------------
 
 	// ----------------------------------------LIST------------------------------------------------------------------

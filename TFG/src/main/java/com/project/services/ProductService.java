@@ -12,7 +12,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.project.domain.Basket;
 import com.project.domain.Client;
 import com.project.domain.Comment;
-import com.project.domain.Company;
+
 import com.project.domain.Product;
 import com.project.repositories.ProductRepository;
 
@@ -39,8 +39,7 @@ public class ProductService {
 	@Autowired
 	private ClientService clientService;
 
-	@Autowired
-	private ItemBasketService itemBasketService;
+
 
 	@Autowired
 	private CommentService commentService;

@@ -78,7 +78,7 @@ public class CommentService {
 	@Transactional
 	public boolean deleteCondition(int commentId, String username) {
 		boolean a= false;
-		Comment c= this.commentRepository.findById(commentId).orElse(null);
+		Comment c= this.findById(commentId);
 		if(c.getClient().getUsername().equals(username)) {
 			a= true;
 		}

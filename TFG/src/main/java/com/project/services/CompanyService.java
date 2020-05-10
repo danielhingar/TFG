@@ -1,10 +1,10 @@
 package com.project.services;
 
 import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,13 +34,13 @@ public class CompanyService {
 	// -------------------------------------List companies order
 	// random------------------------------------------------------------------
 
-	@Transactional(readOnly = true)
-	public List<Company> findAllRandom() {
-		List<Company> companies = companyRepository.findAll();
-		Random rdm = new Random();
-		Collections.shuffle(companies, rdm);
-		return companies;
-	}
+//	@Transactional(readOnly = true)
+//	public List<Company> findAllRandom() {
+//		List<Company> companies = companyRepository.findAll();
+//		Random rdm = new Random();
+//		Collections.shuffle(companies, rdm);
+//		return companies;
+//	}
 
 	// ----------------------------------------Create--------------------------------------------------------
 	@Transactional

@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.project.domain.Basket;
 import com.project.domain.Client;
-import com.project.domain.Company;
 import com.project.domain.ItemBasket;
 import com.project.domain.Product;
 import com.project.repositories.BasketRepository;
@@ -38,8 +37,8 @@ public class BasketService {
 	@Transactional(readOnly = true)
 	public Basket findByClient(String username) {
 		Client c = clientService.findByUsername(username);
-		Basket b = c.getBasket();
-		return b;
+		
+		return c.getBasket();
 
 	}
 
@@ -49,7 +48,7 @@ public class BasketService {
 	public Basket save(Basket basket, int productId, String size, String capacity) {
 		List<ItemBasket> items = basket.getItemBaskets();
 		Product p = this.productService.findById(productId);
-		List<Integer> ids = new ArrayList<Integer>();
+		List<Integer> ids = new ArrayList<>();
 		for (int i = 0; i < items.size(); i++) {
 			ids.add(items.get(i).getProduct().getId());
 		}
@@ -61,14 +60,14 @@ public class BasketService {
 			newItem.setCapacity(capacity); 
 			items.add(newItem);
 			this.itemBasketService.save(newItem);
-		} else if (ids.contains(productId) && (!capacity.equals(null) || !capacity.equals("null"))
-				&& (size.equals(null) || size.equals("null"))) {
+		} else if (ids.contains(productId) && (!capacity.equals("null"))
+				&& (size.equals("null"))) {
 			if (addProductCapacity(basket, productId, capacity) != null) {
 				items.add(addProductCapacity(basket, productId, capacity));
 			}
 
-		} else if (ids.contains(productId) && (!size.equals(null) || !size.equals("null"))
-				&& (capacity.equals(null) || capacity.equals("null"))) {
+		} else if (ids.contains(productId) && (!size.equals("null"))
+				&& (capacity.equals("null"))) {
 			if (addProduct(basket, productId, size) != null) {
 				items.add(addProduct(basket, productId, size));
 			}
@@ -105,7 +104,7 @@ public class BasketService {
 				newItem.setQuantity(1);
 				newItem.setSize(size);
 				newItem.setCapacity("null");
-			} else if (items.get(i).getProduct().getId() == p.getId() && !size.equals("null") && size.contains(size)
+			} else if (items.get(i).getProduct().getId() == p.getId() && !size.equals("null") && sizes.contains(size)
 					&& size.equals(items.get(i).getSize())) {
 				items.get(i).setQuantity(items.get(i).getQuantity() + 1);
 				newItem = null;

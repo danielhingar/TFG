@@ -21,9 +21,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		// TODO Auto-generated method stub
-		http.authorizeRequests().antMatchers(HttpMethod.GET, "/product/list/page/**","/product/show/{id}","/admin/configuration/show","/company/list/page/**","/company/product/uploads/img/**",
-				"/company/about/show/**","/company/list","/company/uploads/img/**","/comment/product/page/**","/comment/condition/**", "/product/recomendation/**","/admin/configuration/statistics/**","/product/avgValoration/**").permitAll()
+	
+		http.authorizeRequests().antMatchers(HttpMethod.GET, "/product/list/page/**","/product/show/{id}","/admin/configuration/show",
+				"/company/list/page/**","/company/product/uploads/img/**","/company/about/show/**","/company/list","/company/uploads/img/**",
+				"/comment/product/page/**","/comment/condition/**","/product/recomendation/**","/admin/configuration/statistics/**",
+				"/product/avgValoration/**").permitAll()
 		.antMatchers(HttpMethod.POST,"/client/create").permitAll()
 		.anyRequest().authenticated()
 		.and().cors().configurationSource(corsConfigurationSource());

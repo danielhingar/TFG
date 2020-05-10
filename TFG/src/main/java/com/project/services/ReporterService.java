@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.project.domain.Claim;
+
 import com.project.domain.Reporter;
 import com.project.domain.Role;
 import com.project.repositories.ReporterRepository;
@@ -28,8 +28,7 @@ public class ReporterService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	@Autowired
-	private ClaimService claimService;
+	
 
 	// CRUD--------------------------------------------------------------------------------------------------------
 
