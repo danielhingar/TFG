@@ -75,9 +75,14 @@ INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,ca
 INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,memory,brand,offert,status,stock) VALUES (11,991,'CAMISETA NIKE','Camiseta nike de manga corta ultima temporada','https://mosaic04.ztat.net/vgs/media/packshot/catalog-sm/NI/12/2O/0I/UA/11/NI122O0IU-A11@2.jpg',100.70,'2019-11-23','MODA','37,38,39,40,41',null,null,'550 gramos',null,null,null,'ADIDAS',null,'DISPONIBLE',2);
 INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,memory,brand,offert,status,stock) VALUES (12,991,'CHAQUETA DE CUERO','Chaqueta de lana, nueva temporada invierno','https://static.zara.net/photos///2020/V/0/2/p/3548/403/800/2/w/810/3548403800_6_1_1.jpg?ts=1579262894330',69.7,'2019-11-23','MODA','S,M,L,XL',null,null,'550 gramos',null,null,null,'SPRINGFIELD',20,'DISPONIBLE',2);
 INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,category,size,height,width,weight,inch,capacity,memory,brand,offert,status,stock) VALUES (13,990,'IPHONE 11 PLUS','IPHONE 11 móvil de última genereción, 6.1" Liquid Retina HD, Chip A13 Bionic, iOS','https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRAVfXRGfCwfYR6EFZFIM89dqjjXR62AACm8gPVXggfT5WTEnvl&usqp=CAU',1000.50,'2019-11-23','TELEFONÍA',null,'18 cm','7 cm','750 gramos','6.1',null,'32GB,64GB,128GB','IPHONE',null,'DISPONIBLE',1);
-/*RELATION BASKET-PRODUCTS*/
+/*conversation*/
+INSERT INTO `conversation` (id,issue,create_date,client_id,company_id) VALUES (1,'Envío','2020-01-23',996,991);
 
-
+/*Messages*/
+INSERT INTO `message` (id,text,create_date,answer,conversation_id) VALUES (1,'Hola, quería saber cuanto tiempo suele tardar en llegar.','2020-01-23',0,1);
+INSERT INTO `message` (id,text,create_date,answer,conversation_id) VALUES (2,'Hola Marta, pues el tiempo de entrega depende el método de envío que selecciones','2020-01-24',1,1);
+INSERT INTO `message` (id,text,create_date,answer,conversation_id) VALUES (3,'Muchas gracias','2020-01-25',0,1);
+ 
  
 /*Comment--------------------------------------------------------------------------------*/
 INSERT INTO `comment` (id,title,description,valoration,client_id,product_id, create_date) VALUES (1,'Perfecto','El producto me llego en perfecta condiciones y estoy muy contento con el',3.0,994,1,'2019-11-23');
