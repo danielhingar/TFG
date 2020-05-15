@@ -30,12 +30,12 @@ public class ConversationCompanyController {
 	private ConversationService conversationService;
 	
 	
-	// -------------------------- List claim by client
+	// -------------------------- List conversation by company
 	// ----------------------------------
 	@Secured({"ROLE_COMPANY"})
 	@CrossOrigin
 	@RequestMapping(value = "/myConversations/page/{page}/{username}", method = RequestMethod.GET)
-	public ResponseEntity<?> findClaimByClient(@PathVariable String username,@PathVariable Integer page) {
+	public ResponseEntity<?> findConversationByCompany(@PathVariable String username,@PathVariable Integer page) {
 		Page<Conversation> conversations;
 		Map<String, Object> response = new HashMap<>();
 		try {

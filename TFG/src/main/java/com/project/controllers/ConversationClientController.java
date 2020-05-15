@@ -120,14 +120,14 @@ public class ConversationClientController {
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id) {
 		Map<String, Object> response = new HashMap<>();
 		try {
-			claimService.delete(id);
+			conversationService.delete(id);
 		} catch (DataAccessException e) {
 
-			response.put("mensaje", "Error al borrar la queja");
+			response.put("mensaje", "Error al borrar la conversación");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		response.put("mensaje", "La queja ha sido eliminado con éxito");
+		response.put("mensaje", "La conversación ha sido eliminado con éxito");
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 

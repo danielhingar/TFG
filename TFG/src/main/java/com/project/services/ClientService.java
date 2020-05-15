@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import com.project.domain.Client;
-
+import com.project.domain.Product;
 import com.project.domain.Role;
 import com.project.repositories.ClientRepository;
 
@@ -30,6 +30,8 @@ public class ClientService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+	@Autowired
+	private ProductService productService;
 
 
 	// CRUD--------------------------------------------------------------------------------------------------------
@@ -70,22 +72,13 @@ public class ClientService {
 		return clientRepository.save(client);
 	}
 
-	// ----------------------------------------Delete---------------------------
-//	@Transactional
-//	public void delete(String username) {
-//		List<Facture> factures=this.factureService.findFactureByClient(username);
-//		for(int i=0;i<factures.size();i++) {
-//			List<Claim> claims=this.claimService.findClaimByFacture(factures.get(i).getId());
-//			for(int j=0;j<claims.size();j++) {
-//				this.claimService.delete(claims.get(j).getId());
-//			}
-//			
-//			this.factureService.delete(factures.get(i).getId());
-//		}
-//		Client c=this.findByUsername(username);
-//		Basket b=c.getBasket();
-//		this.basketService.delete(b.getId());
-//		this.clientRepository.deleteById(c.getId());
-//	}
+	@Transactional
+	public Client addProductToWish(Client client, int productId) {
+		List<Product> wishBefore= client.getWishProducts();
+		wishBefore.add(this.productService.findById(productId));
+		return this.clientRepository.save(client);
+	}
+	
+	
 
 }

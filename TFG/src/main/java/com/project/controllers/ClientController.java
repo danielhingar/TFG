@@ -15,7 +15,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CrossOrigin;
-
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -157,22 +157,26 @@ public class ClientController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 
-	// ---------------------------------Delete client-----------------------
-//	@CrossOrigin
-//	@DeleteMapping("/delete/{username}")
-//	public ResponseEntity<?> delete(@PathVariable String username) {
-//		Map<String, Object> response = new HashMap<>();
-//		try {
-//			this.clientService.delete(username);
-//		} catch (DataAccessException e) {
-//			// TODO: handle exception
-//			response.put("mensaje", "Error al borrar el reporter");
-//			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-//			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//		response.put("mensaje", "El perfil ha sido eliminado con éxito");
-//
-//		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
-//
-//	}
+	
+	// --------------------------------add product wish------------------------
+	@Secured({"ROLE_CLIENT"})
+	@CrossOrigin
+	@PutMapping("/addWish/{username}/{id}")
+	public ResponseEntity<?> enable(@PathVariable int id, @PathVariable String username) {
+		Client clientActually = this.clientService.findByUsername(username);
+		Map<String, Object> response = new HashMap<>();
+
+		try {
+			this.clientService.addProductToWish(clientActually, id);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al actualizar en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		response.put("mensaje", "Se ha añadido el producto a la lista de deseados");
+		response.put("client", clientActually);
+
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
 }

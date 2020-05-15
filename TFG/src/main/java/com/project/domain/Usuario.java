@@ -15,9 +15,12 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
@@ -115,6 +118,8 @@ public class Usuario implements Serializable {
 		// Relationships ---------------------------------------------------------
 		
 		private List<Role> roles;
+		
+		
 		
 		@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 		@JoinTable(name="usuario_roles",joinColumns = @JoinColumn(name="usuario_id"),inverseJoinColumns = @JoinColumn(name="role_id"))

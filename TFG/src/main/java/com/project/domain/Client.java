@@ -1,12 +1,15 @@
 package com.project.domain;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
 import javax.persistence.JoinColumn;
-
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 
@@ -72,11 +75,26 @@ public class Client extends Usuario {
 	}
 
 	// Relationships ---------------------------------------------------------
-	private Basket basket;
-
+	private Basket basket;	
+	private List<Product> wishProducts;
+	
 	public Client() {
 		basket=new Basket();
+		wishProducts= new ArrayList<Product>();
 	}
+
+
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JoinColumn(name="client_id")
+	@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "hadler" })
+	public List<Product> getWishProducts() {
+		return wishProducts;
+	}
+
+	public void setWishProducts(List<Product> wishProducts) {
+		this.wishProducts = wishProducts;
+	}
+	
 	
 	
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
