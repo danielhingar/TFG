@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
+
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -200,13 +200,35 @@ public class CompanyController {
 	}
 	
 	//----------------------Stadistic------------------------------------------------------------
-	
+	@Secured({"ROLE_COMPANY"})
 	@CrossOrigin
 	@GetMapping("/statistics/productByCategory/{username}")
 	public Map<String,Integer> productByCompany(@PathVariable String username) {
 		Map<String,Integer> estadistica= new HashMap<>();
 		
 			estadistica = companyService.productByCategory(username);
+		
+		return estadistica;
+	}
+	
+	@Secured({"ROLE_COMPANY"})
+	@CrossOrigin
+	@GetMapping("/statistics/productSold/{username}")
+	public Map<String,Integer> productSold(@PathVariable String username) {
+		Map<String,Integer> estadistica= new HashMap<>();
+		
+			estadistica = companyService.productSoldByCompany(username);
+		
+		return estadistica;
+	}
+	
+	@Secured({"ROLE_COMPANY"})
+	@CrossOrigin
+	@GetMapping("/statistics/productOffert/{username}")
+	public Map<String,Integer> productInOffert(@PathVariable String username) {
+		Map<String,Integer> estadistica= new HashMap<>();
+		
+			estadistica = companyService.productInOffert(username);
 		
 		return estadistica;
 	}
