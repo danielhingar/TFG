@@ -94,7 +94,7 @@ public class ProductService {
 			String[] cadena2 = p.getName().split(" ");
 			for(int i= 0; i<cadena2.length;i++)
 			if (i< cadena2.length && i< cadena.length) {
-				if (computeLevenshteinDistance(cadena[i], cadena2[i]) < 3 && cadena2[i].length()>2 && cadena[i].length()>2) {
+				if (computeLevenshteinDistance(cadena[i], cadena2[i]) < 4 && cadena2[i].length()>2 && cadena[i].length()>2) {
 					recommendationProv.put(computeLevenshteinDistance(cadena[i], cadena2[i]), p);
 
 				}

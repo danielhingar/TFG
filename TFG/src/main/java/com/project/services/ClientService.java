@@ -79,6 +79,12 @@ public class ClientService {
 		return this.clientRepository.save(client);
 	}
 	
+	@Transactional
+	public Client removeProductToWish(Client client, int productId) {
+		List<Product> wishBefore= client.getWishProducts();
+		wishBefore.remove(productService.findById(productId));
+		return this.clientRepository.save(client);
+	}
 	
 
 }

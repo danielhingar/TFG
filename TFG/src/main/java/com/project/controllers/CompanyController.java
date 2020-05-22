@@ -76,6 +76,13 @@ public class CompanyController {
 		return new ResponseEntity<Company>(company, HttpStatus.OK);
 	}
 
+	//----------------------List-----------------------------------------
+	@CrossOrigin
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public List<Company> list() {
+		return companyService.findAll();
+	}
+	
 	// -------------------------- Show ----------------------------------
 	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin

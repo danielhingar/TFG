@@ -162,7 +162,7 @@ public class ClientController {
 	@Secured({"ROLE_CLIENT"})
 	@CrossOrigin
 	@PutMapping("/addWish/{username}/{id}")
-	public ResponseEntity<?> enable(@PathVariable int id, @PathVariable String username) {
+	public ResponseEntity<?> addWish(@PathVariable int id, @PathVariable String username) {
 		Client clientActually = this.clientService.findByUsername(username);
 		Map<String, Object> response = new HashMap<>();
 
@@ -175,6 +175,29 @@ public class ClientController {
 		}
 
 		response.put("mensaje", "Se ha añadido el producto a la lista de deseados");
+		response.put("client", clientActually);
+
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+	}
+	
+	
+	// --------------------------------add product wish------------------------
+	@Secured({"ROLE_CLIENT"})
+	@CrossOrigin
+	@DeleteMapping("/removeWish/{username}/{id}")
+	public ResponseEntity<?> removeWish(@PathVariable int id, @PathVariable String username) {
+		Client clientActually = this.clientService.findByUsername(username);
+		Map<String, Object> response = new HashMap<>();
+
+		try {
+			this.clientService.removeProductToWish(clientActually, id);
+		} catch (DataAccessException e) {
+			response.put("mensaje", "Error al actualizar en la base de datos");
+			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		response.put("mensaje", "Se ha eliminado el producto a la lista de deseados");
 		response.put("client", clientActually);
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
