@@ -39,7 +39,7 @@ public class MessageClientController {
 
 	// -------------------------- List messages by conversation
 	// ----------------------------------
-	@Secured({"ROLE_CLIENT"})
+	@Secured({"ROLE_COMPANY","ROLE_CLIENT"})
 	@CrossOrigin
 	@RequestMapping(value = "/page/{page}/{idConversation}", method = RequestMethod.GET)
 	public ResponseEntity<?> findMessagesByConversation(@PathVariable int idConversation, @PathVariable Integer page) {
@@ -47,7 +47,7 @@ public class MessageClientController {
 		Map<String, Object> response = new HashMap<>();
 		try {
 			messages = messageService.findMessageByConversation(idConversation,
-					PageRequest.of(page, 9, org.springframework.data.domain.Sort.by("createDate").descending()));
+					PageRequest.of(page, 1000000, org.springframework.data.domain.Sort.by("createDate").ascending()));
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -75,7 +75,7 @@ public class MessageClientController {
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 		try {
-
+ 
 			messageNew = this.messageService.save(message, idConversation);
 
 		} catch (DataAccessException e) {

@@ -51,7 +51,7 @@ public class Message implements Serializable {
 		this.text = text;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreateDate() {
 		return createDate;
 	}

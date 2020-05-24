@@ -79,9 +79,11 @@ INSERT INTO `product` (id,company_id,name,description,photo,price,create_date,ca
 INSERT INTO `conversation` (id,issue,create_date,client_id,company_id) VALUES (1,'Envío','2020-01-23',996,991);
 
 /*Messages*/
-INSERT INTO `message` (id,text,create_date,answer,conversation_id) VALUES (1,'Hola, quería saber cuanto tiempo suele tardar en llegar.','2020-01-23',0,1);
-INSERT INTO `message` (id,text,create_date,answer,conversation_id) VALUES (2,'Hola Marta, pues el tiempo de entrega depende el método de envío que selecciones','2020-01-24',1,1);
-INSERT INTO `message` (id,text,create_date,answer,conversation_id) VALUES (3,'Muchas gracias','2020-01-25',0,1);
+INSERT INTO `message` (id,text,create_date,answer,conversation_id) VALUES (1,'Hola, quería saber cuanto tiempo suele tardar en llegar.','2020-01-23 18:30:00',0,1);
+INSERT INTO `message` (id,text,create_date,answer,conversation_id) VALUES (2,'Hola Marta, pues el tiempo de entrega depende el método de envío que selecciones','2020-01-23 18:40:00',1,1);
+INSERT INTO `message` (id,text,create_date,answer,conversation_id) VALUES (3,'Muchas gracias','2020-01-25 10:32:00',0,1);
+INSERT INTO `message` (id,text,create_date,answer,conversation_id) VALUES (4,'De nada, para cualquier otra duda no dude en preguntarnos','2020-01-25 11:31:00',1,1);
+
  
  
 /*Comment--------------------------------------------------------------------------------*/
@@ -91,7 +93,7 @@ INSERT INTO `comment` (id,title,description,valoration,client_id,product_id,crea
 /*Usuario_role*/
 INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (985,4);
 INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (986,4);
-INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (987,4);
+INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (987,4);  
 INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (988,4);
 
 INSERT INTO `usuario_roles` (usuario_id,role_id) VALUES (990,4);
