@@ -60,34 +60,16 @@ public class ConversationClientController {
 	}
 
 	// ------------------------Create a conversation--------------------------------
-	@Secured({ "ROLE_REPORTER" })
+	@Secured({ "ROLE_CLIENT" })
 	@PostMapping("/create/{userClient}/{userCompany}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> create(@Valid @RequestBody Conversation conversation, BindingResult bindingResult,
+	public Integer create(@Valid @RequestBody Conversation conversation, BindingResult bindingResult,
 			@PathVariable String userClient, @PathVariable String userCompany) {
 		Conversation conversationNew = null;
-		Map<String, Object> response = new HashMap<>();
 
-		if (bindingResult.hasErrors()) {
-			List<String> errors = new ArrayList<String>();
-			for (FieldError err : bindingResult.getFieldErrors()) {
-				errors.add("El campo " + err.getField() + " " + err.getDefaultMessage());
-			}
-			response.put("errors", errors);
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
-		}
-		try {
+		conversationNew = this.conversationService.save(conversation, userClient, userCompany);
 
-			conversationNew = this.conversationService.save(conversation, userClient, userCompany);
-
-		} catch (DataAccessException e) {
-			response.put("mensaje", "Error al añadir la nueva conversación");
-			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		response.put("mensaje", "La conversación ha sido creado con éxito");
-		response.put("conversation", conversationNew);
-		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+		return conversationNew.getId();
 
 	}
 
@@ -114,7 +96,7 @@ public class ConversationClientController {
 	}
 
 	// ---------------------------------Delete claim-----------------------
-	
+
 	@CrossOrigin
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Map<String, Object>> delete(@PathVariable int id) {
@@ -131,6 +113,6 @@ public class ConversationClientController {
 
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 
-	}  
+	}
 
 }
