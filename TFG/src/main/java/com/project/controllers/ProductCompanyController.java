@@ -142,6 +142,9 @@ public class ProductCompanyController {
 			if(product.getStock()>0) {
 				productActually.setStatus("DISPONIBLE");
 			}
+			if(product.getStock()==0) {
+				productActually.setStatus("SINSTOCK");
+			}
 			productUpdated = productService.saveProduct(productActually);
 		} catch (DataAccessException e) {
 			response.put("mensaje", "Error al actualizar en la base de datos");
