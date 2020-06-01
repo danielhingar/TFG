@@ -142,7 +142,7 @@ public class CompanyController {
 
 		if (usernames.contains(company.getUsername())) {
 			response.put("mensaje", "No puede usar ese username");
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CONFLICT);
 		}
 
 		try {

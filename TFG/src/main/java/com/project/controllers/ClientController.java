@@ -89,7 +89,7 @@ public class ClientController {
 
 		if (usernames.contains(client.getUsername())) {
 			response.put("mensaje", "No puede usar ese usuario");
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CONFLICT);
 		}
 
 		try {
