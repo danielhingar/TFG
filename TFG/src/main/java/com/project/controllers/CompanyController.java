@@ -84,7 +84,7 @@ public class CompanyController {
 	}
 	
 	// -------------------------- Show ----------------------------------
-	@Secured({"ROLE_CLIENT"})
+	@Secured({"ROLE_CLIENT","ROLE_ADMIN"})
 	@CrossOrigin
 	@GetMapping("/show/{id}")
 	public ResponseEntity<?> show(@PathVariable int id) {
